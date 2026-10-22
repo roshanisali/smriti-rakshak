@@ -1005,7 +1005,7 @@ class _EventsHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 14),
-              const ConstrainedBox(
+              ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 560),
                 child: Text(
                   'From historic walks to vibrant festivals, experience the '

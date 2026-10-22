@@ -326,9 +326,9 @@ class _WebsiteHeader extends StatelessWidget {
               onTap: () => onNavigate(1),
             ),
             _NavText(
-              'Explore',
-              selected: selectedIndex == 2,
-              onTap: () => onNavigate(2),
+              'Community',
+              selected: selectedIndex == 11,
+              onTap: () => onNavigate(11),
             ),
             _NavText(
               'Heritage Sites',

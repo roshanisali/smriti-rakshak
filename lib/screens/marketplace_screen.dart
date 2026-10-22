@@ -10,19 +10,23 @@ class MarketplaceScreen extends StatefulWidget {
 
 class _MarketplaceScreenState extends State<MarketplaceScreen> {
   // ============================================================
-  // HERITAGE THEME
+  // SMRITI RAKSHAK — COLOUR PALETTE
   // ============================================================
 
-  static const Color primary = Color(0xFFC6533B);
-  static const Color primaryDark = Color(0xFF963B29);
-  static const Color gold = Color(0xFFE6B85C);
-  static const Color background = Color(0xFFF7F2E8);
-  static const Color surface = Color(0xFFFFFCF6);
-  static const Color text = Color(0xFF29352C);
-  static const Color secondary = Color(0xFF77786C);
-  static const Color forest = Color(0xFF294536);
-  static const Color forestLight = Color(0xFF42634B);
-  static const Color sandstone = Color(0xFFE8DDC9);
+  static const Color primary = Color(0xFFE0533C);
+  static const Color primaryDark = Color(0xFFA6321F);
+  static const Color gold = Color(0xFFF2A922);
+  static const Color background = Color(0xFFFFF8EF);
+  static const Color surface = Colors.white;
+  static const Color text = Color(0xFF172D26);
+  static const Color secondary = Color(0xFF68766F);
+  static const Color forest = Color(0xFF173F35);
+  static const Color forestLight = Color(0xFF28745D);
+  static const Color teal = Color(0xFF168C91);
+  static const Color sandstone = Color(0xFFE9DED0);
+  static const Color paleGold = Color(0xFFFFF0CE);
+  static const Color paleCoral = Color(0xFFFFE8E1);
+  static const Color paleGreen = Color(0xFFE6F3EB);
 
   // ============================================================
   // STATE
@@ -77,7 +81,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       seller: 'Heritage Artisan',
       imagePath: 'assets/images/bluepottery.jpeg',
       category: 'Handicrafts',
-      accentColor: forestLight,
+      accentColor: teal,
     ),
     _Product(
       title: 'Folk Art Print',
@@ -86,7 +90,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       seller: 'Art Collective',
       imagePath: 'assets/images/folkart.jpeg',
       category: 'Art',
-      accentColor: forest,
+      accentColor: forestLight,
     ),
     _Product(
       title: 'Heritage Jewellery',
@@ -134,7 +138,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       seller: 'Heritage Hands',
       imagePath: 'assets/images/terracotta.jpeg',
       category: 'Handicrafts',
-      accentColor: forestLight,
+      accentColor: teal,
     ),
   ];
 
@@ -145,24 +149,21 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   final List<_Experience> experiences = const [
     _Experience(
       title: 'Learn Warli Painting',
-      description:
-          'A hands-on workshop with a traditional artist.',
+      description: 'A hands-on workshop with a traditional artist.',
       price: '₹600 / person',
       imagePath: 'assets/images/warliworkshop.jpeg',
       accentColor: primary,
     ),
     _Experience(
       title: 'Traditional Pottery Workshop',
-      description:
-          'Create your own piece with a local artisan.',
+      description: 'Create your own piece with a local artisan.',
       price: '₹750 / person',
       imagePath: 'assets/images/potteryworkshop.jpeg',
-      accentColor: gold,
+      accentColor: teal,
     ),
     _Experience(
       title: 'Heritage Craft Walk',
-      description:
-          'Explore local crafts, makers and traditions.',
+      description: 'Explore local crafts, makers and traditions.',
       price: '₹500 / person',
       imagePath: 'assets/images/craftwalk.jpeg',
       accentColor: forestLight,
@@ -213,7 +214,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           behavior: SnackBarBehavior.floating,
           backgroundColor: forest,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
       );
@@ -238,10 +239,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   }
 
   void _addToBag(_Product product) {
-    setState(() {
-      _bag.add(product);
-    });
-
+    setState(() => _bag.add(product));
     _showMessage('${product.title} added to your bag.');
   }
 
@@ -251,6 +249,45 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       searchQuery = '';
       _searchController.clear();
     });
+  }
+
+  // ============================================================
+  // BUTTON STYLES
+  // ============================================================
+
+  ButtonStyle _primaryButtonStyle() {
+    return ElevatedButton.styleFrom(
+      backgroundColor: primary,
+      foregroundColor: Colors.white,
+      elevation: 0,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 15,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
+  }
+
+  // ============================================================
+  // PRICE FORMAT
+  // ============================================================
+
+  String _formatPrice(int price) {
+    final value = price.toString();
+    final result = StringBuffer();
+
+    for (int i = 0; i < value.length; i++) {
+      result.write(value[i]);
+      final remaining = value.length - i - 1;
+
+      if (remaining > 0 && remaining % 2 == 0) {
+        result.write(',');
+      }
+    }
+
+    return result.toString();
   }
 
   // ============================================================
@@ -264,7 +301,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       backgroundColor: surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(28),
+          top: Radius.circular(30),
         ),
       ),
       builder: (sheetContext) {
@@ -277,11 +314,10 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
 
             return SafeArea(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(22, 14, 22, 24),
+                padding: const EdgeInsets.fromLTRB(22, 12, 22, 24),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight:
-                        MediaQuery.of(context).size.height * 0.78,
+                    maxHeight: MediaQuery.of(context).size.height * 0.8,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -290,14 +326,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       Center(
                         child: Container(
                           width: 42,
-                          height: 4,
+                          height: 5,
                           decoration: BoxDecoration(
                             color: sandstone,
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 23),
                       Row(
                         children: [
                           const Expanded(
@@ -305,16 +341,29 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               'Your shopping bag',
                               style: TextStyle(
                                 color: text,
-                                fontSize: 22,
+                                fontSize: 23,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
                           ),
-                          Text(
-                            '${_bag.length} items',
-                            style: const TextStyle(
-                              color: secondary,
-                              fontSize: 12,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 7,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: paleGold,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Text(
+                              '${_bag.length} items',
+                              style: const TextStyle(
+                                color: primaryDark,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
                         ],
@@ -328,8 +377,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               children: [
                                 Icon(
                                   Icons.shopping_bag_outlined,
-                                  color: forestLight,
-                                  size: 54,
+                                  color: teal,
+                                  size: 58,
                                 ),
                                 SizedBox(height: 14),
                                 Text(
@@ -341,9 +390,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                                SizedBox(height: 6),
+                                SizedBox(height: 7),
                                 Text(
-                                  'Explore handcrafted heritage treasures.',
+                                  'Discover handmade heritage treasures.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: secondary,
@@ -368,33 +417,33 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: background,
-                                  borderRadius:
-                                      BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(17),
+                                  border: Border.all(
+                                    color: sandstone.withValues(alpha: 0.7),
+                                  ),
                                 ),
                                 child: Row(
                                   children: [
                                     ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(13),
                                       child: SizedBox(
-                                        width: 64,
-                                        height: 64,
+                                        width: 68,
+                                        height: 68,
                                         child: Image.asset(
                                           product.imagePath,
                                           fit: BoxFit.cover,
                                           errorBuilder: (_, __, ___) =>
                                               Container(
-                                            color: sandstone,
+                                            color: paleGold,
                                             child: Icon(
-                                              Icons.palette_outlined,
-                                              color:
-                                                  product.accentColor,
+                                              Icons.palette_rounded,
+                                              color: product.accentColor,
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
+                                    const SizedBox(width: 13),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -403,21 +452,19 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                           Text(
                                             product.title,
                                             maxLines: 2,
-                                            overflow:
-                                                TextOverflow.ellipsis,
+                                            overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
                                               color: text,
-                                              fontWeight:
-                                                  FontWeight.w800,
+                                              fontWeight: FontWeight.w800,
                                             ),
                                           ),
-                                          const SizedBox(height: 5),
+                                          const SizedBox(height: 6),
                                           Text(
                                             product.price,
                                             style: const TextStyle(
                                               color: primary,
-                                              fontWeight:
-                                                  FontWeight.w900,
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 16,
                                             ),
                                           ),
                                         ],
@@ -426,14 +473,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                     IconButton(
                                       tooltip: 'Remove item',
                                       onPressed: () {
-                                        setState(() {
-                                          _bag.removeAt(index);
-                                        });
+                                        setState(() => _bag.removeAt(index));
                                         setSheetState(() {});
                                       },
                                       icon: const Icon(
                                         Icons.delete_outline_rounded,
-                                        color: secondary,
+                                        color: primary,
                                       ),
                                     ),
                                   ],
@@ -444,13 +489,10 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         ),
                         const SizedBox(height: 16),
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 13,
-                          ),
+                          padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: background,
-                            borderRadius: BorderRadius.circular(14),
+                            color: paleGreen,
+                            borderRadius: BorderRadius.circular(17),
                           ),
                           child: Row(
                             children: [
@@ -458,16 +500,16 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 child: Text(
                                   'Estimated total',
                                   style: TextStyle(
-                                    color: text,
-                                    fontWeight: FontWeight.w700,
+                                    color: forest,
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ),
                               Text(
                                 '₹${_formatPrice(total)}',
                                 style: const TextStyle(
-                                  color: primary,
-                                  fontSize: 20,
+                                  color: forest,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.w900,
                                 ),
                               ),
@@ -477,7 +519,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         const SizedBox(height: 14),
                         SizedBox(
                           width: double.infinity,
-                          height: 50,
+                          height: 52,
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.pop(sheetContext);
@@ -487,9 +529,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                             },
                             style: _primaryButtonStyle(),
                             child: const Text(
-                              'Continue to checkout',
+                              'Continue to checkout  →',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w900,
                               ),
                             ),
                           ),
@@ -504,23 +546,6 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         );
       },
     );
-  }
-
-  String _formatPrice(int price) {
-    final value = price.toString();
-    final result = StringBuffer();
-
-    for (int i = 0; i < value.length; i++) {
-      result.write(value[i]);
-
-      final remaining = value.length - i - 1;
-
-      if (remaining > 0 && remaining % 2 == 0) {
-        result.write(',');
-      }
-    }
-
-    return result.toString();
   }
 
   // ============================================================
@@ -539,7 +564,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               backgroundColor: surface,
               insetPadding: const EdgeInsets.all(20),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(26),
+                borderRadius: BorderRadius.circular(28),
               ),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 440),
@@ -550,20 +575,20 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                     children: [
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(26),
+                          top: Radius.circular(28),
                         ),
                         child: SizedBox(
-                          height: 230,
+                          height: 235,
                           width: double.infinity,
                           child: Image.asset(
                             product.imagePath,
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => Container(
-                              color: sandstone,
+                              color: paleGold,
                               child: Icon(
                                 Icons.palette_rounded,
                                 color: product.accentColor,
-                                size: 64,
+                                size: 65,
                               ),
                             ),
                           ),
@@ -576,11 +601,13 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           children: [
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 11,
-                                vertical: 6,
+                                horizontal: 12,
+                                vertical: 7,
                               ),
                               decoration: BoxDecoration(
-                                color: product.accentColor.withOpacity(0.12),
+                                color: product.accentColor.withValues(
+                                  alpha: 0.12,
+                                ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -593,12 +620,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 13),
                             Text(
                               product.title,
                               style: const TextStyle(
                                 color: text,
-                                fontSize: 24,
+                                fontSize: 25,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
@@ -608,7 +635,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               style: const TextStyle(
                                 color: secondary,
                                 fontSize: 14,
-                                height: 1.5,
+                                height: 1.6,
                               ),
                             ),
                             const SizedBox(height: 14),
@@ -616,8 +643,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               children: [
                                 const Icon(
                                   Icons.storefront_rounded,
-                                  color: forestLight,
-                                  size: 19,
+                                  color: teal,
+                                  size: 20,
                                 ),
                                 const SizedBox(width: 8),
                                 Expanded(
@@ -648,7 +675,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                     product.price,
                                     style: const TextStyle(
                                       color: primary,
-                                      fontSize: 27,
+                                      fontSize: 28,
                                       fontWeight: FontWeight.w900,
                                     ),
                                   ),
@@ -667,21 +694,18 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                   label: Text(saved ? 'Saved' : 'Save'),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: primary,
-                                    side: const BorderSide(
-                                      color: sandstone,
-                                    ),
+                                    side: const BorderSide(color: sandstone),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(13),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 13),
                             SizedBox(
                               width: double.infinity,
-                              height: 50,
+                              height: 51,
                               child: ElevatedButton.icon(
                                 onPressed: () {
                                   Navigator.pop(dialogContext);
@@ -694,7 +718,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 label: const Text(
                                   'Add to bag',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 style: _primaryButtonStyle(),
@@ -724,17 +748,17 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(25),
         ),
         icon: const Icon(
           Icons.auto_awesome_rounded,
           color: gold,
-          size: 34,
+          size: 36,
         ),
         title: const Text(
           'Cultural Experiences',
           style: TextStyle(
-            color: text,
+            color: forest,
             fontWeight: FontWeight.w900,
           ),
         ),
@@ -742,7 +766,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           'Learn traditional crafts, meet local artisans and experience living heritage through hands-on activities.',
           style: TextStyle(
             color: secondary,
-            height: 1.6,
+            height: 1.7,
           ),
         ),
         actions: [
@@ -752,7 +776,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               'Explore below',
               style: TextStyle(
                 color: primary,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w900,
               ),
             ),
           ),
@@ -768,7 +792,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         backgroundColor: surface,
         insetPadding: const EdgeInsets.all(22),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(27),
         ),
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
@@ -779,19 +803,19 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(24),
+                    top: Radius.circular(27),
                   ),
                   child: SizedBox(
                     width: double.infinity,
-                    height: 210,
+                    height: 215,
                     child: Image.asset(
                       experience.imagePath,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
-                        color: sandstone,
+                        color: paleGold,
                         child: Icon(
                           Icons.auto_awesome_rounded,
-                          size: 56,
+                          size: 58,
                           color: experience.accentColor,
                         ),
                       ),
@@ -806,43 +830,43 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       const Text(
                         'A LIVING HERITAGE EXPERIENCE',
                         style: TextStyle(
-                          color: forestLight,
+                          color: teal,
                           fontSize: 10,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.2,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 11),
                       Text(
                         experience.title,
                         style: const TextStyle(
-                          color: text,
-                          fontSize: 22,
+                          color: forest,
+                          fontSize: 23,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-                      const SizedBox(height: 9),
+                      const SizedBox(height: 10),
                       Text(
                         experience.description,
                         style: const TextStyle(
                           color: secondary,
                           fontSize: 13,
-                          height: 1.6,
+                          height: 1.7,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 17),
                       Text(
                         experience.price,
                         style: TextStyle(
                           color: experience.accentColor,
-                          fontSize: 20,
+                          fontSize: 21,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                       const SizedBox(height: 18),
                       SizedBox(
                         width: double.infinity,
-                        height: 48,
+                        height: 49,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.pop(dialogContext);
@@ -855,14 +879,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                             foregroundColor: Colors.white,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                           child: const Text(
                             'Enquire about this experience',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                            ),
+                            style: TextStyle(fontWeight: FontWeight.w800),
                           ),
                         ),
                       ),
@@ -878,7 +900,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   }
 
   // ============================================================
-  // CATEGORY FILTER SHEET
+  // CATEGORY FILTER
   // ============================================================
 
   void _showCategoryFilter() {
@@ -887,9 +909,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       backgroundColor: surface,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(26),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       builder: (sheetContext) {
         return SafeArea(
@@ -902,10 +922,10 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 Center(
                   child: Container(
                     width: 42,
-                    height: 4,
+                    height: 5,
                     decoration: BoxDecoration(
                       color: sandstone,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
@@ -913,18 +933,15 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 const Text(
                   'Browse categories',
                   style: TextStyle(
-                    color: text,
-                    fontSize: 22,
+                    color: forest,
+                    fontSize: 23,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 7),
                 const Text(
                   'Choose what you would like to discover.',
-                  style: TextStyle(
-                    color: secondary,
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: secondary, fontSize: 13),
                 ),
                 const SizedBox(height: 20),
                 Wrap(
@@ -941,15 +958,13 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       backgroundColor: background,
                       labelStyle: TextStyle(
                         color: selected ? Colors.white : text,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                       ),
                       side: BorderSide(
                         color: selected ? forest : sandstone,
                       ),
                       onSelected: (_) {
-                        setState(() {
-                          selectedCategory = category;
-                        });
+                        setState(() => selectedCategory = category);
                         Navigator.pop(sheetContext);
                       },
                     );
@@ -960,21 +975,6 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           ),
         );
       },
-    );
-  }
-
-  // ============================================================
-  // REUSABLE BUTTON STYLE
-  // ============================================================
-
-  ButtonStyle _primaryButtonStyle() {
-    return ElevatedButton.styleFrom(
-      backgroundColor: primary,
-      foregroundColor: Colors.white,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
     );
   }
 
@@ -990,7 +990,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         backgroundColor: background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: 78,
+        toolbarHeight: 82,
         leading: IconButton(
           tooltip: 'Go back',
           onPressed: () {
@@ -1015,17 +1015,17 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 color: forest,
                 fontSize: 21,
                 fontWeight: FontWeight.w900,
-                letterSpacing: -0.5,
+                letterSpacing: -0.6,
               ),
             ),
-            SizedBox(height: 3),
+            SizedBox(height: 4),
             Text(
               'CRAFTS  ·  ART  ·  EXPERIENCES',
               style: TextStyle(
                 color: secondary,
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.1,
+                fontSize: 9,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
               ),
             ),
           ],
@@ -1044,9 +1044,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                     foregroundColor: forest,
                     fixedSize: const Size(46, 46),
                   ),
-                  icon: const Icon(
-                    Icons.shopping_bag_outlined,
-                  ),
+                  icon: const Icon(Icons.shopping_bag_outlined),
                 ),
                 if (_bag.isNotEmpty)
                   Positioned(
@@ -1055,8 +1053,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       constraints: const BoxConstraints(
-                        minWidth: 19,
-                        minHeight: 19,
+                        minWidth: 20,
+                        minHeight: 20,
                       ),
                       decoration: const BoxDecoration(
                         color: primary,
@@ -1083,7 +1081,6 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           final width = constraints.maxWidth;
           final isDesktop = width >= 1050;
           final isTablet = width >= 650 && width < 1050;
-
           final contentWidth = isDesktop ? 1180.0 : 920.0;
 
           final crossAxisCount = width >= 1100
@@ -1115,13 +1112,10 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // SEARCH BAR
                     _SearchBar(
                       controller: _searchController,
                       onChanged: (value) {
-                        setState(() {
-                          searchQuery = value;
-                        });
+                        setState(() => searchQuery = value);
                       },
                       onFilter: _showCategoryFilter,
                       onClear: () {
@@ -1131,32 +1125,55 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         });
                       },
                     ),
-                    const SizedBox(height: 26),
+                    const SizedBox(height: 25),
 
                     // HERO BANNER
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(isDesktop ? 38 : 25),
                       decoration: BoxDecoration(
-                        color: forest,
-                        borderRadius: BorderRadius.circular(28),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF16483B),
+                            Color(0xFF226652),
+                            Color(0xFF153B32),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: forest.withOpacity(0.12),
-                            blurRadius: 24,
-                            offset: const Offset(0, 10),
+                            color: forest.withValues(alpha: 0.19),
+                            blurRadius: 26,
+                            offset: const Offset(0, 12),
                           ),
                         ],
                       ),
                       child: Stack(
                         children: [
                           Positioned(
-                            right: -22,
-                            bottom: -34,
+                            top: -45,
+                            right: -35,
+                            child: Container(
+                              width: 190,
+                              height: 190,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: gold.withValues(alpha: 0.15),
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: -24,
+                            bottom: -38,
                             child: Icon(
                               Icons.spa_rounded,
                               size: isDesktop ? 200 : 130,
-                              color: Colors.white.withOpacity(0.045),
+                              color: Colors.white.withValues(alpha: 0.055),
                             ),
                           ),
                           Row(
@@ -1164,58 +1181,51 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                             children: [
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 12,
-                                        vertical: 7,
+                                        vertical: 8,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: gold.withOpacity(0.17),
-                                        borderRadius:
-                                            BorderRadius.circular(20),
+                                        color: gold.withValues(alpha: 0.17),
+                                        borderRadius: BorderRadius.circular(20),
                                         border: Border.all(
-                                          color: gold.withOpacity(0.35),
+                                          color: gold.withValues(alpha: 0.5),
                                         ),
                                       ),
                                       child: const Text(
-                                        'MADE WITH HERITAGE',
+                                        '✦  MADE WITH HERITAGE',
                                         style: TextStyle(
-                                          color: Color(0xFFFFD98D),
+                                          color: Color(0xFFFFD985),
                                           fontSize: 10,
                                           fontWeight: FontWeight.w900,
-                                          letterSpacing: 1.3,
+                                          letterSpacing: 1.1,
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 17),
+                                    const SizedBox(height: 19),
                                     Text(
-                                      'Every craft has a story.',
+                                      'Every craft has\na story.',
                                       style: TextStyle(
-                                        color: surface,
-                                        fontSize: isDesktop ? 38 : 29,
+                                        color: Colors.white,
+                                        fontSize: isDesktop ? 42 : 31,
                                         fontWeight: FontWeight.w900,
                                         height: 1.12,
-                                        letterSpacing: -0.8,
+                                        letterSpacing: -1,
                                       ),
                                     ),
-                                    const SizedBox(height: 12),
-                                    ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        maxWidth: 520,
-                                      ),
-                                      child: Text(
-                                        'Bring home the beauty of living traditions. Discover handmade treasures and meet the people keeping culture alive.',
-                                        style: TextStyle(
-                                          color: Color(0xFFDCE5D9),
-                                          fontSize: 14,
-                                          height: 1.7,
-                                        ),
+                                    const SizedBox(height: 13),
+                                    const Text(
+                                      'Bring home the beauty of living traditions. Discover handmade treasures and meet the people keeping culture alive.',
+                                      style: TextStyle(
+                                        color: Color(0xFFDCEAE2),
+                                        fontSize: 13,
+                                        height: 1.8,
                                       ),
                                     ),
-                                    const SizedBox(height: 22),
+                                    const SizedBox(height: 23),
                                     Wrap(
                                       spacing: 10,
                                       runSpacing: 10,
@@ -1226,21 +1236,18 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                             Icons.explore_rounded,
                                             size: 18,
                                           ),
-                                          label: const Text(
-                                            'Explore collection',
-                                          ),
+                                          label: const Text('Explore collection'),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: gold,
                                             foregroundColor: forest,
                                             elevation: 0,
-                                            padding:
-                                                const EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                               horizontal: 18,
                                               vertical: 15,
                                             ),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(13),
+                                                  BorderRadius.circular(14),
                                             ),
                                           ),
                                         ),
@@ -1252,19 +1259,19 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                           ),
                                           label: const Text('Experiences'),
                                           style: OutlinedButton.styleFrom(
-                                            foregroundColor: surface,
+                                            foregroundColor: Colors.white,
                                             side: BorderSide(
-                                              color:
-                                                  surface.withOpacity(0.38),
+                                              color: Colors.white.withValues(
+                                                alpha: 0.45,
+                                              ),
                                             ),
-                                            padding:
-                                                const EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                               horizontal: 17,
                                               vertical: 15,
                                             ),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(13),
+                                                  BorderRadius.circular(14),
                                             ),
                                           ),
                                         ),
@@ -1276,20 +1283,20 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               if (width >= 620) ...[
                                 SizedBox(width: isDesktop ? 35 : 18),
                                 Container(
-                                  width: isDesktop ? 158 : 110,
-                                  height: isDesktop ? 158 : 110,
+                                  width: isDesktop ? 165 : 115,
+                                  height: isDesktop ? 165 : 115,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: gold.withOpacity(0.12),
+                                    color: gold.withValues(alpha: 0.13),
                                     border: Border.all(
-                                      color: gold.withOpacity(0.3),
+                                      color: gold.withValues(alpha: 0.45),
                                       width: 1.5,
                                     ),
                                   ),
                                   child: Icon(
                                     Icons.palette_rounded,
                                     color: gold,
-                                    size: isDesktop ? 78 : 55,
+                                    size: isDesktop ? 82 : 57,
                                   ),
                                 ),
                               ],
@@ -1298,7 +1305,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 34),
 
                     // CATEGORIES
                     const _SectionHeader(
@@ -1306,9 +1313,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       subtitle: 'Find something that speaks to you',
                       showViewAll: false,
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 16),
                     SizedBox(
-                      height: 46,
+                      height: 47,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: categories.length,
@@ -1316,17 +1323,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                             const SizedBox(width: 9),
                         itemBuilder: (context, index) {
                           final category = categories[index];
-                          final selected =
-                              selectedCategory == category;
+                          final selected = selectedCategory == category;
 
                           return ChoiceChip(
                             label: Text(category),
                             selected: selected,
                             showCheckmark: false,
                             onSelected: (_) {
-                              setState(() {
-                                selectedCategory = category;
-                              });
+                              setState(() => selectedCategory = category);
                             },
                             selectedColor: forest,
                             backgroundColor: surface,
@@ -1334,13 +1338,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               color: selected ? forest : sandstone,
                             ),
                             labelStyle: TextStyle(
-                              color:
-                                  selected ? Colors.white : text,
+                              color: selected ? Colors.white : text,
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
                             ),
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
+                              horizontal: 11,
                               vertical: 7,
                             ),
                             shape: RoundedRectangleBorder(
@@ -1360,7 +1363,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                     ),
                     const SizedBox(height: 17),
                     SizedBox(
-                      height: isDesktop ? 355 : 330,
+                      height: isDesktop ? 365 : 340,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: featuredProducts.length,
@@ -1378,15 +1381,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                             child: _FeaturedProductCard(
                               product: product,
                               isSaved: _isSaved(product.title),
-                              onTap: () =>
-                                  _showProductDetails(product),
+                              onTap: () => _showProductDetails(product),
                               onFavorite: () => _toggleSaved(product),
                             ),
                           );
                         },
                       ),
                     ),
-                    const SizedBox(height: 36),
+                    const SizedBox(height: 37),
 
                     // PRODUCT GRID
                     _SectionHeader(
@@ -1403,26 +1405,26 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         padding: const EdgeInsets.all(34),
                         decoration: BoxDecoration(
                           color: surface,
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(25),
                           border: Border.all(color: sandstone),
                         ),
                         child: Column(
                           children: [
                             const Icon(
                               Icons.search_off_rounded,
-                              color: forestLight,
-                              size: 44,
+                              color: teal,
+                              size: 48,
                             ),
-                            const SizedBox(height: 13),
+                            const SizedBox(height: 14),
                             const Text(
                               'No treasures found',
                               style: TextStyle(
-                                color: text,
+                                color: forest,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 7),
                             const Text(
                               'Try another keyword or category.',
                               textAlign: TextAlign.center,
@@ -1438,7 +1440,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 'Clear search and filters',
                                 style: TextStyle(
                                   color: primary,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
                             ),
@@ -1463,13 +1465,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           return _GridProductCard(
                             product: product,
                             isSaved: _isSaved(product.title),
-                            onTap: () =>
-                                _showProductDetails(product),
+                            onTap: () => _showProductDetails(product),
                             onFavorite: () => _toggleSaved(product),
                           );
                         },
                       ),
-                    const SizedBox(height: 38),
+                    const SizedBox(height: 39),
 
                     // CULTURAL EXPERIENCES
                     const _SectionHeader(
@@ -1477,7 +1478,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       subtitle: 'Learn directly from tradition bearers',
                       showViewAll: false,
                     ),
-                    const SizedBox(height: 17),
+                    const SizedBox(height: 18),
                     if (isDesktop)
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1522,7 +1523,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       Column(
                         children: experiences.map((experience) {
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 13),
+                            padding: const EdgeInsets.only(bottom: 14),
                             child: _ExperienceCard(
                               experience: experience,
                               onTap: () =>
@@ -1531,16 +1532,25 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           );
                         }).toList(),
                       ),
-                    const SizedBox(height: 38),
+                    const SizedBox(height: 39),
 
                     // SELLER BANNER
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(isDesktop ? 30 : 22),
                       decoration: BoxDecoration(
-                        color: surface,
-                        borderRadius: BorderRadius.circular(26),
-                        border: Border.all(color: sandstone),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFFFFF0D4),
+                            Color(0xFFFFE5D9),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(27),
+                        border: Border.all(
+                          color: gold.withValues(alpha: 0.45),
+                        ),
                       ),
                       child: isDesktop
                           ? Row(
@@ -1558,19 +1568,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                     size: 18,
                                   ),
                                   label: const Text('Become a seller'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: primary,
-                                    foregroundColor: Colors.white,
-                                    elevation: 0,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 22,
-                                      vertical: 17,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(14),
-                                    ),
-                                  ),
+                                  style: _primaryButtonStyle(),
                                 ),
                               ],
                             )
@@ -1579,10 +1577,10 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 const _SellerIcon(),
                                 const SizedBox(height: 15),
                                 const _SellerText(),
-                                const SizedBox(height: 18),
+                                const SizedBox(height: 19),
                                 SizedBox(
                                   width: double.infinity,
-                                  height: 49,
+                                  height: 50,
                                   child: ElevatedButton.icon(
                                     onPressed: () => _showMessage(
                                       'Seller registration can be connected here.',
@@ -1598,12 +1596,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               ],
                             ),
                     ),
-                    const SizedBox(height: 27),
+                    const SizedBox(height: 28),
 
                     // FOOTER
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 22),
+                      padding: const EdgeInsets.symmetric(vertical: 24),
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(color: sandstone),
@@ -1613,20 +1611,20 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         children: [
                           Icon(
                             Icons.spa_rounded,
-                            color: forestLight,
-                            size: 24,
+                            color: teal,
+                            size: 27,
                           ),
-                          SizedBox(height: 9),
+                          SizedBox(height: 10),
                           Text(
                             'Preserving heritage, one creation at a time.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: forest,
                               fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 6),
                           Text(
                             'SMRITI RAKSHAK  ·  DISCOVER  ·  EXPERIENCE  ·  PRESERVE',
                             textAlign: TextAlign.center,
@@ -1719,21 +1717,26 @@ class _SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: 58,
       decoration: BoxDecoration(
         color: _MarketplaceScreenState.surface,
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(
-          color: _MarketplaceScreenState.sandstone,
-        ),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: _MarketplaceScreenState.sandstone),
+        boxShadow: [
+          BoxShadow(
+            color: _MarketplaceScreenState.forest.withValues(alpha: 0.035),
+            blurRadius: 14,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Row(
         children: [
-          const SizedBox(width: 16),
+          const SizedBox(width: 17),
           const Icon(
             Icons.search_rounded,
-            color: _MarketplaceScreenState.forestLight,
-            size: 22,
+            color: _MarketplaceScreenState.teal,
+            size: 23,
           ),
           const SizedBox(width: 11),
           Expanded(
@@ -1775,7 +1778,7 @@ class _SearchBar extends StatelessWidget {
             onPressed: onFilter,
             icon: const Icon(
               Icons.tune_rounded,
-              color: _MarketplaceScreenState.forest,
+              color: _MarketplaceScreenState.primary,
             ),
           ),
           const SizedBox(width: 4),
@@ -1806,6 +1809,15 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Container(
+          width: 4,
+          height: 43,
+          decoration: BoxDecoration(
+            color: _MarketplaceScreenState.primary,
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1814,7 +1826,7 @@ class _SectionHeader extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   color: _MarketplaceScreenState.forest,
-                  fontSize: 21,
+                  fontSize: 20,
                   fontWeight: FontWeight.w900,
                   letterSpacing: -0.5,
                 ),
@@ -1839,7 +1851,7 @@ class _SectionHeader extends StatelessWidget {
               style: TextStyle(
                 color: _MarketplaceScreenState.primary,
                 fontSize: 12,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w900,
               ),
             ),
           ),
@@ -1869,16 +1881,14 @@ class _FeaturedProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: _MarketplaceScreenState.surface,
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(23),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: _MarketplaceScreenState.sandstone,
-            ),
+            borderRadius: BorderRadius.circular(23),
+            border: Border.all(color: _MarketplaceScreenState.sandstone),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1891,7 +1901,7 @@ class _FeaturedProductCard extends StatelessWidget {
                       product.imagePath,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
-                        color: _MarketplaceScreenState.sandstone,
+                        color: _MarketplaceScreenState.paleGold,
                         child: Icon(
                           Icons.palette_rounded,
                           color: product.accentColor,
@@ -1904,20 +1914,20 @@ class _FeaturedProductCard extends StatelessWidget {
                       left: 12,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
+                          horizontal: 11,
                           vertical: 7,
                         ),
                         decoration: BoxDecoration(
-                          color: _MarketplaceScreenState.surface,
+                          color: _MarketplaceScreenState.gold,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          'FEATURED',
+                          '✦ FEATURED',
                           style: TextStyle(
-                            color: product.accentColor,
+                            color: _MarketplaceScreenState.forest,
                             fontSize: 9,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 0.8,
+                            letterSpacing: 0.7,
                           ),
                         ),
                       ),
@@ -1964,7 +1974,10 @@ class _FeaturedProductCard extends StatelessWidget {
                         Text(
                           product.price,
                           style: TextStyle(
-                            color: product.accentColor,
+                            color: product.accentColor == 
+                                    _MarketplaceScreenState.gold
+                                ? _MarketplaceScreenState.primaryDark
+                                : product.accentColor,
                             fontSize: 17,
                             fontWeight: FontWeight.w900,
                           ),
@@ -2017,16 +2030,21 @@ class _GridProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: _MarketplaceScreenState.surface,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(22),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: _MarketplaceScreenState.sandstone,
-            ),
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(color: _MarketplaceScreenState.sandstone),
+            boxShadow: [
+              BoxShadow(
+                color: _MarketplaceScreenState.forest.withValues(alpha: 0.025),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -2040,7 +2058,7 @@ class _GridProductCard extends StatelessWidget {
                       product.imagePath,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
-                        color: _MarketplaceScreenState.sandstone,
+                        color: _MarketplaceScreenState.paleGold,
                         child: Icon(
                           Icons.image_outlined,
                           color: product.accentColor,
@@ -2061,7 +2079,7 @@ class _GridProductCard extends StatelessWidget {
                       bottom: 10,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 9,
+                          horizontal: 10,
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
@@ -2071,9 +2089,12 @@ class _GridProductCard extends StatelessWidget {
                         child: Text(
                           product.category,
                           style: TextStyle(
-                            color: product.accentColor,
+                            color: product.accentColor ==
+                                    _MarketplaceScreenState.gold
+                                ? _MarketplaceScreenState.primaryDark
+                                : product.accentColor,
                             fontSize: 9,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
                       ),
@@ -2117,7 +2138,10 @@ class _GridProductCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: product.accentColor,
+                                color: product.accentColor ==
+                                        _MarketplaceScreenState.gold
+                                    ? _MarketplaceScreenState.primaryDark
+                                    : product.accentColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -2167,8 +2191,9 @@ class _FavoriteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: _MarketplaceScreenState.surface.withOpacity(0.97),
+      color: _MarketplaceScreenState.surface.withValues(alpha: 0.96),
       shape: const CircleBorder(),
+      elevation: 2,
       child: IconButton(
         tooltip: isSaved ? 'Remove from saved items' : 'Save item',
         onPressed: onPressed,
@@ -2182,8 +2207,8 @@ class _FavoriteButton extends StatelessWidget {
           size: 18,
         ),
         constraints: const BoxConstraints.tightFor(
-          width: 37,
-          height: 37,
+          width: 38,
+          height: 38,
         ),
         padding: EdgeInsets.zero,
       ),
@@ -2210,32 +2235,30 @@ class _ExperienceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: _MarketplaceScreenState.surface,
-      borderRadius: BorderRadius.circular(21),
+      borderRadius: BorderRadius.circular(23),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(21),
-            border: Border.all(
-              color: _MarketplaceScreenState.sandstone,
-            ),
+            borderRadius: BorderRadius.circular(23),
+            border: Border.all(color: _MarketplaceScreenState.sandstone),
           ),
           padding: const EdgeInsets.all(13),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(16),
                 child: SizedBox(
                   width: double.infinity,
-                  height: compact ? 110 : 155,
+                  height: compact ? 105 : 155,
                   child: Image.asset(
                     experience.imagePath,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Container(
-                      color: _MarketplaceScreenState.sandstone,
+                      color: _MarketplaceScreenState.paleGold,
                       child: Icon(
                         Icons.auto_awesome_rounded,
                         color: experience.accentColor,
@@ -2274,16 +2297,30 @@ class _ExperienceCard extends StatelessWidget {
                     child: Text(
                       experience.price,
                       style: TextStyle(
-                        color: experience.accentColor,
+                        color: experience.accentColor ==
+                                _MarketplaceScreenState.gold
+                            ? _MarketplaceScreenState.primaryDark
+                            : experience.accentColor,
                         fontSize: 13,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_rounded,
-                    color: experience.accentColor,
-                    size: 19,
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: experience.accentColor.withValues(alpha: 0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward_rounded,
+                      color: experience.accentColor ==
+                              _MarketplaceScreenState.gold
+                          ? _MarketplaceScreenState.primaryDark
+                          : experience.accentColor,
+                      size: 18,
+                    ),
                   ),
                 ],
               ),
@@ -2305,16 +2342,28 @@ class _SellerIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 66,
-      height: 66,
+      width: 68,
+      height: 68,
       decoration: BoxDecoration(
-        color: _MarketplaceScreenState.gold.withOpacity(0.18),
-        borderRadius: BorderRadius.circular(21),
+        gradient: const LinearGradient(
+          colors: [
+            _MarketplaceScreenState.gold,
+            Color(0xFFFFD575),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: [
+          BoxShadow(
+            color: _MarketplaceScreenState.gold.withValues(alpha: 0.25),
+            blurRadius: 14,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       child: const Icon(
         Icons.storefront_rounded,
         color: _MarketplaceScreenState.forest,
-        size: 32,
+        size: 33,
       ),
     );
   }
@@ -2342,7 +2391,7 @@ class _SellerText extends StatelessWidget {
           style: TextStyle(
             color: _MarketplaceScreenState.secondary,
             fontSize: 13,
-            height: 1.6,
+            height: 1.7,
           ),
         ),
       ],

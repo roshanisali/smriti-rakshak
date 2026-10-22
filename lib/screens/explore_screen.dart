@@ -1,29 +1,28 @@
-
 import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
 
   // ============================================================
-  // HERITAGE COLORS
+  // SMRITI RAKSHAK — HERITAGE DESIGN SYSTEM
   // ============================================================
 
-  static const Color primary = Color(0xFFC6533B);
-  static const Color primaryDark = Color(0xFF963B29);
-  static const Color gold = Color(0xFFE6B85C);
-  static const Color background = Color(0xFFF7F2E8);
-  static const Color surface = Color(0xFFFFFCF6);
-  static const Color textDark = Color(0xFF29352C);
-  static const Color textSecondary = Color(0xFF77786C);
-  static const Color forest = Color(0xFF294536);
-  static const Color forestLight = Color(0xFF42634B);
-  static const Color sandstone = Color(0xFFE8DDC9);
-  static const Color teal = Color(0xFF47877A);
-  static const Color green = Color(0xFF63845A);
-  static const Color purple = Color(0xFF87705E);
+  static const Color primary = Color(0xFFE0533C);
+  static const Color primaryDark = Color(0xFFA6321F);
+  static const Color gold = Color(0xFFF2A922);
+  static const Color background = Color(0xFFF0F4F8);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color textDark = Color(0xFF0F172A);
+  static const Color textSecondary = Color(0xFF475569);
+  static const Color forest = Color(0xFF183D32);
+  static const Color forestLight = Color(0xFF285747);
+  static const Color teal = Color(0xFF0EA5E9);
+  static const Color green = Color(0xFF10B981);
+  static const Color purple = Color(0xFF8B5CF6);
+  static const Color sandstone = Color(0xFFE2E8F0);
 
   // ============================================================
-  // NAVIGATION AND MESSAGES
+  // NAVIGATION AND FEEDBACK
   // ============================================================
 
   void _goBack(BuildContext context) {
@@ -43,14 +42,10 @@ class ExploreScreen extends StatelessWidget {
           behavior: SnackBarBehavior.floating,
           backgroundColor: forest,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
           ),
         ),
       );
-  }
-
-  void _showCategoryMessage(BuildContext context, String category) {
-    _showMessage(context, 'Explore $category discoveries.');
   }
 
   void _showTrailDialog(BuildContext context) {
@@ -59,15 +54,15 @@ class ExploreScreen extends StatelessWidget {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(26),
         ),
         icon: const Icon(
-          Icons.route_rounded,
+          Icons.explore_rounded,
+          size: 42,
           color: primary,
-          size: 36,
         ),
         title: const Text(
-          'Create your heritage trail',
+          'Your journey begins here',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textDark,
@@ -75,30 +70,32 @@ class ExploreScreen extends StatelessWidget {
           ),
         ),
         content: const Text(
-          'Choose places that interest you and plan your own cultural '
-          'journey. Your trail can later connect with maps and saved '
-          'discoveries.',
+          'Imagine a journey through mighty forts, ancient temples, '
+          'local art and untold stories. Choose your interests and '
+          'start creating a heritage trail of your own.',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textSecondary,
-            height: 1.6,
+            height: 1.7,
           ),
         ),
         actionsAlignment: MainAxisAlignment.center,
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(
-              'Got it',
-              style: TextStyle(
-                color: primary,
-                fontWeight: FontWeight.w800,
-              ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: primary,
+              foregroundColor: Colors.white,
             ),
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Let’s explore'),
           ),
         ],
       ),
     );
+  }
+
+  void _showCategory(BuildContext context, String category) {
+    _showMessage(context, 'Discover the world of $category.');
   }
 
   // ============================================================
@@ -113,12 +110,12 @@ class ExploreScreen extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.maxWidth;
-            final isDesktop = width >= 1000;
-            final isTablet = width >= 650 && width < 1000;
+            final desktop = width >= 1050;
+            final tablet = width >= 650 && width < 1050;
 
-            final horizontalPadding = isDesktop
+            final horizontalPadding = desktop
                 ? 48.0
-                : isTablet
+                : tablet
                     ? 30.0
                     : 18.0;
 
@@ -126,551 +123,83 @@ class ExploreScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1320),
+                  constraints: const BoxConstraints(maxWidth: 1360),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
                       horizontalPadding,
-                      22,
+                      20,
                       horizontalPadding,
-                      42,
+                      44,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // HEADER
+                        _buildHeader(context),
 
-                        Row(
-                          children: [
-                            _CircleButton(
-                              icon: Icons.arrow_back_rounded,
-                              tooltip: 'Go back',
-                              onTap: () => _goBack(context),
-                            ),
-                            const SizedBox(width: 14),
-                            const Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'SMRITI RAKSHAK',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      letterSpacing: 2.2,
-                                      fontWeight: FontWeight.w900,
-                                      color: primary,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    'Explore heritage',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w900,
-                                      color: textDark,
-                                      letterSpacing: -0.7,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            _CircleButton(
-                              icon: Icons.bookmark_border_rounded,
-                              tooltip: 'Saved discoveries',
-                              onTap: () => _showMessage(
-                                context,
-                                'Your saved discoveries will appear here.',
-                              ),
-                            ),
-                          ],
-                        ),
+                        const SizedBox(height: 26),
 
-                        const SizedBox(height: 28),
+                        // HERO
+                        _buildHero(desktop),
 
-                        // INTRODUCTION BANNER
+                        const SizedBox(height: 34),
 
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(isDesktop ? 36 : 24),
-                          decoration: BoxDecoration(
-                            color: forest,
-                            borderRadius: BorderRadius.circular(28),
-                            border: Border.all(
-                              color: gold.withOpacity(0.3),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: forest.withOpacity(0.08),
-                                blurRadius: 22,
-                                offset: const Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                right: -12,
-                                top: -18,
-                                child: Icon(
-                                  Icons.account_balance_rounded,
-                                  size: isDesktop ? 180 : 120,
-                                  color: Colors.white.withOpacity(0.055),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 7,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: gold.withOpacity(0.16),
-                                      borderRadius: BorderRadius.circular(30),
-                                      border: Border.all(
-                                        color: gold.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.explore_rounded,
-                                          color: gold,
-                                          size: 15,
-                                        ),
-                                        SizedBox(width: 7),
-                                        Text(
-                                          'YOUR NEXT DISCOVERY',
-                                          style: TextStyle(
-                                            color: gold,
-                                            fontSize: 10,
-                                            letterSpacing: 1.2,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Text(
-                                    'Every place has\na story to tell.',
-                                    style: TextStyle(
-                                      color: surface,
-                                      fontSize: isDesktop ? 43 : 34,
-                                      height: 1.12,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: -1,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 13),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxWidth: 520,
-                                    ),
-                                    child: Text(
-                                      'Walk through ancient forts, discover '
-                                      'forgotten stories, and experience the '
-                                      'living culture of Maharashtra.',
-                                      style: TextStyle(
-                                        color: Color(0xCCFFFCF6),
-                                        fontSize: 13,
-                                        height: 1.7,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 23),
-                                  const Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    children: [
-                                      _BannerChip(
-                                        icon: Icons.castle_rounded,
-                                        label: 'Historic forts',
-                                      ),
-                                      _BannerChip(
-                                        icon: Icons.palette_rounded,
-                                        label: 'Local crafts',
-                                      ),
-                                      _BannerChip(
-                                        icon: Icons.temple_hindu_rounded,
-                                        label: 'Living traditions',
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 36),
-
-                        // MOOD CATEGORIES
-
+                        // CATEGORY SECTION
                         const _SectionHeading(
-                          eyebrow: 'FIND YOUR PATH',
-                          title: 'What are you in the mood for?',
-                          subtitle: 'Choose a journey that speaks to you.',
+                          eyebrow: 'CHOOSE YOUR ADVENTURE',
+                          title: 'What speaks to your soul?',
+                          subtitle:
+                              'Every path leads to a different piece of history.',
                         ),
 
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 19),
 
-                        LayoutBuilder(
-                          builder: (context, categoryConstraints) {
-                            final availableWidth =
-                                categoryConstraints.maxWidth;
-
-                            final columns = availableWidth >= 1000
-                                ? 5
-                                : availableWidth >= 650
-                                    ? 3
-                                    : 2;
-
-                            final itemWidth =
-                                (availableWidth - (columns - 1) * 12) /
-                                    columns;
-
-                            return Wrap(
-                              spacing: 12,
-                              runSpacing: 12,
-                              children: [
-                                _MoodCard(
-                                  width: itemWidth,
-                                  icon: Icons.landscape_rounded,
-                                  title: 'Epic Fortresses',
-                                  subtitle: 'Legends carved in stone',
-                                  color: primary,
-                                  onTap: () => _showCategoryMessage(
-                                    context,
-                                    'Epic Fortresses',
-                                  ),
-                                ),
-                                _MoodCard(
-                                  width: itemWidth,
-                                  icon: Icons.palette_rounded,
-                                  title: 'Art & Craft',
-                                  subtitle: 'Meet local artisans',
-                                  color: gold,
-                                  onTap: () => _showCategoryMessage(
-                                    context,
-                                    'Art & Craft',
-                                  ),
-                                ),
-                                _MoodCard(
-                                  width: itemWidth,
-                                  icon: Icons.auto_stories_rounded,
-                                  title: 'Hidden Stories',
-                                  subtitle: 'Uncover the past',
-                                  color: teal,
-                                  onTap: () => _showCategoryMessage(
-                                    context,
-                                    'Hidden Stories',
-                                  ),
-                                ),
-                                _MoodCard(
-                                  width: itemWidth,
-                                  icon: Icons.temple_hindu_rounded,
-                                  title: 'Sacred Places',
-                                  subtitle: 'Explore timeless faith',
-                                  color: green,
-                                  onTap: () => _showCategoryMessage(
-                                    context,
-                                    'Sacred Places',
-                                  ),
-                                ),
-                                _MoodCard(
-                                  width: itemWidth,
-                                  icon: Icons.music_note_rounded,
-                                  title: 'Living Culture',
-                                  subtitle: 'Traditions that live on',
-                                  color: purple,
-                                  onTap: () => _showCategoryMessage(
-                                    context,
-                                    'Living Culture',
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-
-                        const SizedBox(height: 38),
-
-                        // FEATURED DISCOVERIES
-
-                        _SectionHeading(
-                          eyebrow: 'HANDPICKED FOR YOU',
-                          title: 'Featured discoveries',
-                          subtitle: 'Places and stories worth your time.',
-                          action: 'View all',
-                          onAction: () => _showMessage(
-                            context,
-                            'You are viewing our featured discoveries.',
-                          ),
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        if (isDesktop)
-                          const Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: _FeaturedCard(
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1600100397608-f010eaa1f2e6?auto=format&fit=crop&w=900&q=80',
-                                  title: 'The Stone Stories',
-                                  subtitle: 'Ancient architecture',
-                                  tag: 'TIMELESS',
-                                  height: 350,
-                                ),
-                              ),
-                              SizedBox(width: 18),
-                              Expanded(
-                                child: _FeaturedCard(
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=80',
-                                  title: 'Sacred India',
-                                  subtitle: 'Temples and traditions',
-                                  tag: 'CULTURE',
-                                  height: 350,
-                                ),
-                              ),
-                              SizedBox(width: 18),
-                              Expanded(
-                                child: _FeaturedCard(
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80',
-                                  title: 'Stories in Stone',
-                                  subtitle: 'Forgotten monuments',
-                                  tag: 'EXPLORE',
-                                  height: 350,
-                                ),
-                              ),
-                            ],
-                          )
-                        else
-                          SizedBox(
-                            height: 310,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              children: const [
-                                _FeaturedCard(
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1600100397608-f010eaa1f2e6?auto=format&fit=crop&w=900&q=80',
-                                  title: 'The Stone Stories',
-                                  subtitle: 'Ancient architecture',
-                                  tag: 'TIMELESS',
-                                  height: 310,
-                                ),
-                                _FeaturedCard(
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=80',
-                                  title: 'Sacred India',
-                                  subtitle: 'Temples and traditions',
-                                  tag: 'CULTURE',
-                                  height: 310,
-                                ),
-                                _FeaturedCard(
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80',
-                                  title: 'Stories in Stone',
-                                  subtitle: 'Forgotten monuments',
-                                  tag: 'EXPLORE',
-                                  height: 310,
-                                ),
-                              ],
-                            ),
-                          ),
+                        _buildCategories(context, width),
 
                         const SizedBox(height: 40),
 
-                        // HERITAGE TRAILS
-
+                        // FEATURED DISCOVERIES
                         _SectionHeading(
-                          eyebrow: 'CURATED JOURNEYS',
-                          title: 'Explore a trail',
+                          eyebrow: 'THE HERITAGE EDIT',
+                          title: 'Stories worth discovering',
                           subtitle:
-                              'Follow a path through history and culture.',
-                          action: 'See more',
+                              'Extraordinary places. Remarkable histories.',
+                          action: 'Explore all',
                           onAction: () => _showMessage(
                             context,
-                            'Explore our curated heritage trails.',
+                            'You are exploring our featured discoveries.',
                           ),
                         ),
 
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 19),
 
-                        if (isDesktop)
-                          const Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: _TrailCard(
-                                  number: '01',
-                                  title: 'Maratha Legacy',
-                                  places: '6 places  •  1 day',
-                                  description:
-                                      'Walk through the legacy of the Maratha empire.',
-                                  icon: Icons.shield_rounded,
-                                  color: primary,
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: _TrailCard(
-                                  number: '02',
-                                  title: 'Art Beyond Time',
-                                  places: '5 places  •  2 days',
-                                  description:
-                                      'Discover craftsmanship passed through generations.',
-                                  icon: Icons.brush_rounded,
-                                  color: gold,
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: _TrailCard(
-                                  number: '03',
-                                  title: 'Sacred Maharashtra',
-                                  places: '7 places  •  Weekend',
-                                  description:
-                                      'Experience sacred sites and living traditions.',
-                                  icon: Icons.temple_hindu_rounded,
-                                  color: green,
-                                ),
-                              ),
-                            ],
-                          )
-                        else
-                          const Column(
-                            children: [
-                              _TrailCard(
-                                number: '01',
-                                title: 'Maratha Legacy',
-                                places: '6 places  •  1 day',
-                                description:
-                                    'Walk through the legacy of the Maratha empire.',
-                                icon: Icons.shield_rounded,
-                                color: primary,
-                              ),
-                              SizedBox(height: 12),
-                              _TrailCard(
-                                number: '02',
-                                title: 'Art Beyond Time',
-                                places: '5 places  •  2 days',
-                                description:
-                                    'Discover craftsmanship passed through generations.',
-                                icon: Icons.brush_rounded,
-                                color: gold,
-                              ),
-                              SizedBox(height: 12),
-                              _TrailCard(
-                                number: '03',
-                                title: 'Sacred Maharashtra',
-                                places: '7 places  •  Weekend',
-                                description:
-                                    'Experience sacred sites and living traditions.',
-                                icon: Icons.temple_hindu_rounded,
-                                color: green,
-                              ),
-                            ],
-                          ),
+                        _buildFeatured(desktop, tablet),
+
+                        const SizedBox(height: 42),
+
+                        // TRAILS
+                        _SectionHeading(
+                          eyebrow: 'JOURNEYS WITH A STORY',
+                          title: 'Take the scenic route',
+                          subtitle:
+                              'Curated trails for curious minds and wandering hearts.',
+                          action: 'See all trails',
+                          onAction: () => _showTrailDialog(context),
+                        ),
+
+                        const SizedBox(height: 19),
+
+                        _buildTrails(context, desktop),
+
+                        const SizedBox(height: 34),
+
+                        // CREATE YOUR OWN TRAIL
+                        _buildCreateTrail(context, desktop),
 
                         const SizedBox(height: 36),
 
-                        // CREATE YOUR OWN TRAIL
-
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(isDesktop ? 34 : 24),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [primaryDark, primary],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(27),
-                            boxShadow: [
-                              BoxShadow(
-                                color: primary.withOpacity(0.17),
-                                blurRadius: 20,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
-                          ),
-                          child: isDesktop
-                              ? Row(
-                                  children: [
-                                    _routeIcon(),
-                                    const SizedBox(width: 26),
-                                    const Expanded(
-                                      child: _TrailBannerText(),
-                                    ),
-                                    const SizedBox(width: 20),
-                                    _StartTrailButton(
-                                      onTap: () => _showTrailDialog(context),
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _routeIcon(),
-                                    const SizedBox(height: 20),
-                                    const _TrailBannerText(),
-                                    const SizedBox(height: 20),
-                                    _StartTrailButton(
-                                      onTap: () => _showTrailDialog(context),
-                                    ),
-                                  ],
-                                ),
-                        ),
-
-                        const SizedBox(height: 35),
-
                         // FOOTER
-
-                        const Center(
-                          child: Column(
-                            children: [
-                              DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: sandstone,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: SizedBox(
-                                  width: 54,
-                                  height: 54,
-                                  child: Icon(
-                                    Icons.account_balance_rounded,
-                                    color: primary,
-                                    size: 27,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 12),
-                              Text(
-                                'Discover. Experience. Preserve.',
-                                style: TextStyle(
-                                  color: textDark,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                'Every discovery keeps a story alive.',
-                                style: TextStyle(
-                                  color: textSecondary,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        _buildFooter(),
                       ],
                     ),
                   ),
@@ -683,21 +212,673 @@ class ExploreScreen extends StatelessWidget {
     );
   }
 
-  Widget _routeIcon() {
-    return Container(
-      width: 78,
-      height: 78,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.13),
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.white.withOpacity(0.22),
+  // ============================================================
+  // HEADER
+  // ============================================================
+
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        _CircleButton(
+          icon: Icons.arrow_back_rounded,
+          tooltip: 'Go back',
+          onTap: () => _goBack(context),
         ),
+        const SizedBox(width: 13),
+        Container(
+          width: 43,
+          height: 43,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [primary, primaryDark],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: primary.withOpacity(0.2),
+                blurRadius: 12,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: const Icon(
+            Icons.account_balance_rounded,
+            color: Colors.white,
+            size: 24,
+          ),
+        ),
+        const SizedBox(width: 11),
+        const Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'SMRITI RAKSHAK',
+                style: TextStyle(
+                  fontSize: 10,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w900,
+                  color: primary,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                'Explore heritage',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: textDark,
+                  letterSpacing: -0.7,
+                ),
+              ),
+            ],
+          ),
+        ),
+        _CircleButton(
+          icon: Icons.bookmark_border_rounded,
+          tooltip: 'Saved discoveries',
+          onTap: () => _showMessage(
+            context,
+            'Your saved discoveries will appear here.',
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ============================================================
+  // HERO BANNER
+  // ============================================================
+
+  Widget _buildHero(bool desktop) {
+    return Container(
+      width: double.infinity,
+      constraints: BoxConstraints(
+        minHeight: desktop ? 390 : 370,
       ),
-      child: const Icon(
-        Icons.route_rounded,
-        size: 39,
-        color: Colors.white,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: forest,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: forest.withOpacity(0.15),
+            blurRadius: 25,
+            offset: const Offset(0, 12),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.network(
+              'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1800&q=85',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(color: forest);
+              },
+            ),
+          ),
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    forest.withOpacity(0.98),
+                    forest.withOpacity(0.86),
+                    forest.withOpacity(0.35),
+                  ],
+                  stops: const [0, 0.53, 1],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: -28,
+            bottom: -35,
+            child: Icon(
+              Icons.account_balance_rounded,
+              size: desktop ? 300 : 210,
+              color: Colors.white.withOpacity(0.08),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(desktop ? 38 : 25),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 650),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 13,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: gold.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: gold.withOpacity(0.65),
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.auto_awesome_rounded,
+                          color: gold,
+                          size: 15,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'YOUR GATEWAY TO THE PAST',
+                          style: TextStyle(
+                            color: gold,
+                            fontSize: 10,
+                            letterSpacing: 1.2,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  Text(
+                    'History isn’t\njust remembered.\nIt’s experienced.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: desktop ? 47 : 36,
+                      height: 1.12,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -1.6,
+                    ),
+                  ),
+                  const SizedBox(height: 17),
+                  const Text(
+                    'Step into Maharashtra’s magnificent forts, '
+                    'meet the hands behind its crafts, and uncover '
+                    'stories that deserve to live forever.',
+                    style: TextStyle(
+                      color: Color(0xFFE2E8F0),
+                      fontSize: 13,
+                      height: 1.8,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  Wrap(
+                    spacing: 9,
+                    runSpacing: 9,
+                    children: const [
+                      _HeroPill(
+                        icon: Icons.castle_rounded,
+                        label: 'Epic forts',
+                      ),
+                      _HeroPill(
+                        icon: Icons.palette_rounded,
+                        label: 'Living crafts',
+                      ),
+                      _HeroPill(
+                        icon: Icons.auto_stories_rounded,
+                        label: 'Untold stories',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 26),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 13,
+                    ),
+                    decoration: BoxDecoration(
+                      color: gold,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: gold.withOpacity(0.2),
+                          blurRadius: 12,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.explore_rounded,
+                          color: textDark,
+                          size: 19,
+                        ),
+                        SizedBox(width: 9),
+                        Text(
+                          'Find your next adventure',
+                          style: TextStyle(
+                            color: textDark,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // CATEGORY CARDS
+  // ============================================================
+
+  Widget _buildCategories(BuildContext context, double width) {
+    final columns = width >= 1150
+        ? 5
+        : width >= 750
+            ? 3
+            : 2;
+
+    const gap = 13.0;
+    final itemWidth =
+        (width - (columns - 1) * gap) / columns;
+
+    return Wrap(
+      spacing: gap,
+      runSpacing: gap,
+      children: [
+        _CategoryCard(
+          width: itemWidth,
+          image:
+              'https://images.unsplash.com/photo-1600100397608-f010eaa1f2e6?auto=format&fit=crop&w=700&q=80',
+          icon: Icons.castle_rounded,
+          title: 'Epic Fortresses',
+          subtitle: 'Where legends were born',
+          accent: primary,
+          number: '01',
+          onTap: () => _showCategory(context, 'Epic Fortresses'),
+        ),
+        _CategoryCard(
+          width: itemWidth,
+          image:
+              'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=700&q=80',
+          icon: Icons.palette_rounded,
+          title: 'Art & Craft',
+          subtitle: 'Made by remarkable hands',
+          accent: gold,
+          number: '02',
+          onTap: () => _showCategory(context, 'Art & Craft'),
+        ),
+        _CategoryCard(
+          width: itemWidth,
+          image:
+              'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=700&q=80',
+          icon: Icons.auto_stories_rounded,
+          title: 'Hidden Stories',
+          subtitle: 'Secrets from another time',
+          accent: teal,
+          number: '03',
+          onTap: () => _showCategory(context, 'Hidden Stories'),
+        ),
+        _CategoryCard(
+          width: itemWidth,
+          image:
+              'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=700&q=80',
+          icon: Icons.temple_hindu_rounded,
+          title: 'Sacred Places',
+          subtitle: 'Spaces filled with meaning',
+          accent: green,
+          number: '04',
+          onTap: () => _showCategory(context, 'Sacred Places'),
+        ),
+        _CategoryCard(
+          width: itemWidth,
+          image:
+              'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=700&q=80',
+          icon: Icons.music_note_rounded,
+          title: 'Living Culture',
+          subtitle: 'Traditions still alive',
+          accent: purple,
+          number: '05',
+          onTap: () => _showCategory(context, 'Living Culture'),
+        ),
+      ],
+    );
+  }
+
+  // ============================================================
+  // FEATURED DISCOVERIES
+  // ============================================================
+
+  Widget _buildFeatured(bool desktop, bool tablet) {
+    if (desktop) {
+      return const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 6,
+            child: _FeaturedCard(
+              imageUrl:
+                  'https://images.unsplash.com/photo-1600100397608-f010eaa1f2e6?auto=format&fit=crop&w=1100&q=85',
+              title: 'The Stone Stories',
+              subtitle: 'Ancient architecture',
+              description:
+                  'Discover the vision and craftsmanship carved into history.',
+              tag: 'ARCHITECTURE',
+              accent: primary,
+              height: 390,
+            ),
+          ),
+          SizedBox(width: 18),
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: [
+                _CompactFeaturedCard(
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85',
+                  title: 'Sacred India',
+                  subtitle: 'Temples & traditions',
+                  tag: 'CULTURE',
+                  height: 185,
+                ),
+                SizedBox(height: 18),
+                _CompactFeaturedCard(
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85',
+                  title: 'Beyond the Ordinary',
+                  subtitle: 'Journeys through time',
+                  tag: 'DISCOVER',
+                  height: 185,
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
+    return SizedBox(
+      height: tablet ? 355 : 345,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        children: const [
+          _FeaturedCard(
+            imageUrl:
+                'https://images.unsplash.com/photo-1600100397608-f010eaa1f2e6?auto=format&fit=crop&w=900&q=85',
+            title: 'The Stone Stories',
+            subtitle: 'Ancient architecture',
+            description:
+                'Discover the craftsmanship carved into history.',
+            tag: 'ARCHITECTURE',
+            accent: primary,
+            height: 345,
+          ),
+          _FeaturedCard(
+            imageUrl:
+                'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85',
+            title: 'Sacred India',
+            subtitle: 'Temples & traditions',
+            description:
+                'Explore the places that hold generations of belief.',
+            tag: 'CULTURE',
+            accent: gold,
+            height: 345,
+          ),
+          _FeaturedCard(
+            imageUrl:
+                'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85',
+            title: 'Beyond the Ordinary',
+            subtitle: 'Journeys through time',
+            description:
+                'Find the beauty hidden in forgotten corners.',
+            tag: 'DISCOVER',
+            accent: teal,
+            height: 345,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // HERITAGE TRAILS
+  // ============================================================
+
+  Widget _buildTrails(BuildContext context, bool desktop) {
+    final trails = [
+      const _TrailData(
+        number: '01',
+        title: 'The Maratha Legacy',
+        places: '6 PLACES',
+        duration: '1 DAY',
+        description:
+            'Follow the footsteps of warriors, visionaries and kings.',
+        icon: Icons.shield_rounded,
+        color: primary,
+        background: Color(0xFFFFE9E2),
+      ),
+      const _TrailData(
+        number: '02',
+        title: 'Art Beyond Time',
+        places: '5 PLACES',
+        duration: '2 DAYS',
+        description:
+            'Meet the makers keeping generations of craftsmanship alive.',
+        icon: Icons.brush_rounded,
+        color: Color(0xFF9A6700),
+        background: Color(0xFFFFF2CE),
+      ),
+      const _TrailData(
+        number: '03',
+        title: 'Sacred Maharashtra',
+        places: '7 PLACES',
+        duration: 'WEEKEND',
+        description:
+            'Discover sacred architecture, rituals and living traditions.',
+        icon: Icons.temple_hindu_rounded,
+        color: Color(0xFF087F5B),
+        background: Color(0xFFDDF8EC),
+      ),
+    ];
+
+    if (desktop) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (int i = 0; i < trails.length; i++) ...[
+            if (i > 0) const SizedBox(width: 16),
+            Expanded(
+              child: _TrailCard(
+                data: trails[i],
+                onTap: () => _showTrailDialog(context),
+              ),
+            ),
+          ],
+        ],
+      );
+    }
+
+    return Column(
+      children: [
+        for (int i = 0; i < trails.length; i++) ...[
+          if (i > 0) const SizedBox(height: 13),
+          _TrailCard(
+            data: trails[i],
+            onTap: () => _showTrailDialog(context),
+          ),
+        ],
+      ],
+    );
+  }
+
+  // ============================================================
+  // CREATE A TRAIL
+  // ============================================================
+
+  Widget _buildCreateTrail(BuildContext context, bool desktop) {
+    final content = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 62,
+          height: 62,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.22),
+            ),
+          ),
+          child: const Icon(
+            Icons.route_rounded,
+            color: gold,
+            size: 31,
+          ),
+        ),
+        const SizedBox(width: 19),
+        const Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'MAKE IT YOURS',
+                style: TextStyle(
+                  color: gold,
+                  fontSize: 10,
+                  letterSpacing: 1.7,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Your story. Your route.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  height: 1.2,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.7,
+                ),
+              ),
+              SizedBox(height: 9),
+              Text(
+                'Build a journey around the places, people and '
+                'traditions you love. Your next unforgettable '
+                'discovery starts with you.',
+                style: TextStyle(
+                  color: Color(0xFFDCE8E2),
+                  fontSize: 12,
+                  height: 1.8,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(desktop ? 31 : 23),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [forest, forestLight],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(
+          color: gold.withOpacity(0.3),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: forest.withOpacity(0.15),
+            blurRadius: 22,
+            offset: const Offset(0, 9),
+          ),
+        ],
+      ),
+      child: desktop
+          ? Row(
+              children: [
+                Expanded(child: content),
+                const SizedBox(width: 24),
+                _CreateTrailButton(
+                  onTap: () => _showTrailDialog(context),
+                ),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                content,
+                const SizedBox(height: 23),
+                _CreateTrailButton(
+                  onTap: () => _showTrailDialog(context),
+                ),
+              ],
+            ),
+    );
+  }
+
+  // ============================================================
+  // FOOTER
+  // ============================================================
+
+  Widget _buildFooter() {
+    return Center(
+      child: Column(
+        children: [
+          Container(
+            width: 54,
+            height: 54,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [primary, primaryDark],
+              ),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: const Icon(
+              Icons.account_balance_rounded,
+              color: Colors.white,
+              size: 27,
+            ),
+          ),
+          const SizedBox(height: 14),
+          const Text(
+            'Discover. Experience. Preserve.',
+            style: TextStyle(
+              color: textDark,
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(height: 7),
+          const Text(
+            'Every discovery keeps a story alive.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: textSecondary,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 15),
+          Container(
+            width: 48,
+            height: 3,
+            decoration: BoxDecoration(
+              color: gold,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -729,12 +910,12 @@ class _CircleButton extends StatelessWidget {
           onTap: onTap,
           customBorder: const CircleBorder(),
           child: Container(
-            width: 46,
-            height: 46,
+            width: 45,
+            height: 45,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: ExploreScreen.sandstone.withOpacity(0.8),
+                color: ExploreScreen.sandstone,
               ),
             ),
             child: Icon(
@@ -750,14 +931,14 @@ class _CircleButton extends StatelessWidget {
 }
 
 // ============================================================
-// BANNER CHIP
+// HERO PILL
 // ============================================================
 
-class _BannerChip extends StatelessWidget {
+class _HeroPill extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  const _BannerChip({
+  const _HeroPill({
     required this.icon,
     required this.label,
   });
@@ -766,31 +947,27 @@ class _BannerChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 11,
+        horizontal: 12,
         vertical: 9,
       ),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withOpacity(0.09),
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color: Colors.white.withOpacity(0.16),
+          color: Colors.white.withOpacity(0.19),
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 14,
-            color: ExploreScreen.gold,
-          ),
+          Icon(icon, color: ExploreScreen.gold, size: 15),
           const SizedBox(width: 7),
           Text(
             label,
             style: const TextStyle(
-              fontSize: 10,
               color: Colors.white,
               fontWeight: FontWeight.w700,
+              fontSize: 10,
             ),
           ),
         ],
@@ -827,33 +1004,48 @@ class _SectionHeading extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                eyebrow,
-                style: const TextStyle(
-                  color: ExploreScreen.primary,
-                  fontSize: 9,
-                  letterSpacing: 1.7,
-                  fontWeight: FontWeight.w900,
-                ),
+              Row(
+                children: [
+                  Container(
+                    width: 23,
+                    height: 3,
+                    decoration: BoxDecoration(
+                      color: ExploreScreen.gold,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      eyebrow,
+                      style: const TextStyle(
+                        color: ExploreScreen.primary,
+                        fontSize: 9,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: 9),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 20,
-                  height: 1.2,
+                  fontSize: 22,
+                  height: 1.22,
                   fontWeight: FontWeight.w900,
                   color: ExploreScreen.textDark,
-                  letterSpacing: -0.35,
+                  letterSpacing: -0.7,
                 ),
               ),
               if (subtitle != null) ...[
-                const SizedBox(height: 6),
+                const SizedBox(height: 7),
                 Text(
                   subtitle!,
                   style: const TextStyle(
                     fontSize: 12,
-                    height: 1.5,
+                    height: 1.6,
                     color: ExploreScreen.textSecondary,
                   ),
                 ),
@@ -864,22 +1056,27 @@ class _SectionHeading extends StatelessWidget {
         if (action != null)
           TextButton(
             onPressed: onAction,
+            style: TextButton.styleFrom(
+              foregroundColor: ExploreScreen.primary,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 6,
+                vertical: 9,
+              ),
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   action!,
                   style: const TextStyle(
-                    color: ExploreScreen.primary,
                     fontSize: 11,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: 3),
                 const Icon(
                   Icons.arrow_forward_rounded,
-                  size: 14,
-                  color: ExploreScreen.primary,
+                  size: 15,
                 ),
               ],
             ),
@@ -890,23 +1087,27 @@ class _SectionHeading extends StatelessWidget {
 }
 
 // ============================================================
-// MOOD CARD
+// IMAGE-LED CATEGORY CARD
 // ============================================================
 
-class _MoodCard extends StatelessWidget {
+class _CategoryCard extends StatelessWidget {
   final double width;
+  final String image;
   final IconData icon;
   final String title;
   final String subtitle;
-  final Color color;
+  final Color accent;
+  final String number;
   final VoidCallback onTap;
 
-  const _MoodCard({
+  const _CategoryCard({
     required this.width,
+    required this.image,
     required this.icon,
     required this.title,
     required this.subtitle,
-    required this.color,
+    required this.accent,
+    required this.number,
     required this.onTap,
   });
 
@@ -916,56 +1117,141 @@ class _MoodCard extends StatelessWidget {
       width: width,
       child: Material(
         color: ExploreScreen.surface,
-        borderRadius: BorderRadius.circular(19),
+        borderRadius: BorderRadius.circular(22),
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(19),
           child: Container(
-            constraints: const BoxConstraints(minHeight: 150),
-            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(19),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(
-                color: ExploreScreen.sandstone.withOpacity(0.8),
+                color: ExploreScreen.sandstone.withOpacity(0.7),
               ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 42,
-                  width: 42,
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.13),
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  child: Icon(
-                    icon,
-                    color: color,
-                    size: 22,
+                SizedBox(
+                  height: 115,
+                  width: double.infinity,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: accent.withOpacity(0.13),
+                            child: Icon(
+                              icon,
+                              color: accent,
+                              size: 45,
+                            ),
+                          );
+                        },
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.05),
+                              Colors.black.withOpacity(0.48),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 11,
+                        left: 11,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 9,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.95),
+                            borderRadius: BorderRadius.circular(9),
+                          ),
+                          child: Text(
+                            number,
+                            style: TextStyle(
+                              color: accent,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 11,
+                        bottom: 11,
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            color: accent,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            icon,
+                            color: Colors.white,
+                            size: 19,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 13),
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    height: 1.3,
-                    fontWeight: FontWeight.w900,
-                    color: ExploreScreen.textDark,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    height: 1.4,
-                    color: ExploreScreen.textSecondary,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(13, 14, 11, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: ExploreScreen.textDark,
+                          fontSize: 13,
+                          height: 1.3,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        subtitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: ExploreScreen.textSecondary,
+                          fontSize: 10,
+                          height: 1.45,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Text(
+                            'Explore',
+                            style: TextStyle(
+                              color: accent,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 14,
+                            color: accent,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -978,25 +1264,29 @@ class _MoodCard extends StatelessWidget {
 }
 
 // ============================================================
-// FEATURED DISCOVERY CARD
+// LARGE FEATURED CARD
 // ============================================================
 
 class _FeaturedCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String subtitle;
+  final String description;
   final String tag;
+  final Color accent;
   final double height;
 
   const _FeaturedCard({
     required this.imageUrl,
     required this.title,
     required this.subtitle,
+    required this.description,
     required this.tag,
+    required this.accent,
     required this.height,
   });
 
-  void _showCardMessage(BuildContext context, String message) {
+  void _showMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
@@ -1004,9 +1294,6 @@ class _FeaturedCard extends StatelessWidget {
           content: Text(message),
           behavior: SnackBarBehavior.floating,
           backgroundColor: ExploreScreen.forest,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
         ),
       );
   }
@@ -1014,21 +1301,17 @@ class _FeaturedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 260,
+      width: 285,
       height: height,
-      margin: const EdgeInsets.only(right: 14),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: ExploreScreen.sandstone,
-        borderRadius: BorderRadius.circular(23),
-        border: Border.all(
-          color: ExploreScreen.sandstone.withOpacity(0.8),
-        ),
+        color: ExploreScreen.forest,
+        borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: ExploreScreen.forest.withOpacity(0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 7),
+            color: ExploreScreen.forest.withOpacity(0.12),
+            blurRadius: 17,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -1038,27 +1321,25 @@ class _FeaturedCard extends StatelessWidget {
           Image.network(
             imageUrl,
             fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-
+            loadingBuilder: (context, child, progress) {
+              if (progress == null) return child;
               return Container(
                 color: ExploreScreen.sandstone,
                 child: const Center(
                   child: CircularProgressIndicator(
                     color: ExploreScreen.primary,
-                    strokeWidth: 2,
                   ),
                 ),
               );
             },
             errorBuilder: (context, error, stackTrace) {
               return Container(
-                color: ExploreScreen.sandstone,
+                color: ExploreScreen.forest,
                 child: const Center(
                   child: Icon(
                     Icons.account_balance_rounded,
-                    size: 60,
-                    color: ExploreScreen.forestLight,
+                    color: Colors.white54,
+                    size: 65,
                   ),
                 ),
               );
@@ -1070,120 +1351,117 @@ class _FeaturedCard extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.24),
+                  Colors.black.withOpacity(0.22),
                   Colors.transparent,
-                  ExploreScreen.forest.withOpacity(0.95),
+                  ExploreScreen.forest.withOpacity(0.97),
                 ],
-                stops: const [0, 0.34, 1],
+                stops: const [0, 0.3, 1],
               ),
             ),
           ),
           Positioned(
-            top: 14,
-            left: 14,
+            top: 15,
+            left: 15,
             child: Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 7,
+                horizontal: 11,
+                vertical: 8,
               ),
               decoration: BoxDecoration(
-                color: ExploreScreen.surface.withOpacity(0.95),
-                borderRadius: BorderRadius.circular(7),
+                color: ExploreScreen.surface,
+                borderRadius: BorderRadius.circular(9),
               ),
               child: Text(
                 tag,
-                style: const TextStyle(
+                style: TextStyle(
+                  color: accent,
                   fontSize: 9,
-                  fontWeight: FontWeight.w900,
                   letterSpacing: 1,
-                  color: ExploreScreen.forest,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
           ),
           Positioned(
-            top: 10,
-            right: 10,
+            top: 8,
+            right: 8,
             child: Material(
-              color: Colors.black.withOpacity(0.28),
+              color: Colors.black.withOpacity(0.3),
               shape: const CircleBorder(),
               child: IconButton(
                 tooltip: 'Save discovery',
-                onPressed: () => _showCardMessage(
+                onPressed: () => _showMessage(
                   context,
                   '$title selected to save.',
                 ),
                 icon: const Icon(
                   Icons.bookmark_border_rounded,
                   color: Colors.white,
-                  size: 20,
+                  size: 21,
                 ),
               ),
             ),
           ),
           Positioned(
-            left: 18,
-            right: 16,
-            bottom: 19,
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () => _showCardMessage(
-                  context,
-                  '$title details coming soon.',
-                ),
-                borderRadius: BorderRadius.circular(12),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 8,
-                    right: 4,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          height: 1.2,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(height: 7),
-                      Text(
-                        subtitle,
-                        style: const TextStyle(
-                          color: Color(0xDFFFFFFF),
-                          fontSize: 12,
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      const Row(
-                        children: [
-                          Text(
-                            'Discover story',
-                            style: TextStyle(
-                              color: ExploreScreen.gold,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          SizedBox(width: 7),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            color: ExploreScreen.gold,
-                            size: 15,
-                          ),
-                        ],
-                      ),
-                    ],
+            left: 19,
+            right: 19,
+            bottom: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  subtitle.toUpperCase(),
+                  style: const TextStyle(
+                    color: ExploreScreen.gold,
+                    fontSize: 9,
+                    letterSpacing: 1.3,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-              ),
+                const SizedBox(height: 9),
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 23,
+                    height: 1.15,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 9),
+                Text(
+                  description,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color(0xFFE2E8F0),
+                    fontSize: 11,
+                    height: 1.65,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Row(
+                  children: [
+                    Text(
+                      'Discover the story',
+                      style: TextStyle(
+                        color: ExploreScreen.gold,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    SizedBox(width: 7),
+                    Icon(
+                      Icons.arrow_forward_rounded,
+                      color: ExploreScreen.gold,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
@@ -1193,129 +1471,284 @@ class _FeaturedCard extends StatelessWidget {
 }
 
 // ============================================================
+// COMPACT FEATURED CARD
+// ============================================================
+
+class _CompactFeaturedCard extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final String subtitle;
+  final String tag;
+  final double height;
+
+  const _CompactFeaturedCard({
+    required this.imageUrl,
+    required this.title,
+    required this.subtitle,
+    required this.tag,
+    required this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: height,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: ExploreScreen.forest,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(color: ExploreScreen.forest);
+            },
+          ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.2),
+                  Colors.transparent,
+                  ExploreScreen.forest.withOpacity(0.95),
+                ],
+                stops: const [0, 0.3, 1],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 13,
+            left: 14,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: ExploreScreen.surface,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                tag,
+                style: const TextStyle(
+                  color: ExploreScreen.primaryDark,
+                  fontSize: 9,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.7,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 17,
+            right: 17,
+            bottom: 17,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        subtitle,
+                        style: const TextStyle(
+                          color: Color(0xFFE2E8F0),
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: ExploreScreen.gold,
+                      size: 19,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// TRAIL DATA
+// ============================================================
+
+class _TrailData {
+  final String number;
+  final String title;
+  final String places;
+  final String duration;
+  final String description;
+  final IconData icon;
+  final Color color;
+  final Color background;
+
+  const _TrailData({
+    required this.number,
+    required this.title,
+    required this.places,
+    required this.duration,
+    required this.description,
+    required this.icon,
+    required this.color,
+    required this.background,
+  });
+}
+
+// ============================================================
 // HERITAGE TRAIL CARD
 // ============================================================
 
 class _TrailCard extends StatelessWidget {
-  final String number;
-  final String title;
-  final String places;
-  final String description;
-  final IconData icon;
-  final Color color;
+  final _TrailData data;
+  final VoidCallback onTap;
 
   const _TrailCard({
-    required this.number,
-    required this.title,
-    required this.places,
-    required this.description,
-    required this.icon,
-    required this.color,
+    required this.data,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: ExploreScreen.surface,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(23),
       child: InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text('$title trail details coming soon.'),
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: ExploreScreen.forest,
-              ),
-            );
-        },
-        borderRadius: BorderRadius.circular(20),
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(23),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(17),
+          padding: const EdgeInsets.all(19),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(23),
             border: Border.all(
-              color: ExploreScreen.sandstone.withOpacity(0.9),
+              color: ExploreScreen.sandstone.withOpacity(0.75),
             ),
           ),
-          child: Row(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 43,
-                height: 50,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.13),
-                  borderRadius: BorderRadius.circular(13),
-                ),
-                child: Text(
-                  number,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w900,
-                    color: color,
+              Row(
+                children: [
+                  Container(
+                    width: 55,
+                    height: 55,
+                    decoration: BoxDecoration(
+                      color: data.background,
+                      borderRadius: BorderRadius.circular(17),
+                    ),
+                    child: Icon(
+                      data.icon,
+                      color: data.color,
+                      size: 27,
+                    ),
                   ),
+                  const Spacer(),
+                  Text(
+                    data.number,
+                    style: TextStyle(
+                      color: data.color.withOpacity(0.65),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 19),
+              Text(
+                data.title,
+                style: const TextStyle(
+                  color: ExploreScreen.textDark,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.35,
                 ),
               ),
-              const SizedBox(width: 12),
-              Container(
-                width: 43,
-                height: 43,
-                decoration: BoxDecoration(
-                  color: ExploreScreen.background,
-                  borderRadius: BorderRadius.circular(13),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 22,
-                ),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 7,
+                runSpacing: 7,
+                children: [
+                  _TrailInfoChip(
+                    icon: Icons.place_rounded,
+                    label: data.places,
+                    color: data.color,
+                    background: data.background,
+                  ),
+                  _TrailInfoChip(
+                    icon: Icons.schedule_rounded,
+                    label: data.duration,
+                    color: data.color,
+                    background: data.background,
+                  ),
+                ],
               ),
-              const SizedBox(width: 13),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
-                        color: ExploreScreen.textDark,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      places,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                        color: ExploreScreen.primary,
-                      ),
-                    ),
-                    const SizedBox(height: 7),
-                    Text(
-                      description,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        height: 1.45,
-                        color: ExploreScreen.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 5),
-              const Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 14,
+              const SizedBox(height: 14),
+              Text(
+                data.description,
+                style: const TextStyle(
                   color: ExploreScreen.textSecondary,
+                  fontSize: 12,
+                  height: 1.7,
                 ),
+              ),
+              const SizedBox(height: 17),
+              Divider(
+                color: ExploreScreen.sandstone.withOpacity(0.9),
+                height: 1,
+              ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Text(
+                    'Explore this trail',
+                    style: TextStyle(
+                      color: data.color,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Icon(
+                    Icons.arrow_forward_rounded,
+                    color: data.color,
+                    size: 16,
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: data.background,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.north_east_rounded,
+                      size: 16,
+                      color: data.color,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -1326,58 +1759,60 @@ class _TrailCard extends StatelessWidget {
 }
 
 // ============================================================
-// CREATE YOUR OWN TRAIL BANNER TEXT
+// TRAIL INFO CHIP
 // ============================================================
 
-class _TrailBannerText extends StatelessWidget {
-  const _TrailBannerText();
+class _TrailInfoChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color background;
+
+  const _TrailInfoChip({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.background,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'YOUR HERITAGE TRAIL',
-          style: TextStyle(
-            color: Color(0xDFFFFFFF),
-            fontSize: 10,
-            letterSpacing: 1.6,
-            fontWeight: FontWeight.w900,
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 9,
+        vertical: 7,
+      ),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(9),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 13, color: color),
+          const SizedBox(width: 5),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 9,
+              fontWeight: FontWeight.w900,
+            ),
           ),
-        ),
-        SizedBox(height: 10),
-        Text(
-          'Create your own cultural journey.',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            height: 1.2,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          'Choose the places, traditions and stories you want to experience.',
-          style: TextStyle(
-            color: Color(0xDFFFFFFF),
-            fontSize: 12,
-            height: 1.6,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 // ============================================================
-// START TRAIL BUTTON
+// CREATE TRAIL BUTTON
 // ============================================================
 
-class _StartTrailButton extends StatelessWidget {
+class _CreateTrailButton extends StatelessWidget {
   final VoidCallback onTap;
 
-  const _StartTrailButton({
+  const _CreateTrailButton({
     required this.onTap,
   });
 
@@ -1386,23 +1821,23 @@ class _StartTrailButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: ExploreScreen.surface,
-        foregroundColor: ExploreScreen.primaryDark,
+        backgroundColor: ExploreScreen.gold,
+        foregroundColor: ExploreScreen.textDark,
+        elevation: 0,
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 16,
+          vertical: 17,
         ),
-        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(13),
+          borderRadius: BorderRadius.circular(14),
         ),
       ),
       icon: const Icon(
-        Icons.route_rounded,
-        size: 17,
+        Icons.add_location_alt_rounded,
+        size: 18,
       ),
       label: const Text(
-        'Start exploring',
+        'Create my trail',
         style: TextStyle(
           fontWeight: FontWeight.w900,
           fontSize: 12,

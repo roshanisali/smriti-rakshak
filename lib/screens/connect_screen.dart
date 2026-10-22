@@ -1,12 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 import 'community_screen.dart';
 import 'marketplace_screen.dart';
 
 class ConnectScreen extends StatefulWidget {
-  // Optional callback for returning to the homepage when this
-  // screen is displayed inside a homepage/bottom-navigation layout.
   final VoidCallback? onBack;
 
   const ConnectScreen({
@@ -23,19 +20,21 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // HERITAGE THEME
   // ============================================================
 
-  static const Color primary = Color(0xFFC94F36);
-  static const Color primaryDark = Color(0xFF963B29);
-  static const Color gold = Color(0xFFE8B957);
-  static const Color forest = Color(0xFF263D32);
-  static const Color forestLight = Color(0xFF385745);
-  static const Color sandstone = Color(0xFFE9DDC8);
-  static const Color cream = Color(0xFFF7F0E3);
-  static const Color ink = Color(0xFF292C25);
-  static const Color muted = Color(0xFF6F7165);
-
-  // ============================================================
-  // STATE
-  // ============================================================
+  static const Color primary = Color(0xFFE0533C);
+  static const Color primaryDark = Color(0xFFA6321F);
+  static const Color gold = Color(0xFFF2A922);
+  static const Color forest = Color(0xFF183D32);
+  static const Color forestLight = Color(0xFF28634D);
+  static const Color teal = Color(0xFF0EA5A8);
+  static const Color blue = Color(0xFF3182CE);
+  static const Color purple = Color(0xFF8264C8);
+  static const Color green = Color(0xFF10B981);
+  static const Color background = Color(0xFFF0F4F8);
+  static const Color cream = Color(0xFFFFFAF1);
+  static const Color surface = Colors.white;
+  static const Color ink = Color(0xFF0F172A);
+  static const Color muted = Color(0xFF64748B);
+  static const Color borderColor = Color(0xFFE2E8F0);
 
   final TextEditingController searchController = TextEditingController();
 
@@ -59,19 +58,21 @@ class _ConnectScreenState extends State<ConnectScreen> {
       'title': 'The Stories Behind Our Forts',
       'author': 'Heritage Explorer',
       'description':
-          'Discover the forgotten stories, architecture and history of Maharashtra’s magnificent forts.',
+          'Discover forgotten stories, remarkable architecture and the history of Maharashtra’s magnificent forts.',
       'image': 'assets/images/fort.jpeg',
       'tag': 'History',
       'icon': Icons.account_balance_rounded,
+      'color': primary,
     },
     {
       'title': 'Sunrise at Sinhagad',
       'author': 'Travel Diaries',
       'description':
-          'A beautiful morning exploring the hills, trails and historic landscapes of Sinhagad.',
+          'Explore the hills, scenic trails and timeless landscapes surrounding historic Sinhagad.',
       'image': 'assets/images/sunrise.jpeg',
       'tag': 'Travel',
       'icon': Icons.landscape_rounded,
+      'color': teal,
     },
     {
       'title': 'Keeping Traditions Alive',
@@ -81,6 +82,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
       'image': 'assets/images/tradition.jpeg',
       'tag': 'Culture',
       'icon': Icons.diversity_3_rounded,
+      'color': purple,
     },
   ];
 
@@ -96,6 +98,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
       'description': 'Traditional tribal artwork',
       'image': 'assets/images/warli2.jpeg',
       'icon': Icons.brush_rounded,
+      'color': primary,
     },
     {
       'name': 'Paithani Textile',
@@ -104,6 +107,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
       'description': 'Handwoven traditional textile',
       'image': 'assets/images/paithani2.jpeg',
       'icon': Icons.checkroom_rounded,
+      'color': purple,
     },
     {
       'name': 'Heritage Painting',
@@ -112,6 +116,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
       'description': 'Handcrafted Indian artwork',
       'image': 'assets/images/painting.jpeg',
       'icon': Icons.palette_rounded,
+      'color': teal,
     },
   ];
 
@@ -126,20 +131,17 @@ class _ConnectScreenState extends State<ConnectScreen> {
   // ============================================================
 
   List<Map<String, dynamic>> get filteredPosts {
-    if (searchQuery.trim().isEmpty) {
+    final query = searchQuery.trim().toLowerCase();
+
+    if (query.isEmpty) {
       return communityPosts;
     }
 
-    final query = searchQuery.trim().toLowerCase();
-
     return communityPosts.where((post) {
-      final title = post['title'].toString().toLowerCase();
-      final author = post['author'].toString().toLowerCase();
-      final tag = post['tag'].toString().toLowerCase();
-
-      return title.contains(query) ||
-          author.contains(query) ||
-          tag.contains(query);
+      return post['title'].toString().toLowerCase().contains(query) ||
+          post['author'].toString().toLowerCase().contains(query) ||
+          post['tag'].toString().toLowerCase().contains(query) ||
+          post['description'].toString().toLowerCase().contains(query);
     }).toList();
   }
 
@@ -160,18 +162,15 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 
   // ============================================================
-  // NAVIGATION - BACK BUTTON FIX
+  // NAVIGATION
   // ============================================================
 
   void _goBack() {
-    // Case 1: ConnectScreen is inside the homepage or an
-    // IndexedStack. Ask the parent to return to Home.
     if (widget.onBack != null) {
       widget.onBack!();
       return;
     }
 
-    // Case 2: ConnectScreen was opened using Navigator.push.
     final navigator = Navigator.of(context);
 
     if (navigator.canPop()) {
@@ -179,12 +178,9 @@ class _ConnectScreenState extends State<ConnectScreen> {
       return;
     }
 
-    // Case 3: There is no parent callback and no route to pop.
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text(
-          'No previous page is available.',
-        ),
+        content: Text('No previous page is available.'),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -218,6 +214,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
     double? width,
     BoxFit fit = BoxFit.cover,
     BorderRadius? borderRadius,
+    Color fallbackColor = forest,
   }) {
     return ClipRRect(
       borderRadius: borderRadius ?? BorderRadius.zero,
@@ -230,12 +227,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
           return Container(
             height: height,
             width: width,
-            color: sandstone,
+            color: fallbackColor.withValues(alpha: 0.09),
             alignment: Alignment.center,
-            child: const Icon(
+            child: Icon(
               Icons.account_balance_rounded,
-              size: 38,
-              color: forest,
+              size: 42,
+              color: fallbackColor,
             ),
           );
         },
@@ -250,11 +247,15 @@ class _ConnectScreenState extends State<ConnectScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: cream,
+      color: background,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final isDesktop = constraints.maxWidth >= 1000;
-          final horizontalPadding = isDesktop ? 44.0 : 20.0;
+          final horizontalPadding = isDesktop
+              ? 44.0
+              : constraints.maxWidth >= 600
+                  ? 30.0
+                  : 18.0;
 
           return SingleChildScrollView(
             child: Center(
@@ -263,40 +264,43 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
                     horizontalPadding,
-                    24,
+                    22,
                     horizontalPadding,
-                    40,
+                    38,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildTopBar(),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 25),
                       _buildHero(isDesktop),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 28),
+                      _buildQuickStats(),
+                      const SizedBox(height: 25),
                       _buildSearchBar(),
                       const SizedBox(height: 34),
                       _buildSectionHeading(
                         eyebrow: 'YOUR PEOPLE, YOUR STORIES',
                         title: 'Heritage Community',
                         subtitle:
-                            'Share discoveries, exchange stories and learn from fellow explorers.',
-                        actionLabel: 'Explore community',
+                            'Real stories. Shared discoveries. A community that keeps culture alive.',
+                        actionLabel: 'Explore all',
                         onAction: openCommunity,
+                        accent: primary,
                       ),
                       const SizedBox(height: 18),
                       _buildCommunityCards(isDesktop),
                       const SizedBox(height: 38),
                       _buildMarketplaceHeading(),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 17),
                       _buildCategoryFilters(),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 17),
                       _buildProductGrid(isDesktop),
-                      const SizedBox(height: 38),
+                      const SizedBox(height: 36),
                       _buildNetworkSection(isDesktop),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 28),
                       _buildShareBanner(isDesktop),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 24),
                       _buildFooter(),
                     ],
                   ),
@@ -317,22 +321,33 @@ class _ConnectScreenState extends State<ConnectScreen> {
     return Row(
       children: [
         Material(
-          color: Colors.transparent,
+          color: forest,
           borderRadius: BorderRadius.circular(15),
           child: InkWell(
             onTap: _goBack,
             borderRadius: BorderRadius.circular(15),
             child: Container(
-              height: 48,
-              width: 48,
+              height: 47,
+              width: 47,
               decoration: BoxDecoration(
-                color: forest,
                 borderRadius: BorderRadius.circular(15),
+                gradient: const LinearGradient(
+                  colors: [forestLight, forest],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: forest.withValues(alpha: 0.18),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: const Icon(
                 Icons.arrow_back_rounded,
                 color: gold,
-                size: 25,
+                size: 24,
               ),
             ),
           ),
@@ -347,11 +362,11 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 style: TextStyle(
                   color: forest,
                   fontWeight: FontWeight.w900,
-                  fontSize: 15,
-                  letterSpacing: 1.2,
+                  fontSize: 14,
+                  letterSpacing: 1.1,
                 ),
               ),
-              SizedBox(height: 3),
+              SizedBox(height: 4),
               Text(
                 'Discover • Experience • Preserve',
                 style: TextStyle(
@@ -363,7 +378,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
           ),
         ),
         Material(
-          color: Colors.transparent,
+          color: surface,
+          borderRadius: BorderRadius.circular(15),
           child: InkWell(
             onTap: _showNotifications,
             borderRadius: BorderRadius.circular(15),
@@ -371,9 +387,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
               height: 46,
               width: 46,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.75),
                 borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: sandstone),
+                border: Border.all(color: borderColor),
               ),
               child: const Icon(
                 Icons.notifications_none_rounded,
@@ -395,12 +410,20 @@ class _ConnectScreenState extends State<ConnectScreen> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: forest,
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF153B31),
+            Color(0xFF245744),
+            Color(0xFF34735A),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: forest.withValues(alpha: 0.13),
-            blurRadius: 24,
+            color: forest.withValues(alpha: 0.18),
+            blurRadius: 25,
             offset: const Offset(0, 12),
           ),
         ],
@@ -410,16 +433,25 @@ class _ConnectScreenState extends State<ConnectScreen> {
         child: Stack(
           children: [
             Positioned(
-              right: -25,
-              top: -30,
+              right: -35,
+              top: -55,
               child: Icon(
                 Icons.account_balance_rounded,
-                size: isDesktop ? 280 : 190,
+                size: isDesktop ? 300 : 220,
                 color: Colors.white.withValues(alpha: 0.045),
               ),
             ),
+            Positioned(
+              left: -35,
+              bottom: -60,
+              child: Icon(
+                Icons.auto_stories_rounded,
+                size: 170,
+                color: gold.withValues(alpha: 0.06),
+              ),
+            ),
             Padding(
-              padding: EdgeInsets.all(isDesktop ? 38 : 25),
+              padding: EdgeInsets.all(isDesktop ? 38 : 24),
               child: isDesktop
                   ? Row(
                       children: [
@@ -427,7 +459,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                           flex: 6,
                           child: _buildHeroText(),
                         ),
-                        const SizedBox(width: 30),
+                        const SizedBox(width: 32),
                         Expanded(
                           flex: 4,
                           child: _buildHeroImage(),
@@ -438,7 +470,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildHeroText(),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 25),
                         _buildHeroImage(),
                       ],
                     ),
@@ -456,10 +488,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 12,
-            vertical: 7,
+            vertical: 8,
           ),
           decoration: BoxDecoration(
-            color: gold.withValues(alpha: 0.15),
+            color: gold.withValues(alpha: 0.14),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: gold.withValues(alpha: 0.4),
@@ -479,7 +511,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 style: TextStyle(
                   color: gold,
                   fontSize: 10,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w900,
                   letterSpacing: 1,
                 ),
               ),
@@ -490,7 +522,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
         const Text(
           'Where heritage\nbrings us together.',
           style: TextStyle(
-            color: cream,
+            color: Colors.white,
             fontSize: 34,
             height: 1.13,
             fontWeight: FontWeight.w900,
@@ -500,11 +532,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
         const SizedBox(height: 14),
         const Text(
           'Meet passionate explorers, discover local artisans, '
-          'and keep our cultural stories alive.',
+          'and keep our cultural stories alive. Every connection '
+          'helps our traditions travel into the future.',
           style: TextStyle(
-            color: Color(0xFFD9DDCF),
-            fontSize: 14,
-            height: 1.7,
+            color: Color(0xFFDCEBE2),
+            fontSize: 13,
+            height: 1.75,
           ),
         ),
         const SizedBox(height: 24),
@@ -522,8 +555,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: primary,
                 foregroundColor: Colors.white,
+                elevation: 3,
+                shadowColor: primary.withValues(alpha: 0.3),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 18,
+                  horizontal: 17,
                   vertical: 15,
                 ),
                 shape: RoundedRectangleBorder(
@@ -539,12 +574,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
               ),
               label: const Text('Explore crafts'),
               style: OutlinedButton.styleFrom(
-                foregroundColor: cream,
+                foregroundColor: Colors.white,
                 side: BorderSide(
-                  color: cream.withValues(alpha: 0.5),
+                  color: Colors.white.withValues(alpha: 0.45),
                 ),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 18,
+                  horizontal: 17,
                   vertical: 15,
                 ),
                 shape: RoundedRectangleBorder(
@@ -562,12 +597,27 @@ class _ConnectScreenState extends State<ConnectScreen> {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(21),
           child: AspectRatio(
             aspectRatio: 1.45,
             child: heritageImage(
               'assets/images/openbook.jpeg',
               fit: BoxFit.cover,
+              fallbackColor: gold,
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  forest.withValues(alpha: 0.45),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
           ),
         ),
@@ -578,8 +628,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
           child: Container(
             padding: const EdgeInsets.all(13),
             decoration: BoxDecoration(
-              color: forest.withValues(alpha: 0.91),
-              borderRadius: BorderRadius.circular(14),
+              color: forest.withValues(alpha: 0.94),
+              borderRadius: BorderRadius.circular(15),
               border: Border.all(
                 color: gold.withValues(alpha: 0.4),
               ),
@@ -589,7 +639,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 Icon(
                   Icons.auto_stories_rounded,
                   color: gold,
-                  size: 23,
+                  size: 25,
                 ),
                 SizedBox(width: 10),
                 Expanded(
@@ -599,16 +649,16 @@ class _ConnectScreenState extends State<ConnectScreen> {
                       Text(
                         'Every story matters',
                         style: TextStyle(
-                          color: cream,
-                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
                           fontSize: 13,
                         ),
                       ),
-                      SizedBox(height: 3),
+                      SizedBox(height: 4),
                       Text(
                         'Keep traditions alive, together.',
                         style: TextStyle(
-                          color: Color(0xFFD9DDCF),
+                          color: Color(0xFFDCEBE2),
                           fontSize: 11,
                         ),
                       ),
@@ -624,18 +674,119 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 
   // ============================================================
+  // QUICK STATS
+  // ============================================================
+
+  Widget _buildQuickStats() {
+    final stats = [
+      {
+        'icon': Icons.menu_book_rounded,
+        'title': 'Stories',
+        'subtitle': 'Share knowledge',
+        'color': primary,
+      },
+      {
+        'icon': Icons.palette_rounded,
+        'title': 'Artisans',
+        'subtitle': 'Celebrate craft',
+        'color': purple,
+      },
+      {
+        'icon': Icons.public_rounded,
+        'title': 'Culture',
+        'subtitle': 'Connect deeply',
+        'color': teal,
+      },
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final compact = constraints.maxWidth < 440;
+
+        return Row(
+          children: stats.map((stat) {
+            return Expanded(
+              child: Container(
+                margin: EdgeInsets.only(
+                  right: stat == stats.last ? 0 : 10,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: compact ? 8 : 13,
+                  vertical: 14,
+                ),
+                decoration: BoxDecoration(
+                  color: surface,
+                  borderRadius: BorderRadius.circular(17),
+                  border: Border.all(color: borderColor),
+                  boxShadow: [
+                    BoxShadow(
+                      color: ink.withValues(alpha: 0.025),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        color: (stat['color'] as Color)
+                            .withValues(alpha: 0.11),
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: Icon(
+                        stat['icon'] as IconData,
+                        color: stat['color'] as Color,
+                        size: 19,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      stat['title'] as String,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: ink,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      stat['subtitle'] as String,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: muted,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+
+  // ============================================================
   // SEARCH
   // ============================================================
 
   Widget _buildSearchBar() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: surface,
         borderRadius: BorderRadius.circular(17),
-        border: Border.all(color: sandstone),
+        border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
-            color: ink.withValues(alpha: 0.035),
+            color: ink.withValues(alpha: 0.04),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -656,7 +807,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
           ),
           prefixIcon: const Icon(
             Icons.search_rounded,
-            color: forest,
+            color: forestLight,
+            size: 23,
           ),
           suffixIcon: searchQuery.isNotEmpty
               ? IconButton(
@@ -671,9 +823,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     color: muted,
                   ),
                 )
-              : const Icon(
-                  Icons.tune_rounded,
-                  color: primary,
+              : const Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Icon(
+                    Icons.travel_explore_rounded,
+                    color: primary,
+                  ),
                 ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
@@ -694,20 +849,34 @@ class _ConnectScreenState extends State<ConnectScreen> {
     required String subtitle,
     required String actionLabel,
     required VoidCallback onAction,
+    Color accent = primary,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          eyebrow,
-          style: const TextStyle(
-            color: primary,
-            fontSize: 10,
-            letterSpacing: 1.7,
-            fontWeight: FontWeight.w900,
-          ),
+        Row(
+          children: [
+            Container(
+              height: 20,
+              width: 4,
+              decoration: BoxDecoration(
+                color: accent,
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              eyebrow,
+              style: TextStyle(
+                color: accent,
+                fontSize: 10,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 9),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -736,21 +905,21 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 5),
             TextButton(
               onPressed: onAction,
               style: TextButton.styleFrom(
-                foregroundColor: primary,
+                foregroundColor: accent,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
+                  horizontal: 5,
                   vertical: 8,
                 ),
               ),
               child: Text(
                 actionLabel,
                 style: const TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 11,
                 ),
               ),
             ),
@@ -771,7 +940,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
       return _buildEmptyState(
         icon: Icons.search_off_rounded,
         title: 'No stories found',
-        message: 'Try another search term.',
+        message: 'Try another search term to discover more stories.',
       );
     }
 
@@ -784,7 +953,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
           crossAxisCount: 3,
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
-          mainAxisExtent: 330,
+          mainAxisExtent: 345,
         ),
         itemBuilder: (context, index) {
           return _buildPostCard(posts[index]);
@@ -793,14 +962,14 @@ class _ConnectScreenState extends State<ConnectScreen> {
     }
 
     return SizedBox(
-      height: 330,
+      height: 345,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: posts.length,
         separatorBuilder: (_, __) => const SizedBox(width: 15),
         itemBuilder: (context, index) {
           return SizedBox(
-            width: 270,
+            width: 275,
             child: _buildPostCard(posts[index]),
           );
         },
@@ -809,141 +978,218 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 
   Widget _buildPostCard(Map<String, dynamic> post) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: sandstone),
-        boxShadow: [
-          BoxShadow(
-            color: ink.withValues(alpha: 0.04),
-            blurRadius: 14,
-            offset: const Offset(0, 6),
+    final accent = post['color'] as Color;
+
+    return Material(
+      color: surface,
+      borderRadius: BorderRadius.circular(22),
+      child: InkWell(
+        onTap: openCommunity,
+        borderRadius: BorderRadius.circular(22),
+        child: Container(
+          decoration: BoxDecoration(
+            color: surface,
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(color: borderColor),
+            boxShadow: [
+              BoxShadow(
+                color: ink.withValues(alpha: 0.045),
+                blurRadius: 15,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                heritageImage(
-                  post['image'],
-                  width: double.infinity,
-                  height: 150,
-                ),
-                Positioned(
-                  top: 12,
-                  left: 12,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
+                Stack(
+                  children: [
+                    heritageImage(
+                      post['image'] as String,
+                      width: double.infinity,
+                      height: 158,
+                      fallbackColor: accent,
                     ),
-                    decoration: BoxDecoration(
-                      color: cream,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      post['tag'],
-                      style: const TextStyle(
-                        color: forest,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.24),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
                       ),
+                    ),
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 11,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: surface,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ink.withValues(alpha: 0.08),
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              post['icon'] as IconData,
+                              size: 13,
+                              color: accent,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              post['tag'] as String,
+                              style: TextStyle(
+                                color: accent,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 12,
+                      bottom: 12,
+                      child: Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                          color: accent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_outward_rounded,
+                          color: Colors.white,
+                          size: 19,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 14, 15, 13),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          post['title'] as String,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: ink,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            height: 1.3,
+                          ),
+                        ),
+                        const SizedBox(height: 7),
+                        Expanded(
+                          child: Text(
+                            post['description'] as String,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: muted,
+                              fontSize: 11,
+                              height: 1.55,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 9),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 13,
+                              backgroundColor:
+                                  accent.withValues(alpha: 0.12),
+                              child: Icon(
+                                Icons.person_rounded,
+                                color: accent,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 7),
+                            Expanded(
+                              child: Text(
+                                post['author'] as String,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: muted,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.favorite_border_rounded,
+                              color: accent,
+                              size: 19,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      post['title'],
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: forest,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        height: 1.3,
-                      ),
-                    ),
-                    const SizedBox(height: 7),
-                    Expanded(
-                      child: Text(
-                        post['description'],
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: muted,
-                          fontSize: 11,
-                          height: 1.5,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.account_circle_rounded,
-                          size: 17,
-                          color: primary,
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            post['author'],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: muted,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward_rounded,
-                          color: primary,
-                          size: 18,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   // ============================================================
-  // MARKETPLACE
+  // MARKETPLACE HEADING
   // ============================================================
 
   Widget _buildMarketplaceHeading() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'CRAFTED WITH CULTURE',
-          style: TextStyle(
-            color: primary,
-            fontSize: 10,
-            letterSpacing: 1.7,
-            fontWeight: FontWeight.w900,
-          ),
+        Row(
+          children: [
+            Container(
+              height: 20,
+              width: 4,
+              decoration: BoxDecoration(
+                color: gold,
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              'CRAFTED WITH CULTURE',
+              style: TextStyle(
+                color: primaryDark,
+                fontSize: 10,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 9),
         Row(
           children: [
             const Expanded(
@@ -957,22 +1203,28 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 ),
               ),
             ),
-            TextButton(
+            TextButton.icon(
               onPressed: openMarketplace,
-              child: const Text(
-                'Visit store →',
+              icon: const Icon(
+                Icons.storefront_rounded,
+                size: 16,
+              ),
+              label: const Text(
+                'Visit store',
                 style: TextStyle(
-                  color: primary,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 11,
                 ),
+              ),
+              style: TextButton.styleFrom(
+                foregroundColor: primary,
               ),
             ),
           ],
         ),
         const SizedBox(height: 6),
         const Text(
-          'Discover handmade treasures and support local artisans.',
+          'Every handmade piece carries a story. Discover crafts and support the artists behind them.',
           style: TextStyle(
             color: muted,
             fontSize: 12,
@@ -983,9 +1235,13 @@ class _ConnectScreenState extends State<ConnectScreen> {
     );
   }
 
+  // ============================================================
+  // CATEGORY FILTERS
+  // ============================================================
+
   Widget _buildCategoryFilters() {
     return SizedBox(
-      height: 42,
+      height: 43,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
@@ -1002,18 +1258,18 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 selectedCategory = category;
               });
             },
-            backgroundColor: Colors.white,
+            backgroundColor: surface,
             selectedColor: forest,
             side: BorderSide(
-              color: isSelected ? forest : sandstone,
+              color: isSelected ? forest : borderColor,
             ),
             labelStyle: TextStyle(
-              color: isSelected ? cream : forest,
-              fontWeight: FontWeight.w700,
+              color: isSelected ? Colors.white : forest,
+              fontWeight: FontWeight.w800,
               fontSize: 11,
             ),
             padding: const EdgeInsets.symmetric(
-              horizontal: 9,
+              horizontal: 10,
               vertical: 5,
             ),
             shape: RoundedRectangleBorder(
@@ -1025,6 +1281,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
       ),
     );
   }
+
+  // ============================================================
+  // PRODUCT GRID
+  // ============================================================
 
   Widget _buildProductGrid(bool isDesktop) {
     final items = filteredProducts;
@@ -1053,7 +1313,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 14,
         mainAxisSpacing: 14,
-        mainAxisExtent: 265,
+        mainAxisExtent: 280,
       ),
       itemBuilder: (context, index) {
         return _buildProductCard(items[index]);
@@ -1062,120 +1322,159 @@ class _ConnectScreenState extends State<ConnectScreen> {
   }
 
   Widget _buildProductCard(Map<String, dynamic> product) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(19),
-        border: Border.all(color: sandstone),
-        boxShadow: [
-          BoxShadow(
-            color: ink.withValues(alpha: 0.035),
-            blurRadius: 12,
-            offset: const Offset(0, 5),
+    final accent = product['color'] as Color;
+
+    return Material(
+      color: surface,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: openMarketplace,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          decoration: BoxDecoration(
+            color: surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: borderColor),
+            boxShadow: [
+              BoxShadow(
+                color: ink.withValues(alpha: 0.035),
+                blurRadius: 13,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(19),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                heritageImage(
-                  product['image'],
-                  width: double.infinity,
-                  height: 135,
-                ),
-                Positioned(
-                  top: 9,
-                  left: 9,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 5,
+                Stack(
+                  children: [
+                    heritageImage(
+                      product['image'] as String,
+                      width: double.infinity,
+                      height: 145,
+                      fallbackColor: accent,
                     ),
-                    decoration: BoxDecoration(
-                      color: cream,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      product['category'],
-                      style: const TextStyle(
-                        color: forest,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w800,
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.13),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
                       ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      left: 10,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 9,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: surface,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          product['category'] as String,
+                          style: TextStyle(
+                            color: accent,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 10,
+                      bottom: 10,
+                      child: Container(
+                        height: 31,
+                        width: 31,
+                        decoration: BoxDecoration(
+                          color: accent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          product['icon'] as IconData,
+                          color: Colors.white,
+                          size: 17,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product['name'] as String,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: ink,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Expanded(
+                          child: Text(
+                            product['description'] as String,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: muted,
+                              fontSize: 10,
+                              height: 1.45,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 7),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                product['price'] as String,
+                                style: TextStyle(
+                                  color: accent,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 32,
+                              width: 34,
+                              decoration: BoxDecoration(
+                                color: accent,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Icon(
+                                Icons.arrow_forward_rounded,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product['name'],
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: forest,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Expanded(
-                      child: Text(
-                        product['description'],
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: muted,
-                          fontSize: 10,
-                          height: 1.4,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 7),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            product['price'],
-                            style: const TextStyle(
-                              color: primary,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                        Material(
-                          color: forest,
-                          borderRadius: BorderRadius.circular(10),
-                          child: InkWell(
-                            onTap: openMarketplace,
-                            borderRadius: BorderRadius.circular(10),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Icon(
-                                Icons.arrow_forward_rounded,
-                                color: cream,
-                                size: 17,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -1205,24 +1504,24 @@ class _ConnectScreenState extends State<ConnectScreen> {
         'icon': Icons.handshake_rounded,
         'title': 'Collaborate',
         'subtitle': 'Connect over shared interests',
-        'color': forestLight,
+        'color': purple,
         'onTap': () => _showNetworkInfo(
           'Collaborate',
-          'Connect with fellow heritage enthusiasts, '
-              'share ideas and explore opportunities to work together.',
+          'Connect with fellow heritage enthusiasts, share ideas and explore opportunities to work together.',
           Icons.handshake_rounded,
+          purple,
         ),
       },
       {
         'icon': Icons.volunteer_activism_rounded,
         'title': 'Preserve',
         'subtitle': 'Help keep traditions alive',
-        'color': primaryDark,
+        'color': teal,
         'onTap': () => _showNetworkInfo(
           'Preserve heritage',
-          'Help document local traditions, promote cultural awareness '
-              'and encourage future generations to value their heritage.',
+          'Help document local traditions, promote cultural awareness and encourage future generations to value their heritage.',
           Icons.volunteer_activism_rounded,
+          teal,
         ),
       },
     ];
@@ -1231,60 +1530,92 @@ class _ConnectScreenState extends State<ConnectScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: sandstone.withValues(alpha: 0.48),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: sandstone),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFFE7F2EB),
+            Color(0xFFF4F8F3),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: const Color(0xFFD3E6D9),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'BE PART OF SOMETHING MEANINGFUL',
-            style: TextStyle(
-              color: primary,
-              fontSize: 10,
-              letterSpacing: 1.4,
-              fontWeight: FontWeight.w900,
-            ),
+          Row(
+            children: [
+              Container(
+                height: 20,
+                width: 4,
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Text(
+                'BE PART OF SOMETHING MEANINGFUL',
+                style: TextStyle(
+                  color: primaryDark,
+                  fontSize: 10,
+                  letterSpacing: 1.1,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 9),
           const Text(
             'Your Heritage Network',
             style: TextStyle(
               color: forest,
-              fontSize: 23,
+              fontSize: 24,
               fontWeight: FontWeight.w900,
             ),
           ),
           const SizedBox(height: 8),
           const Text(
-            'Explore different ways to connect with India’s living heritage.',
+            'More than a platform — a place to celebrate, support and preserve India’s living heritage.',
             style: TextStyle(
               color: muted,
               fontSize: 12,
-              height: 1.5,
+              height: 1.6,
             ),
           ),
           const SizedBox(height: 20),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: tiles.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isDesktop ? 4 : 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              mainAxisExtent: 145,
-            ),
-            itemBuilder: (context, index) {
-              final tile = tiles[index];
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final columns = constraints.maxWidth >= 850
+                  ? 4
+                  : constraints.maxWidth >= 480
+                      ? 2
+                      : 1;
 
-              return _buildNetworkTile(
-                icon: tile['icon'] as IconData,
-                title: tile['title'] as String,
-                subtitle: tile['subtitle'] as String,
-                color: tile['color'] as Color,
-                onTap: tile['onTap'] as VoidCallback,
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: tiles.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: columns,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  mainAxisExtent: 145,
+                ),
+                itemBuilder: (context, index) {
+                  final tile = tiles[index];
+
+                  return _buildNetworkTile(
+                    icon: tile['icon'] as IconData,
+                    title: tile['title'] as String,
+                    subtitle: tile['subtitle'] as String,
+                    color: tile['color'] as Color,
+                    onTap: tile['onTap'] as VoidCallback,
+                  );
+                },
               );
             },
           ),
@@ -1301,33 +1632,52 @@ class _ConnectScreenState extends State<ConnectScreen> {
     required VoidCallback onTap,
   }) {
     return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(17),
+      color: surface,
+      borderRadius: BorderRadius.circular(18),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(17),
+        borderRadius: BorderRadius.circular(18),
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(17),
-            border: Border.all(color: sandstone),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: color.withValues(alpha: 0.15),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: ink.withValues(alpha: 0.025),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.11),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 22,
-                ),
+              Row(
+                children: [
+                  Container(
+                    height: 42,
+                    width: 42,
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.11),
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: color,
+                      size: 23,
+                    ),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    Icons.arrow_outward_rounded,
+                    color: color.withValues(alpha: 0.65),
+                    size: 17,
+                  ),
+                ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1367,41 +1717,60 @@ class _ConnectScreenState extends State<ConnectScreen> {
   Widget _buildShareBanner(bool isDesktop) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(isDesktop ? 28 : 22),
+      padding: EdgeInsets.all(isDesktop ? 29 : 22),
       decoration: BoxDecoration(
-        color: primary,
-        borderRadius: BorderRadius.circular(24),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFFE0533C),
+            Color(0xFFC53C2B),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: primary.withValues(alpha: 0.18),
+            blurRadius: 20,
+            offset: const Offset(0, 9),
+          ),
+        ],
       ),
-      child: isDesktop
-          ? Row(
-              children: [
-                _buildShareIcon(),
-                const SizedBox(width: 18),
-                Expanded(child: _buildShareText()),
-                const SizedBox(width: 18),
-                _buildShareButton(),
-              ],
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildShareIcon(),
-                const SizedBox(height: 17),
-                _buildShareText(),
-                const SizedBox(height: 18),
-                _buildShareButton(),
-              ],
-            ),
+      child: ClipRect(
+        child: isDesktop
+            ? Row(
+                children: [
+                  _buildShareIcon(),
+                  const SizedBox(width: 18),
+                  Expanded(child: _buildShareText()),
+                  const SizedBox(width: 18),
+                  _buildShareButton(),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildShareIcon(),
+                  const SizedBox(height: 17),
+                  _buildShareText(),
+                  const SizedBox(height: 18),
+                  _buildShareButton(),
+                ],
+              ),
+      ),
     );
   }
 
   Widget _buildShareIcon() {
     return Container(
-      height: 55,
-      width: 55,
+      height: 57,
+      width: 57,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.white.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(17),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.23),
+        ),
       ),
       child: const Icon(
         Icons.add_a_photo_rounded,
@@ -1425,11 +1794,11 @@ class _ConnectScreenState extends State<ConnectScreen> {
         ),
         SizedBox(height: 7),
         Text(
-          'Your photos, experiences and knowledge can inspire others.',
+          'Your photos, experiences and knowledge can inspire others and help keep our culture alive.',
           style: TextStyle(
             color: Color(0xFFFFE8DC),
             fontSize: 12,
-            height: 1.5,
+            height: 1.6,
           ),
         ),
       ],
@@ -1446,7 +1815,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
       label: const Text('Share your story'),
       style: ElevatedButton.styleFrom(
         backgroundColor: forest,
-        foregroundColor: cream,
+        foregroundColor: Colors.white,
+        elevation: 2,
         padding: const EdgeInsets.symmetric(
           horizontal: 18,
           vertical: 15,
@@ -1465,10 +1835,10 @@ class _ConnectScreenState extends State<ConnectScreen> {
   Widget _buildFooter() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 18),
+      padding: const EdgeInsets.symmetric(vertical: 22),
       decoration: const BoxDecoration(
         border: Border(
-          top: BorderSide(color: sandstone),
+          top: BorderSide(color: borderColor),
         ),
       ),
       child: const Column(
@@ -1479,7 +1849,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
               Icon(
                 Icons.account_balance_rounded,
                 color: primary,
-                size: 19,
+                size: 21,
               ),
               SizedBox(width: 8),
               Text(
@@ -1493,7 +1863,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 9),
           Text(
             'Discover • Experience • Preserve',
             style: TextStyle(
@@ -1501,7 +1871,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
               fontSize: 11,
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 6),
           Text(
             'Keeping our stories alive for generations to come.',
             textAlign: TextAlign.center,
@@ -1528,18 +1898,26 @@ class _ConnectScreenState extends State<ConnectScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: sandstone),
+        color: surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         children: [
-          Icon(
-            icon,
-            color: primary,
-            size: 35,
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(19),
+            ),
+            child: Icon(
+              icon,
+              color: primary,
+              size: 30,
+            ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 13),
           Text(
             title,
             style: const TextStyle(
@@ -1555,6 +1933,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
             style: const TextStyle(
               color: muted,
               fontSize: 12,
+              height: 1.5,
             ),
           ),
         ],
@@ -1569,23 +1948,37 @@ class _ConnectScreenState extends State<ConnectScreen> {
   void _showNotifications() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: cream,
+      backgroundColor: background,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
+          top: Radius.circular(26),
         ),
       ),
       builder: (context) {
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.fromLTRB(22, 24, 22, 28),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
+                    Container(
+                      height: 43,
+                      width: 43,
+                      decoration: BoxDecoration(
+                        color: gold.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: const Icon(
+                        Icons.notifications_active_rounded,
+                        color: primary,
+                        size: 23,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
                     const Expanded(
                       child: Text(
                         'Notifications',
@@ -1598,19 +1991,17 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     ),
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.close_rounded,
-                      ),
+                      icon: const Icon(Icons.close_rounded),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
                 Container(
                   padding: const EdgeInsets.all(17),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: sandstone),
+                    color: surface,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: borderColor),
                   ),
                   child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1618,7 +2009,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                       Icon(
                         Icons.auto_awesome_rounded,
                         color: primary,
-                        size: 24,
+                        size: 25,
                       ),
                       SizedBox(width: 12),
                       Expanded(
@@ -1633,14 +2024,13 @@ class _ConnectScreenState extends State<ConnectScreen> {
                                 fontSize: 14,
                               ),
                             ),
-                            SizedBox(height: 6),
+                            SizedBox(height: 7),
                             Text(
-                              'Explore cultural stories, discover artisans '
-                              'and connect with fellow heritage lovers.',
+                              'Explore cultural stories, discover artisans and connect with fellow heritage lovers.',
                               style: TextStyle(
                                 color: muted,
                                 fontSize: 12,
-                                height: 1.5,
+                                height: 1.6,
                               ),
                             ),
                           ],
@@ -1649,7 +2039,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 18),
               ],
             ),
           ),
@@ -1666,13 +2055,14 @@ class _ConnectScreenState extends State<ConnectScreen> {
     String title,
     String description,
     IconData icon,
+    Color accent,
   ) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: cream,
+      backgroundColor: background,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
+          top: Radius.circular(26),
         ),
       ),
       builder: (context) {
@@ -1684,16 +2074,16 @@ class _ConnectScreenState extends State<ConnectScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 54,
-                  width: 54,
+                  height: 58,
+                  width: 58,
                   decoration: BoxDecoration(
-                    color: forest.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(16),
+                    color: accent.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(17),
                   ),
                   child: Icon(
                     icon,
-                    color: forest,
-                    size: 28,
+                    color: accent,
+                    size: 29,
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -1714,14 +2104,14 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     height: 1.7,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 22),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: forest,
-                      foregroundColor: cream,
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                         vertical: 15,
                       ),
@@ -1729,7 +2119,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
                         borderRadius: BorderRadius.circular(13),
                       ),
                     ),
-                    child: const Text('Got it'),
+                    child: const Text(
+                      'Got it',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                   ),
                 ),
               ],

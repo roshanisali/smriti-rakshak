@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ArVrScreen extends StatelessWidget {
@@ -57,23 +56,30 @@ class ArVrScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 78,
-                height: 78,
+                width: 82,
+                height: 82,
                 decoration: BoxDecoration(
-                  color: gold.withOpacity(0.22),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: gold.withOpacity(0.65),
-                    width: 1.5,
+                  gradient: const LinearGradient(
+                    colors: [gold, Color(0xFFF5D991)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: gold.withOpacity(0.28),
+                      blurRadius: 22,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
                 child: const Icon(
                   Icons.auto_awesome_rounded,
                   color: forest,
-                  size: 37,
+                  size: 38,
                 ),
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 23),
               Text(
                 feature,
                 textAlign: TextAlign.center,
@@ -110,9 +116,7 @@ class ArVrScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Sounds exciting!',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w800),
                   ),
                 ),
               ),
@@ -201,16 +205,20 @@ class ArVrScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // HERO
                   _ArVrHero(
                     desktop: desktop,
                     onTap: () => _showComingSoon(
                       context,
                       'AR Heritage Lens',
                     ),
+                    onDiscover: () {
+                      Scrollable.ensureVisible(
+                        context,
+                        duration: const Duration(milliseconds: 450),
+                        curve: Curves.easeInOut,
+                      );
+                    },
                   ),
-
-                  // MAIN CONTENT
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                       desktop ? 56 : 22,
@@ -229,10 +237,8 @@ class ArVrScreen extends StatelessWidget {
                               'forgotten stories and see India’s heritage '
                               'from an entirely new perspective.',
                         ),
-
                         const SizedBox(height: 30),
 
-                        // EXPERIENCE CARDS
                         LayoutBuilder(
                           builder: (context, gridConstraints) {
                             final columns =
@@ -259,6 +265,7 @@ class ArVrScreen extends StatelessWidget {
                                 image: 'assets/images/ShaniwarWada.jpg',
                                 icon: Icons.camera_alt_rounded,
                                 tag: 'AUGMENTED REALITY',
+                                accent: primary,
                                 onTap: () => _showComingSoon(
                                   context,
                                   'AR Heritage Lens',
@@ -273,6 +280,7 @@ class ArVrScreen extends StatelessWidget {
                                 image: 'assets/images/AgaKhanPalace.jpg',
                                 icon: Icons.vrpano_rounded,
                                 tag: 'VIRTUAL REALITY',
+                                accent: const Color(0xFF397D78),
                                 onTap: () => _showComingSoon(
                                   context,
                                   'Virtual Tours',
@@ -287,6 +295,7 @@ class ArVrScreen extends StatelessWidget {
                                 image: 'assets/images/LostFort.jpg',
                                 icon: Icons.view_in_ar_rounded,
                                 tag: '3D EXPLORATION',
+                                accent: const Color(0xFF6B8050),
                                 onTap: () => _showComingSoon(
                                   context,
                                   '3D Heritage Models',
@@ -301,6 +310,7 @@ class ArVrScreen extends StatelessWidget {
                                 image: 'assets/images/SinhagadFort.jpg',
                                 icon: Icons.history_edu_rounded,
                                 tag: 'HISTORICAL STORIES',
+                                accent: const Color(0xFF8B694B),
                                 onTap: () => _showComingSoon(
                                   context,
                                   'Historical Reconstructions',
@@ -323,7 +333,6 @@ class ArVrScreen extends StatelessWidget {
 
                         const SizedBox(height: 70),
 
-                        // DESTINATIONS
                         const _ArVrSectionTitle(
                           eyebrow: 'THE WORLD IS YOUR TIME MACHINE',
                           title: 'Journeys worth taking.',
@@ -332,11 +341,10 @@ class ArVrScreen extends StatelessWidget {
                               'temples, discover the stories hidden within '
                               'India’s extraordinary landmarks.',
                         ),
-
                         const SizedBox(height: 28),
 
                         SizedBox(
-                          height: 335,
+                          height: 350,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
@@ -345,6 +353,7 @@ class ArVrScreen extends StatelessWidget {
                                 subtitle: 'Walk through a lost kingdom',
                                 image: 'assets/images/Hampi.jpg',
                                 tag: 'KARNATAKA',
+                                number: '01',
                                 onTap: () => _showComingSoon(
                                   context,
                                   'Hampi VR Experience',
@@ -355,6 +364,7 @@ class ArVrScreen extends StatelessWidget {
                                 subtitle: 'Discover ancient cave art',
                                 image: 'assets/images/Ajanta.jpg',
                                 tag: 'MAHARASHTRA',
+                                number: '02',
                                 onTap: () => _showComingSoon(
                                   context,
                                   'Ajanta Caves Experience',
@@ -365,6 +375,7 @@ class ArVrScreen extends StatelessWidget {
                                 subtitle: 'Explore the Sun Temple',
                                 image: 'assets/images/Konark.jpg',
                                 tag: 'ODISHA',
+                                number: '03',
                                 onTap: () => _showComingSoon(
                                   context,
                                   'Konark Experience',
@@ -376,7 +387,6 @@ class ArVrScreen extends StatelessWidget {
 
                         const SizedBox(height: 75),
 
-                        // HOW IT WORKS
                         const _ArVrSectionTitle(
                           eyebrow: 'YOUR ADVENTURE, SIMPLIFIED',
                           title: 'Three steps. A whole new world.',
@@ -384,7 +394,6 @@ class ArVrScreen extends StatelessWidget {
                               'Getting closer to history has never '
                               'felt this exciting.',
                         ),
-
                         const SizedBox(height: 30),
 
                         LayoutBuilder(
@@ -421,8 +430,7 @@ class ArVrScreen extends StatelessWidget {
 
                             if (horizontal) {
                               return Row(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: steps.map((step) {
                                   return Expanded(
                                     child: Padding(
@@ -436,15 +444,12 @@ class ArVrScreen extends StatelessWidget {
                               );
                             }
 
-                            return Column(
-                              children: steps,
-                            );
+                            return Column(children: steps);
                           },
                         ),
 
                         const SizedBox(height: 55),
 
-                        // HERITAGE PASSPORT
                         _HeritagePassport(
                           onTap: () => _showComingSoon(
                             context,
@@ -454,7 +459,6 @@ class ArVrScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   const _ArVrFooter(),
                 ],
               ),
@@ -473,10 +477,12 @@ class ArVrScreen extends StatelessWidget {
 class _ArVrHero extends StatelessWidget {
   final bool desktop;
   final VoidCallback onTap;
+  final VoidCallback onDiscover;
 
   const _ArVrHero({
     required this.desktop,
     required this.onTap,
+    required this.onDiscover,
   });
 
   @override
@@ -491,7 +497,7 @@ class _ArVrHero extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: SizedBox(
-          height: desktop ? 500 : 490,
+          height: desktop ? 500 : 520,
           width: double.infinity,
           child: Stack(
             fit: StackFit.expand,
@@ -508,8 +514,6 @@ class _ArVrHero extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // DARK CINEMATIC OVERLAY
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -525,8 +529,6 @@ class _ArVrHero extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // BOTTOM GRADIENT
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -539,9 +541,8 @@ class _ArVrHero extends StatelessWidget {
                   ),
                 ),
               ),
-
               Padding(
-                padding: EdgeInsets.all(desktop ? 55 : 25),
+                padding: EdgeInsets.all(desktop ? 55 : 24),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: ConstrainedBox(
@@ -580,22 +581,18 @@ class _ArVrHero extends StatelessWidget {
                             ],
                           ),
                         ),
-
                         const SizedBox(height: 27),
-
                         Text(
                           'Step inside\nthe past.',
                           style: TextStyle(
                             color: ArVrScreen.cream,
-                            fontSize: desktop ? 66 : 49,
+                            fontSize: desktop ? 66 : 48,
                             height: 1.04,
                             fontWeight: FontWeight.w900,
                             letterSpacing: -2,
                           ),
                         ),
-
                         const SizedBox(height: 20),
-
                         Container(
                           width: 65,
                           height: 4,
@@ -604,9 +601,7 @@ class _ArVrHero extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-
                         const SizedBox(height: 20),
-
                         Text(
                           'Some stories deserve more than a page. '
                           'Experience India’s living legacy through '
@@ -617,9 +612,7 @@ class _ArVrHero extends StatelessWidget {
                             height: 1.8,
                           ),
                         ),
-
                         const SizedBox(height: 28),
-
                         Wrap(
                           spacing: 12,
                           runSpacing: 12,
@@ -649,14 +642,7 @@ class _ArVrHero extends StatelessWidget {
                               ),
                             ),
                             OutlinedButton.icon(
-                              onPressed: () {
-                                Scrollable.ensureVisible(
-                                  context,
-                                  duration:
-                                      const Duration(milliseconds: 450),
-                                  curve: Curves.easeInOut,
-                                );
-                              },
+                              onPressed: onDiscover,
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: ArVrScreen.cream,
                                 side: BorderSide(
@@ -678,9 +664,7 @@ class _ArVrHero extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         const SizedBox(height: 23),
-
                         Row(
                           children: [
                             const Icon(
@@ -706,7 +690,6 @@ class _ArVrHero extends StatelessWidget {
                   ),
                 ),
               ),
-
               if (desktop)
                 Positioned(
                   right: 25,
@@ -769,6 +752,8 @@ class _ArVrSectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final desktop = MediaQuery.sizeOf(context).width >= 650;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -801,7 +786,7 @@ class _ArVrSectionTitle extends StatelessWidget {
           title,
           style: TextStyle(
             color: ArVrScreen.ink,
-            fontSize: MediaQuery.sizeOf(context).width >= 650 ? 37 : 29,
+            fontSize: desktop ? 37 : 29,
             height: 1.16,
             fontWeight: FontWeight.w900,
             letterSpacing: -1,
@@ -825,7 +810,7 @@ class _ArVrSectionTitle extends StatelessWidget {
 }
 
 // ============================================================
-// EXPERIENCE CARDS
+// IMMERSIVE EXPERIENCE CARDS
 // ============================================================
 
 class _ArVrFeature extends StatefulWidget {
@@ -835,6 +820,7 @@ class _ArVrFeature extends StatefulWidget {
   final String image;
   final IconData icon;
   final String tag;
+  final Color accent;
   final VoidCallback onTap;
 
   const _ArVrFeature({
@@ -844,6 +830,7 @@ class _ArVrFeature extends StatefulWidget {
     required this.image,
     required this.icon,
     required this.tag,
+    required this.accent,
     required this.onTap,
   });
 
@@ -864,22 +851,23 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
         transform: Matrix4.translationValues(0, hovered ? -7 : 0, 0),
         decoration: BoxDecoration(
           color: ArVrScreen.forest,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: ArVrScreen.forest.withOpacity(hovered ? 0.20 : 0.08),
-              blurRadius: hovered ? 26 : 14,
-              offset: Offset(0, hovered ? 13 : 6),
+              color: ArVrScreen.forest.withOpacity(hovered ? 0.22 : 0.09),
+              blurRadius: hovered ? 28 : 15,
+              offset: Offset(0, hovered ? 14 : 6),
             ),
           ],
           border: Border.all(
             color: hovered
-                ? ArVrScreen.gold.withOpacity(0.8)
-                : ArVrScreen.forestLight.withOpacity(0.4),
+                ? widget.accent.withOpacity(0.95)
+                : ArVrScreen.forestLight.withOpacity(0.35),
+            width: hovered ? 1.5 : 1,
           ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(23),
+          borderRadius: BorderRadius.circular(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -890,7 +878,7 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                   fit: StackFit.expand,
                   children: [
                     AnimatedScale(
-                      scale: hovered ? 1.05 : 1,
+                      scale: hovered ? 1.06 : 1,
                       duration: const Duration(milliseconds: 350),
                       child: Image.asset(
                         widget.image,
@@ -911,9 +899,9 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.black.withOpacity(0.35),
+                            Colors.black.withOpacity(0.36),
                             Colors.transparent,
-                            ArVrScreen.forest.withOpacity(0.75),
+                            ArVrScreen.forest.withOpacity(0.84),
                           ],
                         ),
                       ),
@@ -927,13 +915,13 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: ArVrScreen.gold,
-                          borderRadius: BorderRadius.circular(10),
+                          color: widget.accent,
+                          borderRadius: BorderRadius.circular(11),
                         ),
                         child: Text(
                           widget.number,
                           style: const TextStyle(
-                            color: ArVrScreen.forest,
+                            color: Colors.white,
                             fontSize: 11,
                             fontWeight: FontWeight.w900,
                           ),
@@ -943,19 +931,20 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                     Positioned(
                       right: 15,
                       bottom: 15,
-                      child: Container(
-                        padding: const EdgeInsets.all(11),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 240),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: ArVrScreen.forest.withOpacity(0.93),
-                          borderRadius: BorderRadius.circular(15),
+                          color: hovered ? widget.accent : ArVrScreen.forest,
+                          borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: ArVrScreen.gold.withOpacity(0.5),
+                            color: ArVrScreen.gold.withOpacity(0.55),
                           ),
                         ),
                         child: Icon(
                           widget.icon,
                           color: ArVrScreen.gold,
-                          size: 24,
+                          size: 25,
                         ),
                       ),
                     ),
@@ -967,16 +956,26 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.tag,
-                      style: const TextStyle(
-                        color: ArVrScreen.gold,
-                        fontSize: 9,
-                        letterSpacing: 1.35,
-                        fontWeight: FontWeight.w900,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 7,
+                      ),
+                      decoration: BoxDecoration(
+                        color: widget.accent.withOpacity(0.17),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        widget.tag,
+                        style: TextStyle(
+                          color: ArVrScreen.gold,
+                          fontSize: 9,
+                          letterSpacing: 1.15,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 11),
+                    const SizedBox(height: 14),
                     Text(
                       widget.title,
                       style: const TextStyle(
@@ -990,7 +989,7 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                     Text(
                       widget.description,
                       style: TextStyle(
-                        color: ArVrScreen.cream.withOpacity(0.73),
+                        color: ArVrScreen.cream.withOpacity(0.76),
                         fontSize: 12,
                         height: 1.8,
                       ),
@@ -998,16 +997,18 @@ class _ArVrFeatureState extends State<_ArVrFeature> {
                     const SizedBox(height: 22),
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton(
+                      child: FilledButton(
                         onPressed: widget.onTap,
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: ArVrScreen.gold,
-                          side: BorderSide(
-                            color: ArVrScreen.gold.withOpacity(0.45),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 13),
+                        style: FilledButton.styleFrom(
+                          backgroundColor:
+                              hovered ? widget.accent : ArVrScreen.forestLight,
+                          foregroundColor: ArVrScreen.cream,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(13),
+                            side: BorderSide(
+                              color: ArVrScreen.gold.withOpacity(0.35),
+                            ),
                           ),
                         ),
                         child: const Row(
@@ -1049,6 +1050,7 @@ class _ArVrDestination extends StatefulWidget {
   final String subtitle;
   final String image;
   final String tag;
+  final String number;
   final VoidCallback onTap;
 
   const _ArVrDestination({
@@ -1056,6 +1058,7 @@ class _ArVrDestination extends StatefulWidget {
     required this.subtitle,
     required this.image,
     required this.tag,
+    required this.number,
     required this.onTap,
   });
 
@@ -1073,7 +1076,7 @@ class _ArVrDestinationState extends State<_ArVrDestination> {
       onExit: (_) => setState(() => hovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 230),
-        transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0),
+        transform: Matrix4.translationValues(0, hovered ? -7 : 0, 0),
         width: 285,
         margin: const EdgeInsets.only(right: 18, bottom: 8),
         child: ClipRRect(
@@ -1086,7 +1089,7 @@ class _ArVrDestinationState extends State<_ArVrDestination> {
                 fit: StackFit.expand,
                 children: [
                   AnimatedScale(
-                    scale: hovered ? 1.045 : 1,
+                    scale: hovered ? 1.06 : 1,
                     duration: const Duration(milliseconds: 350),
                     child: Image.asset(
                       widget.image,
@@ -1107,7 +1110,7 @@ class _ArVrDestinationState extends State<_ArVrDestination> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          ArVrScreen.forest.withOpacity(0.40),
+                          ArVrScreen.forest.withOpacity(0.48),
                           Colors.transparent,
                           ArVrScreen.forest.withOpacity(0.98),
                         ],
@@ -1144,13 +1147,28 @@ class _ArVrDestinationState extends State<_ArVrDestination> {
                     child: Container(
                       padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
-                        color: ArVrScreen.forest.withOpacity(0.7),
+                        color: ArVrScreen.forest.withOpacity(0.78),
                         shape: BoxShape.circle,
+                        border: Border.all(
+                          color: ArVrScreen.gold.withOpacity(0.45),
+                        ),
                       ),
                       child: const Icon(
                         Icons.arrow_outward_rounded,
                         color: Colors.white,
                         size: 17,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 17,
+                    top: 75,
+                    child: Text(
+                      widget.number,
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.22),
+                        fontSize: 45,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ),
@@ -1185,9 +1203,9 @@ class _ArVrDestinationState extends State<_ArVrDestination> {
                           color: Colors.white.withOpacity(0.22),
                         ),
                         const SizedBox(height: 15),
-                        const Row(
+                        Row(
                           children: [
-                            Flexible(
+                            const Flexible(
                               child: Text(
                                 'EXPLORE DESTINATION',
                                 style: TextStyle(
@@ -1198,11 +1216,21 @@ class _ArVrDestinationState extends State<_ArVrDestination> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 9),
-                            Icon(
-                              Icons.arrow_forward_rounded,
-                              color: ArVrScreen.gold,
-                              size: 17,
+                            const SizedBox(width: 9),
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: hovered
+                                    ? ArVrScreen.primary
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_forward_rounded,
+                                color: ArVrScreen.gold,
+                                size: 17,
+                              ),
                             ),
                           ],
                         ),
@@ -1250,9 +1278,9 @@ class _ArVrStep extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: ArVrScreen.forest.withOpacity(0.045),
-            blurRadius: 18,
-            offset: const Offset(0, 6),
+            color: ArVrScreen.forest.withOpacity(0.055),
+            blurRadius: 20,
+            offset: const Offset(0, 7),
           ),
         ],
       ),
@@ -1265,7 +1293,14 @@ class _ArVrStep extends StatelessWidget {
                 width: 53,
                 height: 53,
                 decoration: BoxDecoration(
-                  color: ArVrScreen.forest,
+                  gradient: const LinearGradient(
+                    colors: [
+                      ArVrScreen.forest,
+                      ArVrScreen.forestLight,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.circular(17),
                 ),
                 child: Icon(
@@ -1397,7 +1432,7 @@ class _HeritagePassport extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Your story. Your heritage.',
+                                'YOUR STORY. YOUR HERITAGE.',
                                 style: TextStyle(
                                   color: ArVrScreen.gold,
                                   fontSize: 10,

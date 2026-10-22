@@ -4,150 +4,215 @@ import 'package:flutter/material.dart';
 class SitesScreen extends StatefulWidget {
   const SitesScreen({super.key});
 
-  // ============================================================
-  // HERITAGE THEME
-  // ============================================================
-
-  static const Color primary = Color(0xFFC6533B);
-  static const Color primaryDark = Color(0xFF963B29);
-  static const Color gold = Color(0xFFE6B85C);
-  static const Color background = Color(0xFFF7F2E8);
-  static const Color surface = Color(0xFFFFFCF6);
-  static const Color textColor = Color(0xFF29352C);
-  static const Color secondaryText = Color(0xFF77786C);
-  static const Color forest = Color(0xFF294536);
-  static const Color forestLight = Color(0xFF42634B);
-  static const Color sandstone = Color(0xFFE8DDC9);
-
   @override
   State<SitesScreen> createState() => _SitesScreenState();
 }
 
 class _SitesScreenState extends State<SitesScreen> {
+  // ============================================================
+  // SMRITI RAKSHAK - HERITAGE COLOURS
+  // ============================================================
+
+  static const Color primary = Color(0xFFE0533C);
+  static const Color primaryDark = Color(0xFFA6321F);
+  static const Color gold = Color(0xFFF2A922);
+  static const Color background = Color(0xFFF0F4F8);
+  static const Color surface = Colors.white;
+  static const Color textColor = Color(0xFF0F172A);
+  static const Color secondaryText = Color(0xFF475569);
+  static const Color teal = Color(0xFF0EA5E9);
+  static const Color green = Color(0xFF10B981);
+
   final TextEditingController _searchController = TextEditingController();
 
-  String _selectedType = 'All';
   String _searchQuery = '';
+  String _selectedType = 'All';
+
+  final List<String> _siteTypes = [
+    'All',
+    'Forts',
+    'Temples',
+    'Palaces',
+    'Caves',
+    'Museums',
+    'Historic Sites',
+  ];
 
   // ============================================================
-  // HERITAGE DATA
+  // FEATURED HERITAGE SITES
   // ============================================================
 
   final List<Map<String, dynamic>> _featuredSites = [
     {
-      'title': 'Raigad Fort',
+      'name': 'Raigad Fort',
       'location': 'Raigad, Maharashtra',
-      'type': 'Hill Fort',
+      'type': 'Forts',
+      'category': 'Hill Fort',
       'image': 'assets/images/raigadFort.jpeg',
-      'color': SitesScreen.primary,
-      'category': 'Forts',
+      'period': '17th century',
+      'description':
+          'Discover the majestic hill fort that served as the capital of Chhatrapati Shivaji Maharaj’s kingdom. Surrounded by the Sahyadri mountains, Raigad is a powerful symbol of courage, leadership and Maratha heritage.',
+      'fact': 'Capital of the Maratha kingdom under Shivaji Maharaj.',
+      'tag': 'MARATHA HERITAGE',
     },
     {
-      'title': 'Bibi Ka Maqbara',
-      'location': 'Chhatrapati Sambhajinagar',
-      'type': 'Mughal Architecture',
+      'name': 'Bibi Ka Maqbara',
+      'location': 'Chhatrapati Sambhajinagar, Maharashtra',
+      'type': 'Palaces',
+      'category': 'Mughal Architecture',
       'image': 'assets/images/bibi.jpeg',
-      'color': SitesScreen.gold,
-      'category': 'Palaces',
+      'period': '17th century',
+      'description':
+          'Admire the elegant marble-inspired monument known for its Mughal design, ornamental details and beautiful gardens. Its graceful architecture makes it one of Maharashtra’s best-known historical landmarks.',
+      'fact': 'Often called the Deccan’s Taj Mahal.',
+      'tag': 'ARCHITECTURAL GEM',
     },
     {
-      'title': 'Champaner-Pavagadh',
-      'location': 'Gujarat',
-      'type': 'Historic City',
+      'name': 'Champaner-Pavagadh',
+      'location': 'Panchmahal, Gujarat',
+      'type': 'Historic Sites',
+      'category': 'Historic City',
       'image': 'assets/images/champaner.jpeg',
-      'color': SitesScreen.forestLight,
-      'category': 'Historic Sites',
+      'period': 'Medieval period',
+      'description':
+          'Explore a historic landscape of forts, mosques, temples, stepwells and archaeological remains. The site reveals layers of history shaped by different rulers and architectural traditions.',
+      'fact': 'A UNESCO World Heritage Site.',
+      'tag': 'WORLD HERITAGE',
     },
     {
-      'title': 'Rani ki Vav',
+      'name': 'Rani Ki Vav',
       'location': 'Patan, Gujarat',
-      'type': 'Stepwell',
+      'type': 'Historic Sites',
+      'category': 'Stepwell',
       'image': 'assets/images/raniKiVav.jpg',
-      'color': SitesScreen.primaryDark,
-      'category': 'Historic Sites',
+      'period': '11th century',
+      'description':
+          'Step into an extraordinary subterranean structure decorated with intricate sculptures. Rani Ki Vav demonstrates how historic communities combined water management with remarkable craftsmanship.',
+      'fact': 'A UNESCO World Heritage Site famous for its sculptural galleries.',
+      'tag': 'ANCIENT ENGINEERING',
     },
     {
-      'title': 'Badami Caves',
-      'location': 'Karnataka',
-      'type': 'Rock-Cut Caves',
+      'name': 'Badami Caves',
+      'location': 'Badami, Karnataka',
+      'type': 'Caves',
+      'category': 'Rock-Cut Caves',
       'image': 'assets/images/badami.jpeg',
-      'color': SitesScreen.forest,
-      'category': 'Caves',
+      'period': '6th century onward',
+      'description':
+          'Explore sandstone cave temples carved into the cliffs of Badami. Their sculptures and pillars showcase the artistic achievements of early Chalukyan architecture.',
+      'fact': 'Known for rock-cut temples and detailed stone sculptures.',
+      'tag': 'STONE MASTERPIECE',
     },
   ];
+
+  // ============================================================
+  // NEARBY HERITAGE
+  // ============================================================
 
   final List<Map<String, dynamic>> _nearbySites = [
     {
-      'title': 'Pataleshwar Cave Temple',
-      'location': 'Pune',
+      'name': 'Pataleshwar Cave Temple',
+      'location': 'Shivajinagar, Pune',
       'distance': '6.1 km',
-      'image': 'assets/images/pataleshwar.jpeg',
       'type': 'Caves',
+      'image': 'assets/images/pataleshwar.jpeg',
+      'description':
+          'A rock-cut cave temple dedicated to Lord Shiva, known for its stone pillars and quiet courtyard in the middle of Pune.',
+      'fact': 'An early rock-cut temple carved from a single rock formation.',
     },
     {
-      'title': 'Lal Mahal',
-      'location': 'Pune',
+      'name': 'Lal Mahal',
+      'location': 'Kasba Peth, Pune',
       'distance': '6.8 km',
-      'image': 'assets/images/lalMahal.jpeg',
       'type': 'Palaces',
+      'image': 'assets/images/lalMahal.jpeg',
+      'description':
+          'A historically significant landmark associated with the early life of Chhatrapati Shivaji Maharaj.',
+      'fact': 'An important landmark in Maratha history.',
     },
     {
-      'title': 'Raja Dinkar Kelkar Museum',
-      'location': 'Pune',
+      'name': 'Raja Dinkar Kelkar Museum',
+      'location': 'Shukrawar Peth, Pune',
       'distance': '7.2 km',
-      'image': 'assets/images/rajadinkar.jpeg',
       'type': 'Museums',
+      'image': 'assets/images/rajadinkar.jpeg',
+      'description':
+          'Discover an extensive collection of Indian art, traditional objects, musical instruments and everyday artefacts.',
+      'fact': 'Preserves objects that tell stories of Indian craftsmanship and daily life.',
     },
   ];
+
+  // ============================================================
+  // INDIA'S HERITAGE ICONS
+  // ============================================================
 
   final List<Map<String, dynamic>> _iconicSites = [
     {
-      'title': 'Dholavira',
-      'location': 'Gujarat',
+      'name': 'Dholavira',
+      'location': 'Kutch, Gujarat',
+      'type': 'Historic Sites',
       'image': 'assets/images/dholavira.png',
-      'color': SitesScreen.forestLight,
+      'description':
+          'Discover an ancient Harappan city known for its urban planning, water conservation systems and archaeological remains.',
+      'fact': 'A UNESCO World Heritage Site associated with the Indus Valley Civilization.',
     },
     {
-      'title': 'Chittorgarh Fort',
-      'location': 'Rajasthan',
+      'name': 'Chittorgarh Fort',
+      'location': 'Chittorgarh, Rajasthan',
+      'type': 'Forts',
       'image': 'assets/images/chittorgarh.jpeg',
-      'color': SitesScreen.primary,
+      'description':
+          'Explore a vast hilltop fort celebrated for its monumental gateways, palaces, temples and stories of Rajput history.',
+      'fact': 'One of the largest fort complexes in India.',
     },
     {
-      'title': 'Sanchi Stupa',
-      'location': 'Madhya Pradesh',
+      'name': 'Sanchi Stupa',
+      'location': 'Sanchi, Madhya Pradesh',
+      'type': 'Temples',
       'image': 'assets/images/sanchi.jpeg',
-      'color': SitesScreen.gold,
+      'description':
+          'Experience an important Buddhist monument with beautifully carved gateways depicting stories and symbols from Buddhist traditions.',
+      'fact':
+          'A UNESCO World Heritage Site with origins dating to the 3rd century BCE.',
     },
   ];
 
-  final List<Map<String, dynamic>> _types = [
-    {
-      'title': 'Forts',
-      'icon': Icons.castle_rounded,
-      'color': SitesScreen.primary,
-    },
-    {
-      'title': 'Temples',
-      'icon': Icons.temple_hindu_rounded,
-      'color': SitesScreen.gold,
-    },
-    {
-      'title': 'Palaces',
-      'icon': Icons.account_balance_rounded,
-      'color': SitesScreen.forestLight,
-    },
-    {
-      'title': 'Caves',
-      'icon': Icons.landscape_rounded,
-      'color': SitesScreen.forest,
-    },
-    {
-      'title': 'Museums',
-      'icon': Icons.museum_rounded,
-      'color': SitesScreen.primaryDark,
-    },
-  ];
+  // ============================================================
+  // FILTERING
+  // ============================================================
+
+  bool _matchesSearch(Map<String, dynamic> site) {
+    final query = _searchQuery.trim().toLowerCase();
+
+    final matchesQuery = query.isEmpty ||
+        site['name'].toString().toLowerCase().contains(query) ||
+        site['location'].toString().toLowerCase().contains(query) ||
+        site['type'].toString().toLowerCase().contains(query) ||
+        (site['category'] ?? '')
+            .toString()
+            .toLowerCase()
+            .contains(query);
+
+    final matchesType = _selectedType == 'All' ||
+        site['type'] == _selectedType ||
+        site['category'] == _selectedType;
+
+    return matchesQuery && matchesType;
+  }
+
+  List<Map<String, dynamic>> get _filteredFeatured =>
+      _featuredSites.where(_matchesSearch).toList();
+
+  List<Map<String, dynamic>> get _filteredNearby =>
+      _nearbySites.where(_matchesSearch).toList();
+
+  List<Map<String, dynamic>> get _filteredIcons =>
+      _iconicSites.where(_matchesSearch).toList();
+
+  bool get _hasResults =>
+      _filteredFeatured.isNotEmpty ||
+      _filteredNearby.isNotEmpty ||
+      _filteredIcons.isNotEmpty;
 
   @override
   void dispose() {
@@ -156,1157 +221,244 @@ class _SitesScreenState extends State<SitesScreen> {
   }
 
   // ============================================================
-  // DIALOGS
-  // ============================================================
-
-  void _showMessage(String title, String message) {
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: SitesScreen.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: SitesScreen.textColor,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        content: Text(
-          message,
-          style: const TextStyle(
-            color: SitesScreen.secondaryText,
-            height: 1.6,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(
-              'Got it',
-              style: TextStyle(
-                color: SitesScreen.primary,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showSiteDetails(Map<String, dynamic> site) {
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) => Dialog(
-        backgroundColor: SitesScreen.surface,
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 430),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 210,
-                  width: double.infinity,
-                  child: Image.asset(
-                    site['image'] as String,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: SitesScreen.background,
-                        child: const Icon(
-                          Icons.account_balance_rounded,
-                          size: 60,
-                          color: SitesScreen.primary,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(22),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 11,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: (site['color'] as Color).withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          site['type'] as String,
-                          style: TextStyle(
-                            color: site['color'] as Color,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        site['title'] as String,
-                        style: const TextStyle(
-                          color: SitesScreen.textColor,
-                          fontSize: 23,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(height: 9),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on_rounded,
-                            color: SitesScreen.primary,
-                            size: 18,
-                          ),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: Text(
-                              site['location'] as String,
-                              style: const TextStyle(
-                                color: SitesScreen.secondaryText,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 17),
-                      const Text(
-                        'Explore the architecture, stories and cultural heritage of this remarkable place.',
-                        style: TextStyle(
-                          color: SitesScreen.secondaryText,
-                          fontSize: 13,
-                          height: 1.7,
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => Navigator.pop(dialogContext),
-                          child: const Text(
-                            'Close',
-                            style: TextStyle(
-                              color: SitesScreen.primary,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ============================================================
-  // FILTERING
-  // ============================================================
-
-  List<Map<String, dynamic>> get _filteredFeaturedSites {
-    return _featuredSites.where((site) {
-      final matchesSearch =
-          site['title'].toString().toLowerCase().contains(_searchQuery) ||
-          site['location'].toString().toLowerCase().contains(_searchQuery) ||
-          site['type'].toString().toLowerCase().contains(_searchQuery);
-
-      final matchesType =
-          _selectedType == 'All' || site['category'] == _selectedType;
-
-      return matchesSearch && matchesType;
-    }).toList();
-  }
-
-  List<Map<String, dynamic>> get _filteredNearbySites {
-    return _nearbySites.where((site) {
-      final matchesSearch =
-          site['title'].toString().toLowerCase().contains(_searchQuery) ||
-          site['location'].toString().toLowerCase().contains(_searchQuery) ||
-          site['type'].toString().toLowerCase().contains(_searchQuery);
-
-      final matchesType =
-          _selectedType == 'All' || site['type'] == _selectedType;
-
-      return matchesSearch && matchesType;
-    }).toList();
-  }
-
-  // ============================================================
-  // MAIN SCREEN
+  // MAIN PAGE
   // ============================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SitesScreen.background,
+      backgroundColor: background,
       appBar: AppBar(
-        backgroundColor: SitesScreen.background,
+        backgroundColor: surface,
+        foregroundColor: textColor,
         elevation: 0,
-        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
           tooltip: 'Go back',
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: SitesScreen.textColor,
-          ),
-          onPressed: () async {
+          onPressed: () {
             final navigator = Navigator.of(context);
             if (navigator.canPop()) {
               navigator.pop();
             } else {
-              await navigator.maybePop();
+              navigator.maybePop();
             }
           },
         ),
-        titleSpacing: 4,
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: const Row(
           children: [
+            Icon(Icons.account_balance_rounded, color: primary),
+            SizedBox(width: 10),
             Text(
               'Heritage Sites',
               style: TextStyle(
-                color: SitesScreen.textColor,
-                fontSize: 21,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            SizedBox(height: 2),
-            Text(
-              "Discover India's heritage",
-              style: TextStyle(
-                color: SitesScreen.secondaryText,
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w800,
+                fontSize: 19,
+                color: textColor,
               ),
             ),
           ],
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Container(
-              height: 42,
-              width: 42,
-              decoration: BoxDecoration(
-                color: SitesScreen.surface,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: SitesScreen.sandstone),
-              ),
-              child: const Icon(
-                Icons.explore_rounded,
-                color: SitesScreen.primary,
-                size: 22,
-              ),
-            ),
+          IconButton(
+            tooltip: 'Clear search and filters',
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: () {
+              setState(() {
+                _searchQuery = '';
+                _selectedType = 'All';
+                _searchController.clear();
+              });
+            },
           ),
+          const SizedBox(width: 6),
         ],
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final isWide = constraints.maxWidth >= 900;
-          final horizontalPadding = constraints.maxWidth >= 1200
-              ? 40.0
-              : constraints.maxWidth >= 700
-                  ? 28.0
-                  : 16.0;
-
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.fromLTRB(
-              horizontalPadding,
-              12,
-              horizontalPadding,
-              40,
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1240),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHero(isWide),
-                    const SizedBox(height: 24),
-                    _buildSearchBar(),
-                    const SizedBox(height: 30),
-                    _buildSectionTitle(
-                      'Explore by Type',
-                      Icons.category_rounded,
-                    ),
-                    const SizedBox(height: 15),
-                    _buildTypes(isWide),
-                    const SizedBox(height: 34),
-                    _buildSectionTitle(
-                      'Featured Heritage',
-                      Icons.auto_awesome_rounded,
-                      actionText: 'View All',
-                      onAction: _clearFilters,
-                    ),
-                    const SizedBox(height: 15),
-                    _buildFeaturedSites(isWide),
-                    const SizedBox(height: 34),
-                    _buildSectionTitle(
-                      'Near You',
-                      Icons.near_me_rounded,
-                      actionText: 'Open Map',
-                      onAction: () => _showMessage(
-                        'Explore the Map',
-                        'Map exploration will be available here soon.',
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    _buildNearbySites(isWide),
-                    const SizedBox(height: 34),
-                    _buildSectionTitle(
-                      'Hidden Gems',
-                      Icons.travel_explore_rounded,
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Discover lesser-known places beyond the usual tourist spots.',
-                      style: TextStyle(
-                        color: SitesScreen.secondaryText,
-                        fontSize: 13,
-                        height: 1.6,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildHiddenGems(isWide),
-                    const SizedBox(height: 34),
-                    _buildSectionTitle(
-                      "India's Heritage Icons",
-                      Icons.star_rounded,
-                    ),
-                    const SizedBox(height: 15),
-                    _buildIconicSites(isWide),
-                    const SizedBox(height: 34),
-                    _buildBottomCta(isWide),
-                    const SizedBox(height: 30),
-                    const Center(
-                      child: Text(
-                        'SMRITI RAKSHAK',
-                        style: TextStyle(
-                          color: SitesScreen.forest,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    const Center(
-                      child: Text(
-                        'Discover • Experience • Preserve',
-                        style: TextStyle(
-                          color: SitesScreen.secondaryText,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
-                  ],
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: _buildHero()),
+            SliverToBoxAdapter(child: _buildSearch()),
+            SliverToBoxAdapter(child: _buildTypeFilters()),
+            if (!_hasResults)
+              SliverToBoxAdapter(child: _buildEmptyState()),
+            if (_filteredFeatured.isNotEmpty) ...[
+              SliverToBoxAdapter(
+                child: _buildSectionHeading(
+                  eyebrow: 'START YOUR JOURNEY',
+                  title: 'Featured Heritage',
+                  subtitle:
+                      'Remarkable places. Extraordinary stories. A heritage waiting to be explored.',
+                  icon: Icons.auto_awesome_rounded,
                 ),
               ),
-            ),
-          );
-        },
+              SliverToBoxAdapter(child: _buildFeaturedCards()),
+            ],
+            if (_filteredNearby.isNotEmpty) ...[
+              SliverToBoxAdapter(
+                child: _buildSectionHeading(
+                  eyebrow: 'EXPLORE AROUND YOU',
+                  title: 'Nearby Discoveries',
+                  subtitle:
+                      'Explore cultural landmarks around Pune and uncover stories close to home.',
+                  icon: Icons.near_me_rounded,
+                ),
+              ),
+              SliverToBoxAdapter(child: _buildNearbySites()),
+            ],
+            if (_filteredIcons.isNotEmpty) ...[
+              SliverToBoxAdapter(
+                child: _buildSectionHeading(
+                  eyebrow: 'BEYOND THE ORDINARY',
+                  title: 'India’s Heritage Icons',
+                  subtitle:
+                      'From ancient cities to monumental forts, discover the legacy of a civilization.',
+                  icon: Icons.landscape_rounded,
+                ),
+              ),
+              SliverToBoxAdapter(child: _buildIconicSites()),
+            ],
+            SliverToBoxAdapter(child: _buildPreservationBanner()),
+            const SliverToBoxAdapter(child: SizedBox(height: 30)),
+          ],
+        ),
       ),
     );
   }
 
   // ============================================================
-  // HERO SECTION
+  // HERO
   // ============================================================
 
-  Widget _buildHero(bool isWide) {
+  Widget _buildHero() {
     return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(isWide ? 34 : 23),
+      margin: const EdgeInsets.fromLTRB(18, 18, 18, 10),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
         gradient: const LinearGradient(
+          colors: [Color(0xFF963B29), Color(0xFFE0533C), Color(0xFFF2A922)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            SitesScreen.forest,
-            SitesScreen.forestLight,
-            Color(0xFF637650),
-          ],
         ),
-        borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: SitesScreen.forest.withOpacity(0.16),
-            blurRadius: 22,
-            offset: const Offset(0, 9),
+            color: primary.withValues(alpha: 0.22),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: ClipRect(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
         child: Stack(
           children: [
             Positioned(
-              right: -15,
+              right: -25,
               top: -25,
               child: Icon(
                 Icons.account_balance_rounded,
-                size: isWide ? 190 : 125,
-                color: Colors.white.withOpacity(0.07),
+                size: 190,
+                color: Colors.white.withValues(alpha: 0.09),
               ),
             ),
             Positioned(
-              right: isWide ? 180 : 70,
-              bottom: -35,
+              right: 55,
+              bottom: -42,
               child: Icon(
-                Icons.temple_hindu_rounded,
-                size: isWide ? 120 : 80,
-                color: SitesScreen.gold.withOpacity(0.10),
+                Icons.temple_buddhist_rounded,
+                size: 135,
+                color: Colors.white.withValues(alpha: 0.08),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.10),
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      color: SitesScreen.gold.withOpacity(0.45),
+            Padding(
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 7,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.25),
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.explore_rounded,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 7),
+                        Text(
+                          'DISCOVER • EXPERIENCE • PRESERVE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 10,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.explore_rounded,
-                        color: SitesScreen.gold,
-                        size: 16,
-                      ),
-                      SizedBox(width: 7),
-                      Text(
-                        'YOUR HERITAGE JOURNEY',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: isWide ? 620 : 300,
-                  child: Text(
-                    'Explore Heritage Sites',
+                  const SizedBox(height: 22),
+                  const Text(
+                    'Every monument\nhas a story.',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: isWide ? 37 : 29,
-                      height: 1.15,
-                      letterSpacing: -0.5,
+                      fontSize: 33,
+                      height: 1.12,
                       fontWeight: FontWeight.w900,
+                      letterSpacing: -0.7,
                     ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: isWide ? 560 : 310,
-                  child: Text(
-                    'Step into the past. Discover magnificent forts, ancient temples, forgotten stories and the treasures of India.',
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Walk through centuries of courage, creativity and culture. Your next discovery begins here.',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.85),
-                      fontSize: isWide ? 14 : 13,
-                      height: 1.7,
+                      color: Colors.white,
+                      fontSize: 14,
+                      height: 1.65,
                     ),
                   ),
-                ),
-                const SizedBox(height: 23),
-                Wrap(
-                  spacing: 9,
-                  runSpacing: 9,
-                  children: const [
-                    _HeroPill(
-                      icon: Icons.castle_rounded,
-                      label: 'Historic Forts',
-                    ),
-                    _HeroPill(
-                      icon: Icons.museum_rounded,
-                      label: 'Cultural Treasures',
-                    ),
-                    _HeroPill(
-                      icon: Icons.travel_explore_rounded,
-                      label: 'Hidden Gems',
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ============================================================
-  // SEARCH BAR
-  // ============================================================
-
-  Widget _buildSearchBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-      decoration: BoxDecoration(
-        color: SitesScreen.surface,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: SitesScreen.sandstone),
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.search_rounded,
-            color: SitesScreen.primary,
-            size: 23,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextField(
-              controller: _searchController,
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value.trim().toLowerCase();
-                });
-              },
-              style: const TextStyle(
-                color: SitesScreen.textColor,
-                fontSize: 14,
-              ),
-              decoration: const InputDecoration(
-                hintText: 'Search forts, temples, monuments...',
-                hintStyle: TextStyle(
-                  color: SitesScreen.secondaryText,
-                  fontSize: 13,
-                ),
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-          if (_searchQuery.isNotEmpty)
-            IconButton(
-              tooltip: 'Clear search',
-              onPressed: () {
-                _searchController.clear();
-                setState(() => _searchQuery = '');
-              },
-              icon: const Icon(
-                Icons.close_rounded,
-                color: SitesScreen.secondaryText,
-                size: 20,
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  // ============================================================
-  // SECTION HEADING
-  // ============================================================
-
-  Widget _buildSectionTitle(
-    String title,
-    IconData icon, {
-    String? actionText,
-    VoidCallback? onAction,
-  }) {
-    return Row(
-      children: [
-        Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-            color: SitesScreen.primary.withOpacity(0.09),
-            borderRadius: BorderRadius.circular(13),
-          ),
-          child: Icon(
-            icon,
-            color: SitesScreen.primary,
-            size: 21,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: SitesScreen.textColor,
-              fontSize: 19,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        if (actionText != null)
-          TextButton(
-            onPressed: onAction,
-            style: TextButton.styleFrom(
-              foregroundColor: SitesScreen.primary,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 7,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  actionText,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                const Icon(
-                  Icons.arrow_forward_rounded,
-                  size: 15,
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-
-  // ============================================================
-  // CATEGORY FILTERS
-  // ============================================================
-
-  Widget _buildTypes(bool isWide) {
-    if (isWide) {
-      return Wrap(
-        spacing: 14,
-        runSpacing: 14,
-        children: _types.map((type) {
-          return SizedBox(
-            width: 145,
-            child: _TypeCard(
-              icon: type['icon'] as IconData,
-              title: type['title'] as String,
-              color: type['color'] as Color,
-              selected: _selectedType == type['title'],
-              onTap: () => _toggleType(type['title'] as String),
-            ),
-          );
-        }).toList(),
-      );
-    }
-
-    return SizedBox(
-      height: 112,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        children: _types.map((type) {
-          return _TypeCard(
-            icon: type['icon'] as IconData,
-            title: type['title'] as String,
-            color: type['color'] as Color,
-            selected: _selectedType == type['title'],
-            onTap: () => _toggleType(type['title'] as String),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  void _toggleType(String type) {
-    setState(() {
-      _selectedType = _selectedType == type ? 'All' : type;
-    });
-  }
-
-  void _clearFilters() {
-    _searchController.clear();
-    setState(() {
-      _selectedType = 'All';
-      _searchQuery = '';
-    });
-  }
-
-  // ============================================================
-  // FEATURED HERITAGE
-  // ============================================================
-
-  Widget _buildFeaturedSites(bool isWide) {
-    final sites = _filteredFeaturedSites;
-
-    if (sites.isEmpty) {
-      return _emptyState('No matching featured sites found.');
-    }
-
-    if (isWide) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          final count = constraints.maxWidth >= 1050 ? 4 : 3;
-          final cardWidth =
-              (constraints.maxWidth - ((count - 1) * 16)) / count;
-
-          return Wrap(
-            spacing: 16,
-            runSpacing: 16,
-            children: sites.map((site) {
-              return SizedBox(
-                width: cardWidth,
-                height: 260,
-                child: _SiteCard(
-                  title: site['title'] as String,
-                  location: site['location'] as String,
-                  type: site['type'] as String,
-                  image: site['image'] as String,
-                  color: site['color'] as Color,
-                  onTap: () => _showSiteDetails(site),
-                ),
-              );
-            }).toList(),
-          );
-        },
-      );
-    }
-
-    return SizedBox(
-      height: 260,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        children: sites.map((site) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 14),
-            child: _SiteCard(
-              title: site['title'] as String,
-              location: site['location'] as String,
-              type: site['type'] as String,
-              image: site['image'] as String,
-              color: site['color'] as Color,
-              onTap: () => _showSiteDetails(site),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  // ============================================================
-  // NEARBY SITES
-  // ============================================================
-
-  Widget _buildNearbySites(bool isWide) {
-    final sites = _filteredNearbySites;
-
-    if (sites.isEmpty) {
-      return _emptyState('No nearby sites match your search.');
-    }
-
-    if (isWide) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          const gap = 16.0;
-          final cardWidth = (constraints.maxWidth - gap * 2) / 3;
-
-          return Wrap(
-            spacing: gap,
-            runSpacing: gap,
-            children: sites.map((site) {
-              return SizedBox(
-                width: cardWidth,
-                child: _NearbySite(
-                  title: site['title'] as String,
-                  location: site['location'] as String,
-                  distance: site['distance'] as String,
-                  image: site['image'] as String,
-                  onTap: () => _showMessage(
-                    site['title'] as String,
-                    '${site['location']} · ${site['distance']}\n\n'
-                        'More site details will be available soon.',
-                  ),
-                ),
-              );
-            }).toList(),
-          );
-        },
-      );
-    }
-
-    return Column(
-      children: sites.map((site) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: _NearbySite(
-            title: site['title'] as String,
-            location: site['location'] as String,
-            distance: site['distance'] as String,
-            image: site['image'] as String,
-            onTap: () => _showMessage(
-              site['title'] as String,
-              '${site['location']} · ${site['distance']}\n\n'
-                  'More site details will be available soon.',
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  // ============================================================
-  // HIDDEN GEMS
-  // ============================================================
-
-  Widget _buildHiddenGems(bool isWide) {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(25),
-      child: InkWell(
-        onTap: () => _showMessage(
-          'Hidden Heritage',
-          'Discover lesser-known forts, ancient temples and local heritage stories. This collection is coming soon.',
-        ),
-        borderRadius: BorderRadius.circular(25),
-        child: Ink(
-          width: double.infinity,
-          padding: EdgeInsets.all(isWide ? 26 : 20),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                SitesScreen.primaryDark,
-                SitesScreen.primary,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(25),
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.13),
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.15),
-                  ),
-                ),
-                child: const Icon(
-                  Icons.travel_explore_rounded,
-                  color: SitesScreen.gold,
-                  size: 30,
-                ),
-              ),
-              const SizedBox(width: 16),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Hidden Heritage',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    SizedBox(height: 7),
-                    Text(
-                      'Find forgotten forts, ancient temples and secret stories waiting to be uncovered.',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 12,
-                        height: 1.6,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-                size: 17,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ============================================================
-  // INDIA'S HERITAGE ICONS
-  // ============================================================
-
-  Widget _buildIconicSites(bool isWide) {
-    if (isWide) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          final count = constraints.maxWidth > 800 ? 3 : 2;
-          final cardWidth =
-              (constraints.maxWidth - ((count - 1) * 16)) / count;
-
-          return Wrap(
-            spacing: 16,
-            runSpacing: 16,
-            children: _iconicSites.map((site) {
-              return SizedBox(
-                width: cardWidth,
-                height: 215,
-                child: _IconicCard(
-                  title: site['title'] as String,
-                  location: site['location'] as String,
-                  image: site['image'] as String,
-                  color: site['color'] as Color,
-                  onTap: () => _showMessage(
-                    site['title'] as String,
-                    '${site['location']}\n\n'
-                        'Discover the history and cultural significance of this heritage icon.',
-                  ),
-                ),
-              );
-            }).toList(),
-          );
-        },
-      );
-    }
-
-    return SizedBox(
-      height: 215,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        children: _iconicSites.map((site) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 14),
-            child: _IconicCard(
-              title: site['title'] as String,
-              location: site['location'] as String,
-              image: site['image'] as String,
-              color: site['color'] as Color,
-              onTap: () => _showMessage(
-                site['title'] as String,
-                '${site['location']}\n\n'
-                    'Discover the history and cultural significance of this heritage icon.',
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  // ============================================================
-  // BOTTOM CALL TO ACTION
-  // ============================================================
-
-  Widget _buildBottomCta(bool isWide) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(isWide ? 30 : 23),
-      decoration: BoxDecoration(
-        color: SitesScreen.surface,
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: SitesScreen.gold.withOpacity(0.5),
-        ),
-      ),
-      child: isWide
-          ? Row(
-              children: [
-                _ctaIcon(),
-                const SizedBox(width: 22),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 22),
+                  Wrap(
+                    spacing: 9,
+                    runSpacing: 9,
                     children: [
-                      Text(
-                        'Ready to explore?',
-                        style: TextStyle(
-                          color: SitesScreen.textColor,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      SizedBox(height: 7),
-                      Text(
-                        'Find heritage sites around you and start your journey through history.',
-                        style: TextStyle(
-                          color: SitesScreen.secondaryText,
-                          fontSize: 13,
-                          height: 1.6,
-                        ),
-                      ),
+                      _heroPill(Icons.castle_rounded, 'Historic forts'),
+                      _heroPill(Icons.museum_rounded, 'Ancient art'),
+                      _heroPill(Icons.public_rounded, 'Living heritage'),
                     ],
                   ),
-                ),
-                const SizedBox(width: 20),
-                _ExploreButton(
-                  onPressed: () => _showMessage(
-                    'Explore Sites',
-                    'Site discovery is ready to grow. Map navigation will be connected here soon.',
-                  ),
-                ),
-              ],
-            )
-          : Column(
-              children: [
-                _ctaIcon(),
-                const SizedBox(height: 14),
-                const Text(
-                  'Ready to explore?',
-                  style: TextStyle(
-                    color: SitesScreen.textColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: 7),
-                const Text(
-                  'Find heritage sites around you and start your journey.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: SitesScreen.secondaryText,
-                    fontSize: 13,
-                    height: 1.6,
-                  ),
-                ),
-                const SizedBox(height: 18),
-                _ExploreButton(
-                  onPressed: () => _showMessage(
-                    'Explore Sites',
-                    'Site discovery is ready to grow. Map navigation will be connected here soon.',
-                  ),
-                ),
-              ],
-            ),
-    );
-  }
-
-  Widget _ctaIcon() {
-    return Container(
-      height: 68,
-      width: 68,
-      decoration: BoxDecoration(
-        color: SitesScreen.primary.withOpacity(0.09),
-        borderRadius: BorderRadius.circular(21),
-      ),
-      child: const Icon(
-        Icons.map_rounded,
-        color: SitesScreen.primary,
-        size: 36,
-      ),
-    );
-  }
-
-  // ============================================================
-  // EMPTY STATE
-  // ============================================================
-
-  Widget _emptyState(String message) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: SitesScreen.surface,
-        borderRadius: BorderRadius.circular(21),
-        border: Border.all(color: SitesScreen.sandstone),
-      ),
-      child: Column(
-        children: [
-          Icon(
-            Icons.search_off_rounded,
-            size: 38,
-            color: SitesScreen.secondaryText.withOpacity(0.7),
-          ),
-          const SizedBox(height: 11),
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: SitesScreen.secondaryText,
-              fontSize: 13,
-            ),
-          ),
-          if (_searchQuery.isNotEmpty || _selectedType != 'All') ...[
-            const SizedBox(height: 10),
-            TextButton(
-              onPressed: _clearFilters,
-              child: const Text(
-                'Clear filters',
-                style: TextStyle(
-                  color: SitesScreen.primary,
-                  fontWeight: FontWeight.w900,
-                ),
+                ],
               ),
             ),
           ],
-        ],
+        ),
       ),
     );
   }
-}
 
-// ============================================================
-// HERO PILL
-// ============================================================
-
-class _HeroPill extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _HeroPill({
-    required this.icon,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _heroPill(IconData icon, String label) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 9,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.10),
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.16),
-        ),
+        color: Colors.white.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: SitesScreen.gold,
-            size: 16,
-          ),
-          const SizedBox(width: 7),
+          Icon(icon, color: Colors.white, size: 15),
+          const SizedBox(width: 6),
           Text(
             label,
             style: const TextStyle(
@@ -1319,201 +471,891 @@ class _HeroPill extends StatelessWidget {
       ),
     );
   }
-}
 
-// ============================================================
-// CATEGORY CARD
-// ============================================================
+  // ============================================================
+  // SEARCH
+  // ============================================================
 
-class _TypeCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Color color;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _TypeCard({
-    required this.icon,
-    required this.title,
-    required this.color,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 90,
-      child: Material(
-        color: selected ? color.withOpacity(0.09) : SitesScreen.surface,
-        borderRadius: BorderRadius.circular(19),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(19),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 13,
-              horizontal: 8,
+  Widget _buildSearch() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 14, 18, 6),
+      child: Container(
+        decoration: BoxDecoration(
+          color: surface,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: textColor.withValues(alpha: 0.05),
+              blurRadius: 16,
+              offset: const Offset(0, 5),
             ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(19),
-              border: Border.all(
-                color: selected ? color : SitesScreen.sandstone,
-                width: selected ? 1.5 : 1,
-              ),
+          ],
+        ),
+        child: TextField(
+          controller: _searchController,
+          onChanged: (value) => setState(() => _searchQuery = value),
+          style: const TextStyle(
+            color: textColor,
+            fontSize: 14,
+          ),
+          decoration: InputDecoration(
+            hintText: 'Search forts, temples, cities...',
+            hintStyle: const TextStyle(color: secondaryText, fontSize: 13),
+            prefixIcon: const Icon(
+              Icons.search_rounded,
+              color: primary,
+              size: 24,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 43,
-                  width: 43,
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.13),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    icon,
-                    color: color,
-                    size: 23,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: SitesScreen.textColor,
-                    fontSize: 12,
-                    fontWeight:
-                        selected ? FontWeight.w900 : FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
+            suffixIcon: _searchQuery.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.close_rounded),
+                    onPressed: () {
+                      setState(() {
+                        _searchQuery = '';
+                        _searchController.clear();
+                      });
+                    },
+                  )
+                : null,
+            border: InputBorder.none,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           ),
         ),
       ),
     );
   }
-}
 
-// ============================================================
-// FEATURED SITE CARD
-// ============================================================
+  // ============================================================
+  // CATEGORY FILTERS
+  // ============================================================
 
-class _SiteCard extends StatelessWidget {
-  final String title;
-  final String location;
-  final String type;
-  final String image;
-  final Color color;
-  final VoidCallback onTap;
+  Widget _buildTypeFilters() {
+    return SizedBox(
+      height: 64,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        scrollDirection: Axis.horizontal,
+        itemCount: _siteTypes.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final type = _siteTypes[index];
+          final selected = type == _selectedType;
 
-  const _SiteCard({
-    required this.title,
-    required this.location,
-    required this.type,
-    required this.image,
-    required this.color,
-    required this.onTap,
-  });
+          return ChoiceChip(
+            label: Text(type),
+            selected: selected,
+            showCheckmark: false,
+            onSelected: (_) => setState(() => _selectedType = type),
+            backgroundColor: surface,
+            selectedColor: primary,
+            side: BorderSide(
+              color: selected ? primary : const Color(0xFFE2E8F0),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            labelStyle: TextStyle(
+              color: selected ? Colors.white : secondaryText,
+              fontWeight: FontWeight.w800,
+              fontSize: 12,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+          );
+        },
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: SitesScreen.surface,
-      borderRadius: BorderRadius.circular(22),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: 225,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: SitesScreen.sandstone),
+  // ============================================================
+  // SECTION HEADINGS
+  // ============================================================
+
+  Widget _buildSectionHeading({
+    required String eyebrow,
+    required String title,
+    required String subtitle,
+    required IconData icon,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 27, 20, 17),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 45,
+            width: 45,
+            decoration: BoxDecoration(
+              color: primary.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Icon(icon, color: primary, size: 23),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 125,
-                width: double.infinity,
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: color.withOpacity(0.12),
-                      child: Icon(
-                        Icons.account_balance_rounded,
-                        color: color,
-                        size: 42,
-                      ),
-                    );
-                  },
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  eyebrow,
+                  style: const TextStyle(
+                    color: primary,
+                    fontSize: 9,
+                    letterSpacing: 1.4,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: SitesScreen.textColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w900,
+                const SizedBox(height: 4),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: textColor,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    color: secondaryText,
+                    fontSize: 12,
+                    height: 1.55,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // FEATURED FULL-IMAGE CARDS
+  // ============================================================
+
+  Widget _buildFeaturedCards() {
+    return SizedBox(
+      height: 325,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        scrollDirection: Axis.horizontal,
+        itemCount: _filteredFeatured.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 15),
+        itemBuilder: (context, index) {
+          final site = _filteredFeatured[index];
+
+          return _SiteCard(
+            site: site,
+            onTap: () => _showSiteDetails(site),
+          );
+        },
+      ),
+    );
+  }
+
+  // ============================================================
+  // NEARBY SITES
+  // ============================================================
+
+  Widget _buildNearbySites() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Column(
+        children: _filteredNearby.map((site) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _NearbySiteCard(
+              site: site,
+              onTap: () => _showSiteDetails(site),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  // ============================================================
+  // ICONIC FULL-IMAGE CARDS
+  // ============================================================
+
+  Widget _buildIconicSites() {
+    return SizedBox(
+      height: 255,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        scrollDirection: Axis.horizontal,
+        itemCount: _filteredIcons.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 14),
+        itemBuilder: (context, index) {
+          final site = _filteredIcons[index];
+
+          return _IconicCard(
+            site: site,
+            onTap: () => _showSiteDetails(site),
+          );
+        },
+      ),
+    );
+  }
+
+  // ============================================================
+  // DETAILS DIALOG
+  // ============================================================
+
+  void _showSiteDetails(Map<String, dynamic> site) {
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          backgroundColor: surface,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520, maxHeight: 690),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 235,
+                    width: double.infinity,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        _siteImage(
+                          site['image'] as String,
+                          iconSize: 65,
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        location,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: SitesScreen.secondaryText,
-                          fontSize: 11,
-                        ),
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Container(
-                            height: 7,
-                            width: 7,
-                            decoration: BoxDecoration(
-                              color: color,
-                              shape: BoxShape.circle,
+                        const DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0x33000000),
+                                Colors.transparent,
+                                Color(0xCC000000),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              type,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: color,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w900,
+                        ),
+                        Positioned(
+                          top: 12,
+                          right: 12,
+                          child: IconButton(
+                            onPressed: () => Navigator.pop(dialogContext),
+                            style: IconButton.styleFrom(
+                              backgroundColor:
+                                  Colors.black.withValues(alpha: 0.35),
+                              foregroundColor: Colors.white,
+                            ),
+                            icon: const Icon(Icons.close_rounded),
+                          ),
+                        ),
+                        Positioned(
+                          left: 20,
+                          right: 20,
+                          bottom: 20,
+                          child: Text(
+                            site['name'] as String,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 26,
+                              fontWeight: FontWeight.w900,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black54,
+                                  blurRadius: 12,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(22),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on_rounded,
+                              color: primary,
+                              size: 18,
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                site['location'] as String,
+                                style: const TextStyle(
+                                  color: secondaryText,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: [
+                            _detailTag(
+                              Icons.category_rounded,
+                              (site['category'] ?? site['type']).toString(),
+                            ),
+                            if (site['period'] != null)
+                              _detailTag(
+                                Icons.history_edu_rounded,
+                                site['period'].toString(),
+                              ),
+                            if (site['distance'] != null)
+                              _detailTag(
+                                Icons.near_me_rounded,
+                                site['distance'].toString(),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 19),
+                        const Text(
+                          'The Story Behind the Site',
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 9),
+                        Text(
+                          site['description'] as String,
+                          style: const TextStyle(
+                            color: secondaryText,
+                            fontSize: 13,
+                            height: 1.7,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: gold.withValues(alpha: 0.14),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: gold.withValues(alpha: 0.35),
+                            ),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.lightbulb_rounded,
+                                color: Color(0xFFB77905),
+                                size: 22,
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'HERITAGE FACT',
+                                      style: TextStyle(
+                                        color: Color(0xFF8A5B00),
+                                        fontSize: 10,
+                                        letterSpacing: 1,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      site['fact'] as String,
+                                      style: const TextStyle(
+                                        color: textColor,
+                                        fontSize: 12,
+                                        height: 1.5,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: () => Navigator.pop(dialogContext),
+                            icon: const Icon(Icons.explore_rounded),
+                            label: const Text('Continue Exploring'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primary,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
-                          Icon(
-                            Icons.arrow_outward_rounded,
-                            color: color,
-                            size: 17,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _detailTag(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(11),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: primary, size: 14),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: const TextStyle(
+              color: textColor,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // PRESERVATION BANNER
+  // ============================================================
+
+  Widget _buildPreservationBanner() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(18, 30, 18, 0),
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: const Color(0xFF163D36),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF163D36).withValues(alpha: 0.14),
+            blurRadius: 18,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -8,
+            bottom: -15,
+            child: Icon(
+              Icons.park_rounded,
+              size: 110,
+              color: Colors.white.withValues(alpha: 0.07),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(11),
+                decoration: BoxDecoration(
+                  color: gold.withValues(alpha: 0.18),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Icon(
+                  Icons.volunteer_activism_rounded,
+                  color: gold,
+                  size: 27,
+                ),
+              ),
+              const SizedBox(height: 17),
+              const Text(
+                'Our Heritage.\nOur Responsibility.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  height: 1.2,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Every visit is an opportunity to learn, respect local traditions and help preserve the stories that connect generations.',
+                style: TextStyle(
+                  color: Color(0xFFD7E8E2),
+                  fontSize: 13,
+                  height: 1.65,
+                ),
+              ),
+              const SizedBox(height: 19),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.favorite_rounded,
+                    color: Color(0xFFFFC6B9),
+                    size: 18,
+                  ),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Discover the past. Protect the future.',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: gold,
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: Color(0xFF163D36),
+                      size: 19,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // EMPTY STATE
+  // ============================================================
+
+  Widget _buildEmptyState() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 35, 24, 45),
+      child: Center(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(23),
+              decoration: BoxDecoration(
+                color: primary.withValues(alpha: 0.09),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.travel_explore_rounded,
+                size: 43,
+                color: primary,
+              ),
+            ),
+            const SizedBox(height: 18),
+            const Text(
+              'No discoveries found',
+              style: TextStyle(
+                color: textColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Try another keyword or explore a different category.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: secondaryText,
+                fontSize: 13,
+                height: 1.6,
+              ),
+            ),
+            const SizedBox(height: 18),
+            OutlinedButton.icon(
+              onPressed: () {
+                setState(() {
+                  _searchQuery = '';
+                  _selectedType = 'All';
+                  _searchController.clear();
+                });
+              },
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Show all sites'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: primary,
+                side: const BorderSide(color: primary),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
+  // SHARED IMAGE HELPER
+  // ============================================================
+
+  Widget _siteImage(String path, {double iconSize = 45}) {
+    return Image.asset(
+      path,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          color: const Color(0xFFE8DDC9),
+          child: Center(
+            child: Icon(
+              Icons.account_balance_rounded,
+              size: iconSize,
+              color: primaryDark,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ================================================================
+// FEATURED HERITAGE CARD - FULL IMAGE WITH TEXT OVERLAY
+// ================================================================
+
+class _SiteCard extends StatelessWidget {
+  const _SiteCard({
+    required this.site,
+    required this.onTap,
+  });
+
+  final Map<String, dynamic> site;
+  final VoidCallback onTap;
+
+  static const Color primary = Color(0xFFE0533C);
+  static const Color gold = Color(0xFFF2A922);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 265,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(25),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                site['image'] as String,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: const Color(0xFFE8DDC9),
+                    child: const Center(
+                      child: Icon(
+                        Icons.account_balance_rounded,
+                        color: Color(0xFFA6321F),
+                        size: 60,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.24, 0.48, 1.0],
+                    colors: [
+                      Color(0x55000000),
+                      Colors.transparent,
+                      Color(0x44000000),
+                      Color(0xED000000),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 14,
+                left: 14,
+                right: 14,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          color: gold,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          (site['tag'] ?? 'HERITAGE').toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Color(0xFF422A08),
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(9),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.32),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.35),
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_outward_rounded,
+                        color: Colors.white,
+                        size: 17,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 17,
+                right: 17,
+                bottom: 18,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: primary.withValues(alpha: 0.95),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                      child: Text(
+                        (site['category'] ?? site['type']).toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      site['name'] as String,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 23,
+                        height: 1.12,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.4,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black45,
+                            blurRadius: 8,
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on_rounded,
+                          color: gold,
+                          size: 15,
+                        ),
+                        const SizedBox(width: 5),
+                        Expanded(
+                          child: Text(
+                            site['location'] as String,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 13),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.auto_stories_rounded,
+                          color: gold,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 7),
+                        const Expanded(
+                          child: Text(
+                            'Discover its story',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward_rounded,
+                            color: primary,
+                            size: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -1524,59 +1366,87 @@ class _SiteCard extends StatelessWidget {
   }
 }
 
-// ============================================================
+// ================================================================
 // NEARBY SITE CARD
-// ============================================================
+// ================================================================
 
-class _NearbySite extends StatelessWidget {
-  final String title;
-  final String location;
-  final String distance;
-  final String image;
-  final VoidCallback onTap;
-
-  const _NearbySite({
-    required this.title,
-    required this.location,
-    required this.distance,
-    required this.image,
+class _NearbySiteCard extends StatelessWidget {
+  const _NearbySiteCard({
+    required this.site,
     required this.onTap,
   });
+
+  final Map<String, dynamic> site;
+  final VoidCallback onTap;
+
+  static const Color primary = Color(0xFFE0533C);
+  static const Color textColor = Color(0xFF0F172A);
+  static const Color secondaryText = Color(0xFF475569);
+  static const Color teal = Color(0xFF0EA5E9);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: SitesScreen.surface,
+      color: Colors.white,
       borderRadius: BorderRadius.circular(20),
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.all(11),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: SitesScreen.sandstone),
-          ),
           child: Row(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: Image.asset(
-                  image,
-                  width: 74,
-                  height: 74,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 74,
-                      height: 74,
-                      color: SitesScreen.background,
-                      child: const Icon(
-                        Icons.account_balance_rounded,
-                        color: SitesScreen.primary,
+                borderRadius: BorderRadius.circular(15),
+                child: SizedBox(
+                  width: 106,
+                  height: 112,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.asset(
+                        site['image'] as String,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: const Color(0xFFE8DDC9),
+                            child: const Icon(
+                              Icons.account_balance_rounded,
+                              color: Color(0xFFA6321F),
+                              size: 35,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                      const DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Color(0x99000000),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 8,
+                        left: 7,
+                        right: 7,
+                        child: Text(
+                          site['type'] as String,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 14),
@@ -1585,13 +1455,213 @@ class _NearbySite extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      site['name'] as String,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        color: SitesScreen.textColor,
-                        fontSize: 14,
+                        color: textColor,
+                        fontSize: 15,
+                        height: 1.25,
                         fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on_rounded,
+                          color: primary,
+                          size: 15,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            site['location'] as String,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: secondaryText,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 9),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 9,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: teal.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.near_me_rounded,
+                            color: teal,
+                            size: 13,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            site['distance'] as String,
+                            style: const TextStyle(
+                              color: teal,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 6),
+              const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: primary,
+                size: 16,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ================================================================
+// INDIA'S HERITAGE ICON - FULL IMAGE WITH TEXT OVERLAY
+// ================================================================
+
+class _IconicCard extends StatelessWidget {
+  const _IconicCard({
+    required this.site,
+    required this.onTap,
+  });
+
+  final Map<String, dynamic> site;
+  final VoidCallback onTap;
+
+  static const Color primary = Color(0xFFE0533C);
+  static const Color gold = Color(0xFFF2A922);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 225,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(23),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                site['image'] as String,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: const Color(0xFFE8DDC9),
+                    child: const Center(
+                      child: Icon(
+                        Icons.landscape_rounded,
+                        size: 55,
+                        color: Color(0xFFA6321F),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0, 0.35, 1],
+                    colors: [
+                      Color(0x33000000),
+                      Color(0x11000000),
+                      Color(0xE9000000),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 12,
+                left: 12,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: gold,
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  child: const Icon(
+                    Icons.workspace_premium_rounded,
+                    color: Color(0xFF422A08),
+                    size: 17,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 12,
+                right: 12,
+                child: Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.30),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.north_east_rounded,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 15,
+                right: 15,
+                bottom: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 9,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: primary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        site['type'] as String,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 9),
+                    Text(
+                      site['name'] as String,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 21,
+                        height: 1.1,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.3,
                       ),
                     ),
                     const SizedBox(height: 7),
@@ -1599,16 +1669,19 @@ class _NearbySite extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.location_on_rounded,
-                          color: SitesScreen.secondaryText,
+                          color: gold,
                           size: 14,
                         ),
-                        const SizedBox(width: 3),
+                        const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            location,
+                            site['location'] as String,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              color: SitesScreen.secondaryText,
-                              fontSize: 12,
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -1617,167 +1690,8 @@ class _NearbySite extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 9,
-                  vertical: 7,
-                ),
-                decoration: BoxDecoration(
-                  color: SitesScreen.forest.withOpacity(0.09),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  distance,
-                  style: const TextStyle(
-                    color: SitesScreen.forest,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-// ============================================================
-// ICONIC SITE CARD
-// ============================================================
-
-class _IconicCard extends StatelessWidget {
-  final String title;
-  final String location;
-  final String image;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _IconicCard({
-    required this.title,
-    required this.location,
-    required this.image,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: SitesScreen.surface,
-      borderRadius: BorderRadius.circular(22),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: 190,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: SitesScreen.sandstone),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 112,
-                width: double.infinity,
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: color.withOpacity(0.12),
-                      child: Icon(
-                        Icons.account_balance_rounded,
-                        size: 40,
-                        color: color,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: SitesScreen.textColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_rounded,
-                            color: color,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              location,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: SitesScreen.secondaryText,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ============================================================
-// EXPLORE BUTTON
-// ============================================================
-
-class _ExploreButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _ExploreButton({
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: const Icon(
-        Icons.explore_rounded,
-        size: 19,
-      ),
-      label: const Text('Explore Sites'),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: SitesScreen.primary,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 22,
-          vertical: 15,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
         ),
       ),
     );

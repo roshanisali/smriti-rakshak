@@ -10,22 +10,22 @@ class CommunityScreen extends StatefulWidget {
 
 class _CommunityScreenState extends State<CommunityScreen> {
   // ============================================================
-  // THEME
+  // HERITAGE THEME
   // ============================================================
 
-  static const Color primary = Color(0xFFC94F36);
-  static const Color primaryDark = Color(0xFF963B29);
-  static const Color gold = Color(0xFFE8B957);
+  static const Color primary = Color(0xFFE0533C);
+  static const Color primaryDark = Color(0xFFA6321F);
+  static const Color gold = Color(0xFFF2A922);
   static const Color forest = Color(0xFF263D32);
   static const Color forestLight = Color(0xFF385745);
   static const Color sandstone = Color(0xFFE9DDC8);
   static const Color cream = Color(0xFFF7F0E3);
-  static const Color background = Color(0xFFF5F0E6);
+  static const Color background = Color(0xFFF0F4F8);
   static const Color surface = Color(0xFFFFFDF8);
-  static const Color textColor = Color(0xFF292C25);
-  static const Color secondaryText = Color(0xFF777568);
-  static const Color teal = Color(0xFF397D78);
-  static const Color green = Color(0xFF648052);
+  static const Color textColor = Color(0xFF0F172A);
+  static const Color secondaryText = Color(0xFF64748B);
+  static const Color teal = Color(0xFF0EA5E9);
+  static const Color green = Color(0xFF10B981);
 
   final TextEditingController searchController = TextEditingController();
   final TextEditingController postTitleController = TextEditingController();
@@ -114,7 +114,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
     final query = searchController.text.trim().toLowerCase();
 
     return posts.where((post) {
-      final matchesCategory = selectedCategory == 'All' ||
+      final matchesCategory =
+          selectedCategory == 'All' ||
           post['category'] == selectedCategory;
 
       final matchesSearch = query.isEmpty ||
@@ -236,34 +237,39 @@ class _CommunityScreenState extends State<CommunityScreen> {
             ),
           ),
           const SizedBox(width: 12),
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Smriti Rakshak',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w900,
-                  color: cream,
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Smriti Rakshak',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w900,
+                    color: cream,
+                  ),
                 ),
-              ),
-              SizedBox(height: 3),
-              Text(
-                'COMMUNITY & CULTURE',
-                style: TextStyle(
-                  fontSize: 9,
-                  letterSpacing: 1.5,
-                  color: Color(0xFFD8CDB8),
-                  fontWeight: FontWeight.w700,
+                SizedBox(height: 3),
+                Text(
+                  'COMMUNITY & CULTURE',
+                  style: TextStyle(
+                    fontSize: 9,
+                    letterSpacing: 1.3,
+                    color: Color(0xFFD8CDB8),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 17),
+          padding: const EdgeInsets.only(right: 15),
           child: Center(
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -276,6 +282,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 border: Border.all(color: Colors.white12),
               ),
               child: const Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.circle,
@@ -362,13 +369,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   children: [
                     Icon(Icons.auto_awesome, color: gold, size: 13),
                     SizedBox(width: 7),
-                    Text(
-                      'A COMMUNITY ROOTED IN HERITAGE',
-                      style: TextStyle(
-                        color: gold,
-                        fontSize: 9,
-                        letterSpacing: 1.1,
-                        fontWeight: FontWeight.w900,
+                    Flexible(
+                      child: Text(
+                        'A COMMUNITY ROOTED IN HERITAGE',
+                        style: TextStyle(
+                          color: gold,
+                          fontSize: 9,
+                          letterSpacing: 0.8,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                   ],
@@ -376,10 +385,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               ),
               const SizedBox(height: 22),
               Text(
-                'Every place has\na story.\\nWhat’s yours?'.replaceAll(
-                  r'\n',
-                  '\n',
-                ),
+                'Every place has\na story.\nWhat’s yours?',
                 style: TextStyle(
                   color: cream,
                   fontSize: wide ? 39 : 29,
@@ -391,11 +397,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
               const SizedBox(height: 13),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 480),
-                child: Text(
+                child: const Text(
                   'Discover forgotten places, share meaningful memories, '
                   'and connect with people who believe our heritage '
                   'deserves to live on.',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFFD8E0D5),
                     fontSize: 12,
                     height: 1.8,
@@ -414,14 +420,14 @@ class _CommunityScreenState extends State<CommunityScreen> {
               ),
               const SizedBox(height: 25),
               SizedBox(
-                height: 43,
+                height: 45,
                 child: ElevatedButton.icon(
                   onPressed: _showCreatePost,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: gold,
                     foregroundColor: forest,
                     elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 17),
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(13),
                     ),
@@ -480,12 +486,23 @@ class _CommunityScreenState extends State<CommunityScreen> {
         color: surface,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: sandstone),
+        boxShadow: [
+          BoxShadow(
+            color: forest.withOpacity(0.035),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Row(
         children: [
           _statItem(Icons.auto_stories_rounded, '${posts.length}', 'Stories'),
           _statDivider(),
-          _statItem(Icons.favorite_rounded, '758+', 'Appreciations'),
+          _statItem(
+            Icons.favorite_rounded,
+            '${posts.fold<int>(0, (sum, post) => sum + (post['likes'] as int))}',
+            'Appreciations',
+          ),
           _statDivider(),
           _statItem(Icons.people_alt_rounded, '4', 'Explorers'),
         ],
@@ -541,6 +558,13 @@ class _CommunityScreenState extends State<CommunityScreen> {
         color: surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: sandstone),
+        boxShadow: [
+          BoxShadow(
+            color: forest.withOpacity(0.025),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: TextField(
         controller: searchController,
@@ -689,9 +713,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
         border: Border.all(color: gold.withOpacity(0.65)),
         boxShadow: [
           BoxShadow(
-            color: forest.withOpacity(0.035),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: forest.withOpacity(0.045),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -1028,6 +1052,13 @@ class _CommunityScreenState extends State<CommunityScreen> {
         ),
         borderRadius: BorderRadius.circular(23),
         border: Border.all(color: gold.withOpacity(0.25)),
+        boxShadow: [
+          BoxShadow(
+            color: forest.withOpacity(0.09),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1107,7 +1138,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
     });
 
     _showMessage(
-      savedPosts.contains(id) ? 'Post saved!' : 'Post removed from saved.',
+      savedPosts.contains(id)
+          ? 'Post saved!'
+          : 'Post removed from saved.',
     );
   }
 
@@ -1315,7 +1348,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
       post['comments'] = (post['comments'] as int) + 1;
     });
 
-    updateSheet(controller.clear);
+    updateSheet(() {});
+    controller.clear();
   }
 
   // ============================================================
@@ -1652,9 +1686,9 @@ class _CommunityFeedCard extends StatelessWidget {
         border: Border.all(color: _CommunityScreenState.sandstone),
         boxShadow: [
           BoxShadow(
-            color: _CommunityScreenState.forest.withOpacity(0.035),
-            blurRadius: 14,
-            offset: const Offset(0, 5),
+            color: _CommunityScreenState.forest.withOpacity(0.045),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -1668,8 +1702,16 @@ class _CommunityFeedCard extends StatelessWidget {
                 width: 47,
                 height: 47,
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.13),
+                  gradient: LinearGradient(
+                    colors: [
+                      color.withOpacity(0.20),
+                      color.withOpacity(0.08),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: color.withOpacity(0.18)),
                 ),
                 child: Icon(icon, color: color, size: 23),
               ),
@@ -1881,6 +1923,13 @@ class _PersonCard extends StatelessWidget {
         color: _CommunityScreenState.surface,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: _CommunityScreenState.sandstone),
+        boxShadow: [
+          BoxShadow(
+            color: _CommunityScreenState.forest.withOpacity(0.035),
+            blurRadius: 14,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

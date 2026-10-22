@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class CultureScreen extends StatelessWidget {
@@ -16,16 +17,60 @@ class CultureScreen extends StatelessWidget {
   static const Color cream = Color(0xFFFAF6EE);
   static const Color ink = Color(0xFF292C25);
   static const Color muted = Color(0xFF77776D);
-  static const Color white = Colors.white;
+
+  // ============================================================
+  // CATEGORY DATA
+  // Images are added to category cards for a richer UI.
+  // ============================================================
 
   static const List<Map<String, dynamic>> categories = [
-    {'title': 'Folk Arts', 'icon': Icons.palette_rounded, 'color': Color(0xFFEEDCC5)},
-    {'title': 'Music & Dance', 'icon': Icons.music_note_rounded, 'color': Color(0xFFF5DCD5)},
-    {'title': 'Crafts', 'icon': Icons.brush_rounded, 'color': Color(0xFFDCE8D8)},
-    {'title': 'Food', 'icon': Icons.restaurant_rounded, 'color': Color(0xFFF3E7BD)},
-    {'title': 'Languages', 'icon': Icons.translate_rounded, 'color': Color(0xFFDFE8F2)},
-    {'title': 'Festivals', 'icon': Icons.celebration_rounded, 'color': Color(0xFFF0DDEA)},
+    {
+      'title': 'Folk Arts',
+      'icon': Icons.palette_rounded,
+      'image': 'assets/images/warli.jpeg',
+      'color': Color(0xFFEEDCC5),
+      'description': 'Art that tells stories of everyday life.',
+    },
+    {
+      'title': 'Music & Dance',
+      'icon': Icons.music_note_rounded,
+      'image': 'assets/images/lavani.jpg',
+      'color': Color(0xFFF5DCD5),
+      'description': 'Feel the rhythm of living traditions.',
+    },
+    {
+      'title': 'Crafts',
+      'icon': Icons.brush_rounded,
+      'image': 'assets/images/paithani.jpeg',
+      'color': Color(0xFFDCE8D8),
+      'description': 'Discover the skill behind handmade treasures.',
+    },
+    {
+      'title': 'Food',
+      'icon': Icons.restaurant_rounded,
+      'image': 'assets/images/potter.jpeg',
+      'color': Color(0xFFF3E7BD),
+      'description': 'Explore regional flavours and food stories.',
+    },
+    {
+      'title': 'Languages',
+      'icon': Icons.translate_rounded,
+      'image': 'assets/images/artist.jpeg',
+      'color': Color(0xFFDFE8F2),
+      'description': 'Discover the voices that carry our stories.',
+    },
+    {
+      'title': 'Festivals',
+      'icon': Icons.celebration_rounded,
+      'image': 'assets/images/Ganesh.jpg',
+      'color': Color(0xFFF0DDEA),
+      'description': 'Celebrate traditions that unite communities.',
+    },
   ];
+
+  // ============================================================
+  // TRADITIONS
+  // ============================================================
 
   static const List<Map<String, String>> traditions = [
     {
@@ -68,12 +113,16 @@ class CultureScreen extends StatelessWidget {
       'subtitle': 'A celebration of devotion and community',
       'image': 'assets/images/Ganesh.jpg',
       'tag': 'CULTURAL FESTIVAL',
+      'description':
+          'Ganeshotsav brings communities together through devotion, public celebrations, music, art and shared traditions.',
     },
     {
       'title': 'Gudi Padwa',
       'subtitle': 'Welcome the traditional Maharashtrian New Year',
       'image': 'assets/images/gudiPadwa.jpeg',
       'tag': 'NEW YEAR',
+      'description':
+          'Gudi Padwa marks the traditional Maharashtrian New Year and is celebrated with decorated gudis, festive food and family traditions.',
     },
   ];
 
@@ -136,44 +185,72 @@ class CultureScreen extends StatelessWidget {
       builder: (sheetContext) {
         return Container(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(sheetContext).size.height * 0.82,
+            maxHeight: MediaQuery.of(sheetContext).size.height * 0.86,
           ),
           decoration: const BoxDecoration(
             color: cream,
             borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
           ),
+          clipBehavior: Clip.antiAlias,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(28),
-                  ),
-                  child: SizedBox(
-                    height: 230,
-                    width: double.infinity,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        _CultureImage(path: image),
-                        Positioned(
-                          top: 14,
-                          right: 14,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.black.withValues(alpha: 0.45),
-                            child: IconButton(
-                              tooltip: 'Close',
-                              onPressed: () => Navigator.pop(sheetContext),
-                              icon: const Icon(
-                                Icons.close_rounded,
-                                color: Colors.white,
+                SizedBox(
+                  height: 250,
+                  width: double.infinity,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      _CultureImage(path: image),
+                      const DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Color(0x99000000),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 22,
+                        bottom: 22,
+                        right: 70,
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -0.8,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black38,
+                                blurRadius: 12,
                               ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 14,
+                        right: 14,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black.withValues(alpha: 0.5),
+                          child: IconButton(
+                            tooltip: 'Close',
+                            onPressed: () => Navigator.pop(sheetContext),
+                            icon: const Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -181,32 +258,62 @@ class CultureScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'LIVING HERITAGE',
-                        style: TextStyle(
-                          color: primary,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: gold.withValues(alpha: 0.25),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Text(
+                          '✦  LIVING HERITAGE',
+                          style: TextStyle(
+                            color: primaryDark,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.2,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          color: forest,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -0.8,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 16),
                       Text(
                         description,
                         style: const TextStyle(
                           color: muted,
                           fontSize: 14,
-                          height: 1.8,
+                          height: 1.9,
+                        ),
+                      ),
+                      const SizedBox(height: 22),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: sandstone),
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.favorite_rounded,
+                              color: primary,
+                              size: 24,
+                            ),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'Every tradition carries a story worth preserving.',
+                                style: TextStyle(
+                                  color: forest,
+                                  fontSize: 12,
+                                  height: 1.6,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 22),
@@ -217,13 +324,16 @@ class CultureScreen extends StatelessWidget {
                           style: FilledButton.styleFrom(
                             backgroundColor: forest,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
-                          icon: const Icon(Icons.arrow_back_rounded),
-                          label: const Text('Continue exploring'),
+                          icon: const Icon(Icons.explore_rounded),
+                          label: const Text(
+                            'Continue exploring',
+                            style: TextStyle(fontWeight: FontWeight.w800),
+                          ),
                         ),
                       ),
                     ],
@@ -298,97 +408,201 @@ class CultureScreen extends StatelessWidget {
   }
 
   void _openCategory(BuildContext context, String category) {
-    final matching = traditions.where((item) {
-      switch (category) {
-        case 'Folk Arts':
-          return item['title'] == 'Warli Art';
-        case 'Music & Dance':
-          return item['title'] == 'Lavani' ||
-              item['title'] == 'Dhol Tasha';
-        case 'Crafts':
-          return item['title'] == 'Paithani' ||
-              item['title'] == 'Warli Art';
-        default:
-          return false;
-      }
-    }).toList();
+    final List<Map<String, String>> matching;
 
-    if (matching.isNotEmpty) {
-      showModalBottomSheet<void>(
-        context: context,
-        backgroundColor: cream,
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
-        ),
-        builder: (sheetContext) => SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  category,
-                  style: const TextStyle(
-                    color: forest,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w900,
-                  ),
+    switch (category) {
+      case 'Folk Arts':
+        matching = traditions
+            .where((item) => item['title'] == 'Warli Art')
+            .toList();
+        break;
+
+      case 'Music & Dance':
+        matching = traditions
+            .where(
+              (item) =>
+                  item['title'] == 'Lavani' ||
+                  item['title'] == 'Dhol Tasha',
+            )
+            .toList();
+        break;
+
+      case 'Crafts':
+        matching = traditions
+            .where(
+              (item) =>
+                  item['title'] == 'Paithani' ||
+                  item['title'] == 'Warli Art',
+            )
+            .toList();
+        break;
+
+      case 'Festivals':
+        matching = festivals;
+        break;
+
+      case 'Food':
+        _showMessage(
+          context,
+          'Our regional food stories collection is coming soon!',
+        );
+        return;
+
+      case 'Languages':
+        _showMessage(
+          context,
+          'Our languages and oral traditions collection is coming soon!',
+        );
+        return;
+
+      default:
+        matching = [];
+    }
+
+    if (matching.isEmpty) {
+      _showMessage(context, '$category collection is coming soon!');
+      return;
+    }
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: cream,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 44,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: sandstone,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                const SizedBox(height: 6),
-                const Text(
-                  'Discover traditions connected to your interests.',
-                  style: TextStyle(color: muted, height: 1.5),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                category,
+                style: const TextStyle(
+                  color: forest,
+                  fontSize: 27,
+                  fontWeight: FontWeight.w900,
                 ),
-                const SizedBox(height: 16),
-                ...matching.map(
-                  (item) => ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: SizedBox(
-                        width: 58,
-                        height: 58,
-                        child: _CultureImage(path: item['image']!),
+              ),
+              const SizedBox(height: 7),
+              const Text(
+                'Choose a story and discover the tradition behind it.',
+                style: TextStyle(color: muted, height: 1.5),
+              ),
+              const SizedBox(height: 18),
+              ...matching.map(
+                (item) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(17),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(17),
+                      onTap: () {
+                        Navigator.pop(sheetContext);
+                        _showTopicDetails(
+                          context,
+                          item['title']!,
+                          item['description']!,
+                          item['image']!,
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(13),
+                              child: SizedBox(
+                                width: 72,
+                                height: 72,
+                                child: _CultureImage(path: item['image']!),
+                              ),
+                            ),
+                            const SizedBox(width: 13),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item['title']!,
+                                    style: const TextStyle(
+                                      color: forest,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    item['subtitle']!,
+                                    style: const TextStyle(
+                                      color: muted,
+                                      fontSize: 11,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_rounded,
+                              color: primary,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    title: Text(
-                      item['title']!,
-                      style: const TextStyle(
-                        color: forest,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    subtitle: Text(
-                      item['subtitle']!,
-                      style: const TextStyle(color: muted, fontSize: 12),
-                    ),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 15,
-                      color: primary,
-                    ),
-                    onTap: () {
-                      Navigator.pop(sheetContext);
-                      _showTopicDetails(
-                        context,
-                        item['title']!,
-                        item['description']!,
-                        item['image']!,
-                      );
-                    },
                   ),
                 ),
-                const SizedBox(height: 10),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _selectSearchTopic(BuildContext context, String topic) {
+    final traditionMatches =
+        traditions.where((item) => item['title'] == topic).toList();
+
+    if (traditionMatches.isNotEmpty) {
+      final item = traditionMatches.first;
+      _showTopicDetails(
+        context,
+        item['title']!,
+        item['description']!,
+        item['image']!,
       );
-    } else {
-      _showMessage(context, '$category collection is coming soon!');
+      return;
     }
+
+    final festivalMatches =
+        festivals.where((item) => item['title'] == topic).toList();
+
+    if (festivalMatches.isNotEmpty) {
+      final item = festivalMatches.first;
+      _showTopicDetails(
+        context,
+        item['title']!,
+        item['description']!,
+        item['image']!,
+      );
+      return;
+    }
+
+    _openCategory(context, topic);
   }
 
   // ============================================================
@@ -450,25 +664,8 @@ class CultureScreen extends StatelessWidget {
                     showSearch(
                       context: context,
                       delegate: _CultureSearchDelegate(
-                        onTopicSelected: (topic) {
-                          final item = traditions.where(
-                            (element) => element['title'] == topic,
-                          );
-
-                          if (item.isNotEmpty) {
-                            _showTopicDetails(
-                              context,
-                              item.first['title']!,
-                              item.first['description']!,
-                              item.first['image']!,
-                            );
-                          } else {
-                            _showMessage(
-                              context,
-                              '$topic collection is coming soon!',
-                            );
-                          }
-                        },
+                        onTopicSelected: (topic) =>
+                            _selectSearchTopic(context, topic),
                       ),
                     );
                   },
@@ -481,7 +678,9 @@ class CultureScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  // HERO SECTION
+                  // ==================================================
+                  // HERO
+                  // ==================================================
 
                   LayoutBuilder(
                     builder: (context, constraints) {
@@ -490,7 +689,7 @@ class CultureScreen extends StatelessWidget {
                       return Container(
                         width: double.infinity,
                         constraints: BoxConstraints(
-                          minHeight: wide ? 370 : 390,
+                          minHeight: wide ? 400 : 430,
                         ),
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
@@ -498,8 +697,8 @@ class CultureScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: forest.withValues(alpha: 0.14),
-                              blurRadius: 24,
+                              color: forest.withValues(alpha: 0.17),
+                              blurRadius: 25,
                               offset: const Offset(0, 12),
                             ),
                           ],
@@ -508,41 +707,56 @@ class CultureScreen extends StatelessWidget {
                           children: [
                             Positioned.fill(
                               child: Opacity(
-                                opacity: 0.26,
+                                opacity: 0.31,
                                 child: _CultureImage(
                                   path: 'assets/images/warli.jpeg',
                                 ),
                               ),
                             ),
-                            Positioned(
-                              right: -70,
-                              top: -90,
-                              child: Container(
-                                width: 270,
-                                height: 270,
+                            const Positioned.fill(
+                              child: DecoratedBox(
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: gold.withValues(alpha: 0.15),
-                                    width: 35,
+                                  gradient: LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Color(0xF5263D32),
+                                      Color(0xD9263D32),
+                                      Color(0x55263D32),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                             Positioned(
-                              right: 25,
-                              bottom: 22,
+                              right: -65,
+                              top: -80,
+                              child: Container(
+                                width: 260,
+                                height: 260,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: gold.withValues(alpha: 0.17),
+                                    width: 32,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 20,
+                              bottom: 16,
                               child: Icon(
                                 Icons.account_balance_rounded,
-                                size: wide ? 150 : 90,
-                                color: Colors.white.withValues(alpha: 0.07),
+                                size: wide ? 175 : 115,
+                                color: Colors.white.withValues(alpha: 0.09),
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(wide ? 38 : 26),
+                              padding: EdgeInsets.all(wide ? 38 : 25),
                               child: ConstrainedBox(
                                 constraints: const BoxConstraints(
-                                  maxWidth: 560,
+                                  maxWidth: 570,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -556,7 +770,7 @@ class CultureScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: gold.withValues(alpha: 0.16),
                                         border: Border.all(
-                                          color: gold.withValues(alpha: 0.35),
+                                          color: gold.withValues(alpha: 0.4),
                                         ),
                                         borderRadius: BorderRadius.circular(30),
                                       ),
@@ -575,18 +789,18 @@ class CultureScreen extends StatelessWidget {
                                               color: gold,
                                               fontSize: 9,
                                               fontWeight: FontWeight.w900,
-                                              letterSpacing: 1.3,
+                                              letterSpacing: 1.2,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 25),
+                                    const SizedBox(height: 24),
                                     Text(
                                       'Culture is our\nliving legacy.',
                                       style: TextStyle(
                                         color: cream,
-                                        fontSize: wide ? 50 : 39,
+                                        fontSize: wide ? 51 : 39,
                                         height: 1.08,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: -1.7,
@@ -594,15 +808,16 @@ class CultureScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 17),
                                     Text(
-                                      'From timeless folk art to vibrant festivals, '
-                                      'discover the traditions that make our heritage extraordinary.',
+                                      'Every art form holds a memory. Every rhythm '
+                                      'carries a story. Discover the traditions that '
+                                      'keep Maharashtra’s identity alive.',
                                       style: TextStyle(
-                                        color: cream.withValues(alpha: 0.86),
-                                        fontSize: 14,
+                                        color: cream.withValues(alpha: 0.9),
+                                        fontSize: 13,
                                         height: 1.8,
                                       ),
                                     ),
-                                    const SizedBox(height: 26),
+                                    const SizedBox(height: 25),
                                     Wrap(
                                       spacing: 10,
                                       runSpacing: 10,
@@ -618,7 +833,7 @@ class CultureScreen extends StatelessWidget {
                                             backgroundColor: gold,
                                             foregroundColor: forest,
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 19,
+                                              horizontal: 18,
                                               vertical: 15,
                                             ),
                                             shape: RoundedRectangleBorder(
@@ -645,7 +860,7 @@ class CultureScreen extends StatelessWidget {
                                             foregroundColor: cream,
                                             side: BorderSide(
                                               color: cream.withValues(
-                                                alpha: 0.5,
+                                                alpha: 0.55,
                                               ),
                                             ),
                                             padding: const EdgeInsets.symmetric(
@@ -681,13 +896,15 @@ class CultureScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 22),
 
-                  // QUICK FACT STRIP
+                  // ==================================================
+                  // QUICK FACTS
+                  // ==================================================
 
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final compact = constraints.maxWidth < 500;
+                      final compact = constraints.maxWidth < 540;
 
                       final facts = [
                         (
@@ -745,7 +962,9 @@ class CultureScreen extends StatelessWidget {
 
                   const SizedBox(height: 38),
 
+                  // ==================================================
                   // CULTURE OF THE DAY
+                  // ==================================================
 
                   const _SectionTitle(
                     eyebrow: 'A LITTLE CULTURE, EVERY DAY',
@@ -758,28 +977,30 @@ class CultureScreen extends StatelessWidget {
                   _CultureOfDayCard(
                     onTap: () => _showTopicDetails(
                       context,
-                      'Lavani',
+                      traditions[2]['title']!,
                       traditions[2]['description']!,
-                      'assets/images/lavani.jpg',
+                      traditions[2]['image']!,
                     ),
                   ),
 
                   const SizedBox(height: 40),
 
-                  // CATEGORIES
+                  // ==================================================
+                  // CATEGORIES WITH IMAGES
+                  // ==================================================
 
                   const _SectionTitle(
                     eyebrow: 'FIND YOUR INTEREST',
                     title: 'Explore culture',
-                    subtitle: 'Which part of our heritage calls to you?',
+                    subtitle: 'Choose a path into Maharashtra’s heritage.',
                   ),
 
                   const SizedBox(height: 18),
 
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final columns = constraints.maxWidth >= 950
-                          ? 6
+                      final columns = constraints.maxWidth >= 1000
+                          ? 3
                           : constraints.maxWidth >= 560
                               ? 3
                               : 2;
@@ -792,7 +1013,9 @@ class CultureScreen extends StatelessWidget {
                           crossAxisCount: columns,
                           crossAxisSpacing: 13,
                           mainAxisSpacing: 13,
-                          childAspectRatio: 1.04,
+                          childAspectRatio: constraints.maxWidth >= 700
+                              ? 1.18
+                              : 0.92,
                         ),
                         itemBuilder: (context, index) {
                           final category = categories[index];
@@ -800,7 +1023,9 @@ class CultureScreen extends StatelessWidget {
                           return _CultureCategory(
                             title: category['title'] as String,
                             icon: category['icon'] as IconData,
+                            image: category['image'] as String,
                             color: category['color'] as Color,
+                            description: category['description'] as String,
                             onTap: () => _openCategory(
                               context,
                               category['title'] as String,
@@ -813,7 +1038,9 @@ class CultureScreen extends StatelessWidget {
 
                   const SizedBox(height: 40),
 
+                  // ==================================================
                   // TRADITIONS
+                  // ==================================================
 
                   _SectionTitle(
                     eyebrow: 'ROOTED IN HISTORY',
@@ -830,12 +1057,12 @@ class CultureScreen extends StatelessWidget {
                   const SizedBox(height: 18),
 
                   SizedBox(
-                    height: 310,
+                    height: 325,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: traditions.length,
                       separatorBuilder: (_, __) =>
-                          const SizedBox(width: 16),
+                          const SizedBox(width: 15),
                       itemBuilder: (context, index) {
                         final item = traditions[index];
 
@@ -857,13 +1084,14 @@ class CultureScreen extends StatelessWidget {
 
                   const SizedBox(height: 40),
 
+                  // ==================================================
                   // FESTIVALS
+                  // ==================================================
 
                   const _SectionTitle(
                     eyebrow: 'CELEBRATE TOGETHER',
-                    title: 'Festivals & events',
-                    subtitle:
-                        'Celebrations that bring communities together.',
+                    title: 'Festivals & celebrations',
+                    subtitle: 'Traditions that bring communities together.',
                   ),
 
                   const SizedBox(height: 18),
@@ -886,9 +1114,11 @@ class CultureScreen extends StatelessWidget {
                                   subtitle: festival['subtitle']!,
                                   image: festival['image']!,
                                   tag: festival['tag']!,
-                                  onTap: () => _showMessage(
+                                  onTap: () => _showTopicDetails(
                                     context,
-                                    '${festival['title']} details coming soon!',
+                                    festival['title']!,
+                                    festival['description']!,
+                                    festival['image']!,
                                   ),
                                 ),
                               ),
@@ -906,9 +1136,11 @@ class CultureScreen extends StatelessWidget {
                               subtitle: festival['subtitle']!,
                               image: festival['image']!,
                               tag: festival['tag']!,
-                              onTap: () => _showMessage(
+                              onTap: () => _showTopicDetails(
                                 context,
-                                '${festival['title']} details coming soon!',
+                                festival['title']!,
+                                festival['description']!,
+                                festival['image']!,
                               ),
                             ),
                           );
@@ -917,9 +1149,11 @@ class CultureScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 25),
 
-                  // QUEST BANNER
+                  // ==================================================
+                  // QUEST BANNER WITH BACKGROUND IMAGE
+                  // ==================================================
 
                   _CultureQuestCard(
                     onTap: () => _showQuestDialog(context),
@@ -927,19 +1161,21 @@ class CultureScreen extends StatelessWidget {
 
                   const SizedBox(height: 40),
 
+                  // ==================================================
                   // MAKERS
+                  // ==================================================
 
                   const _SectionTitle(
                     eyebrow: 'HANDS THAT KEEP HISTORY ALIVE',
                     title: 'Meet the makers',
                     subtitle:
-                        'Discover the people behind our living traditions.',
+                        'Discover the people and skills behind our traditions.',
                   ),
 
                   const SizedBox(height: 18),
 
                   SizedBox(
-                    height: 230,
+                    height: 245,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: makers.length,
@@ -961,81 +1197,100 @@ class CultureScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 34),
+                  const SizedBox(height: 35),
 
+                  // ==================================================
                   // CLOSING BANNER
+                  // ==================================================
 
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(24),
+                    clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       color: const Color(0xFFEDE3D1),
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(
-                        color: sandstone.withValues(alpha: 0.9),
-                      ),
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(color: sandstone),
                     ),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final compact = constraints.maxWidth < 420;
-
-                        final icon = Container(
-                          width: 58,
-                          height: 58,
-                          decoration: BoxDecoration(
-                            color: primary.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          child: const Icon(
-                            Icons.account_balance_rounded,
-                            color: primary,
-                            size: 30,
-                          ),
-                        );
-
-                        final text = const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Heritage lives through us.',
-                              style: TextStyle(
-                                color: forest,
-                                fontSize: 19,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: -0.4,
-                              ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          right: -10,
+                          top: 0,
+                          bottom: 0,
+                          width: 150,
+                          child: Opacity(
+                            opacity: 0.22,
+                            child: _CultureImage(
+                              path: 'assets/images/paithani.jpeg',
                             ),
-                            SizedBox(height: 7),
-                            Text(
-                              'Discover it. Experience it. Preserve it.',
-                              style: TextStyle(
-                                color: muted,
-                                fontSize: 12,
-                                height: 1.6,
-                              ),
-                            ),
-                          ],
-                        );
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              final compact = constraints.maxWidth < 420;
 
-                        if (compact) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              icon,
-                              const SizedBox(height: 16),
-                              text,
-                            ],
-                          );
-                        }
+                              final icon = Container(
+                                width: 58,
+                                height: 58,
+                                decoration: BoxDecoration(
+                                  color: primary.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: const Icon(
+                                  Icons.account_balance_rounded,
+                                  color: primary,
+                                  size: 30,
+                                ),
+                              );
 
-                        return Row(
-                          children: [
-                            icon,
-                            const SizedBox(width: 16),
-                            Expanded(child: text),
-                          ],
-                        );
-                      },
+                              const text = Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Heritage lives through us.',
+                                    style: TextStyle(
+                                      color: forest,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w900,
+                                      letterSpacing: -0.4,
+                                    ),
+                                  ),
+                                  SizedBox(height: 7),
+                                  Text(
+                                    'Discover it. Experience it. Preserve it.',
+                                    style: TextStyle(
+                                      color: muted,
+                                      fontSize: 12,
+                                      height: 1.6,
+                                    ),
+                                  ),
+                                ],
+                              );
+
+                              if (compact) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    icon,
+                                    const SizedBox(height: 16),
+                                    text,
+                                  ],
+                                );
+                              }
+
+                              return Row(
+                                children: [
+                                  icon,
+                                  const SizedBox(width: 16),
+                                  const Expanded(child: text),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -1097,19 +1352,26 @@ class _FactTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 15),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(17),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: CultureScreen.sandstone),
+        boxShadow: [
+          BoxShadow(
+            color: CultureScreen.forest.withValues(alpha: 0.035),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         children: [
           Container(
-            width: 43,
-            height: 43,
+            width: 45,
+            height: 45,
             decoration: BoxDecoration(
               color: CultureScreen.cream,
-              borderRadius: BorderRadius.circular(13),
+              borderRadius: BorderRadius.circular(14),
             ),
-            child: Icon(icon, color: CultureScreen.primary, size: 22),
+            child: Icon(icon, color: CultureScreen.primary, size: 23),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -1240,13 +1502,13 @@ class _CultureOfDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 290,
+      height: 300,
       decoration: BoxDecoration(
         color: CultureScreen.forest,
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: CultureScreen.forest.withValues(alpha: 0.12),
+            color: CultureScreen.forest.withValues(alpha: 0.14),
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -1257,17 +1519,17 @@ class _CultureOfDayCard extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           _CultureImage(path: 'assets/images/lavani.jpg'),
-          Container(
+          const DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.centerRight,
                 end: Alignment.centerLeft,
                 colors: [
                   Colors.transparent,
-                  CultureScreen.forest.withValues(alpha: 0.45),
-                  CultureScreen.forest.withValues(alpha: 0.97),
+                  Color(0xAA263D32),
+                  Color(0xF5263D32),
                 ],
-                stops: const [0, 0.35, 1],
+                stops: [0, 0.42, 1],
               ),
             ),
           ),
@@ -1285,7 +1547,7 @@ class _CultureOfDayCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 300),
+                constraints: const BoxConstraints(maxWidth: 320),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1324,7 +1586,7 @@ class _CultureOfDayCard extends StatelessWidget {
                       'The expressive folk dance of Maharashtra, '
                       'celebrated for its rhythm, storytelling and energy.',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: Colors.white.withValues(alpha: 0.92),
                         fontSize: 12,
                         height: 1.7,
                       ),
@@ -1360,19 +1622,23 @@ class _CultureOfDayCard extends StatelessWidget {
 }
 
 // ================================================================
-// CATEGORY TILE
+// IMAGE-BACKED CATEGORY CARD
 // ================================================================
 
 class _CultureCategory extends StatefulWidget {
   final String title;
   final IconData icon;
+  final String image;
   final Color color;
+  final String description;
   final VoidCallback onTap;
 
   const _CultureCategory({
     required this.title,
     required this.icon,
+    required this.image,
     required this.color,
+    required this.description,
     required this.onTap,
   });
 
@@ -1390,72 +1656,134 @@ class _CultureCategoryState extends State<_CultureCategory> {
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 220),
         transform: Matrix4.translationValues(0, isHovered ? -4 : 0, 0),
         decoration: BoxDecoration(
-          color: isHovered ? CultureScreen.forest : Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(22),
           border: Border.all(
-            color: isHovered
-                ? CultureScreen.forest
-                : CultureScreen.sandstone.withValues(alpha: 0.8),
+            color: isHovered ? CultureScreen.primary : CultureScreen.sandstone,
+            width: isHovered ? 1.4 : 1,
           ),
           boxShadow: [
             BoxShadow(
               color: CultureScreen.forest.withValues(
-                alpha: isHovered ? 0.13 : 0.035,
+                alpha: isHovered ? 0.13 : 0.05,
               ),
-              blurRadius: isHovered ? 18 : 8,
-              offset: Offset(0, isHovered ? 8 : 3),
+              blurRadius: isHovered ? 18 : 9,
+              offset: Offset(0, isHovered ? 8 : 4),
             ),
           ],
         ),
+        clipBehavior: Clip.antiAlias,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(22),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 55,
-                    height: 55,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                AnimatedOpacity(
+                  opacity: isHovered ? 1 : 0.88,
+                  duration: const Duration(milliseconds: 200),
+                  child: _CultureImage(path: widget.image),
+                ),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        CultureScreen.forest.withValues(alpha: 0.02),
+                        CultureScreen.forest.withValues(alpha: 0.25),
+                        CultureScreen.forest.withValues(alpha: 0.94),
+                      ],
+                      stops: const [0, 0.35, 1],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: Container(
+                    width: 38,
+                    height: 38,
                     decoration: BoxDecoration(
-                      color: isHovered
-                          ? Colors.white.withValues(alpha: 0.12)
-                          : widget.color,
-                      borderRadius: BorderRadius.circular(18),
+                      color: widget.color,
+                      borderRadius: BorderRadius.circular(13),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.12),
+                          blurRadius: 8,
+                        ),
+                      ],
                     ),
                     child: Icon(
                       widget.icon,
-                      color: isHovered ? CultureScreen.gold : CultureScreen.forest,
-                      size: 26,
+                      color: CultureScreen.forest,
+                      size: 21,
                     ),
                   ),
-                  const SizedBox(height: 13),
-                  Text(
-                    widget.title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: isHovered ? Colors.white : CultureScreen.forest,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900,
+                ),
+                Positioned(
+                  right: 12,
+                  top: 12,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: isHovered
+                          ? CultureScreen.gold
+                          : Colors.white.withValues(alpha: 0.92),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.arrow_outward_rounded,
+                      size: 16,
+                      color: CultureScreen.forest,
                     ),
                   ),
-                  const SizedBox(height: 7),
-                  Icon(
-                    Icons.arrow_forward_rounded,
-                    size: 16,
-                    color: isHovered
-                        ? CultureScreen.gold
-                        : CultureScreen.primary.withValues(alpha: 0.8),
+                ),
+                Positioned(
+                  left: 13,
+                  right: 12,
+                  bottom: 14,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black38,
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.92),
+                          fontSize: 10,
+                          height: 1.45,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -1498,17 +1826,18 @@ class _TraditionCardState extends State<_TraditionCard> {
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 235,
+        width: 245,
         transform: Matrix4.translationValues(0, isHovered ? -5 : 0, 0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(23),
+          border: Border.all(color: CultureScreen.sandstone),
           boxShadow: [
             BoxShadow(
               color: CultureScreen.forest.withValues(
-                alpha: isHovered ? 0.12 : 0.045,
+                alpha: isHovered ? 0.13 : 0.05,
               ),
-              blurRadius: isHovered ? 20 : 9,
+              blurRadius: isHovered ? 20 : 10,
               offset: const Offset(0, 5),
             ),
           ],
@@ -1526,15 +1855,15 @@ class _TraditionCardState extends State<_TraditionCard> {
                     fit: StackFit.expand,
                     children: [
                       _CultureImage(path: widget.image),
-                      Container(
+                      const DecoratedBox(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.black.withValues(alpha: 0.05),
+                              Color(0x11000000),
                               Colors.transparent,
-                              Colors.black.withValues(alpha: 0.2),
+                              Color(0x55000000),
                             ],
                           ),
                         ),
@@ -1565,11 +1894,14 @@ class _TraditionCardState extends State<_TraditionCard> {
                       Positioned(
                         right: 12,
                         bottom: 12,
-                        child: Container(
-                          width: 34,
-                          height: 34,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 180),
+                          width: 36,
+                          height: 36,
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.95),
+                            color: isHovered
+                                ? CultureScreen.gold
+                                : Colors.white.withValues(alpha: 0.96),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -1658,10 +1990,11 @@ class _FestivalCardState extends State<_FestivalCard> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(23),
+          border: Border.all(color: CultureScreen.sandstone),
           boxShadow: [
             BoxShadow(
-              color: CultureScreen.forest.withValues(alpha: 0.06),
-              blurRadius: 14,
+              color: CultureScreen.forest.withValues(alpha: 0.07),
+              blurRadius: 16,
               offset: const Offset(0, 5),
             ),
           ],
@@ -1675,27 +2008,27 @@ class _FestivalCardState extends State<_FestivalCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 190,
+                  height: 205,
                   width: double.infinity,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       _CultureImage(path: widget.image),
-                      Container(
+                      const DecoratedBox(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              Colors.black.withValues(alpha: 0.4),
+                              Color(0x66000000),
                             ],
                           ),
                         ),
                       ),
                       Positioned(
                         left: 13,
-                        bottom: 13,
+                        top: 13,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 11,
@@ -1713,6 +2046,23 @@ class _FestivalCardState extends State<_FestivalCard> {
                               fontWeight: FontWeight.w900,
                               letterSpacing: 0.6,
                             ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 13,
+                        bottom: 13,
+                        child: Container(
+                          width: 37,
+                          height: 37,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.96),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_outward_rounded,
+                            color: CultureScreen.primary,
+                            size: 18,
                           ),
                         ),
                       ),
@@ -1774,7 +2124,7 @@ class _FestivalCardState extends State<_FestivalCard> {
 }
 
 // ================================================================
-// CULTURE QUEST
+// CULTURE QUEST BANNER WITH IMAGE
 // ================================================================
 
 class _CultureQuestCard extends StatelessWidget {
@@ -1788,17 +2138,45 @@ class _CultureQuestCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: CultureScreen.forest,
         borderRadius: BorderRadius.circular(26),
+        boxShadow: [
+          BoxShadow(
+            color: CultureScreen.forest.withValues(alpha: 0.13),
+            blurRadius: 18,
+            offset: const Offset(0, 7),
+          ),
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.19,
+              child: _CultureImage(path: 'assets/images/warli.jpeg'),
+            ),
+          ),
+          const Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xF5263D32),
+                    Color(0xD9263D32),
+                    Color(0x77263D32),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Positioned(
             right: -25,
             bottom: -40,
             child: Icon(
               Icons.explore_rounded,
               size: 200,
-              color: Colors.white.withValues(alpha: 0.055),
+              color: Colors.white.withValues(alpha: 0.08),
             ),
           ),
           Positioned(
@@ -1807,7 +2185,7 @@ class _CultureQuestCard extends StatelessWidget {
             child: Icon(
               Icons.auto_awesome_rounded,
               size: 32,
-              color: CultureScreen.gold.withValues(alpha: 0.5),
+              color: CultureScreen.gold.withValues(alpha: 0.65),
             ),
           ),
           Padding(
@@ -1819,10 +2197,10 @@ class _CultureQuestCard extends StatelessWidget {
                   width: 55,
                   height: 55,
                   decoration: BoxDecoration(
-                    color: CultureScreen.gold.withValues(alpha: 0.15),
+                    color: CultureScreen.gold.withValues(alpha: 0.17),
                     borderRadius: BorderRadius.circular(17),
                     border: Border.all(
-                      color: CultureScreen.gold.withValues(alpha: 0.3),
+                      color: CultureScreen.gold.withValues(alpha: 0.4),
                     ),
                   ),
                   child: const Icon(
@@ -1844,10 +2222,10 @@ class _CultureQuestCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 11),
                 Text(
-                  'Test what you know, discover something new, '
+                  'Test what you know, uncover fascinating facts, '
                   'and celebrate the culture around you.',
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.78),
+                    color: Colors.white.withValues(alpha: 0.85),
                     fontSize: 12,
                     height: 1.7,
                   ),
@@ -1916,15 +2294,16 @@ class _MakerCardState extends State<_MakerCard> {
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 180,
+        width: 185,
         transform: Matrix4.translationValues(0, isHovered ? -4 : 0, 0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(21),
+          border: Border.all(color: CultureScreen.sandstone),
           boxShadow: [
             BoxShadow(
-              color: CultureScreen.forest.withValues(alpha: 0.06),
-              blurRadius: 12,
+              color: CultureScreen.forest.withValues(alpha: 0.07),
+              blurRadius: 14,
               offset: const Offset(0, 4),
             ),
           ],
@@ -1944,20 +2323,55 @@ class _MakerCardState extends State<_MakerCard> {
                       fit: StackFit.expand,
                       children: [
                         _CultureImage(path: widget.image),
+                        const DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Color(0x33000000),
+                              ],
+                            ),
+                          ),
+                        ),
                         Positioned(
                           right: 10,
                           top: 10,
                           child: Container(
-                            width: 31,
-                            height: 31,
+                            width: 33,
+                            height: 33,
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.94),
+                              color: Colors.white.withValues(alpha: 0.95),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
                               Icons.person_outline_rounded,
                               color: CultureScreen.primary,
-                              size: 18,
+                              size: 19,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          bottom: 10,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 9,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: CultureScreen.gold,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Text(
+                              'ARTISAN',
+                              style: TextStyle(
+                                color: CultureScreen.forest,
+                                fontSize: 8,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 0.8,
+                              ),
                             ),
                           ),
                         ),
@@ -2027,16 +2441,17 @@ class _CultureImage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.image_not_supported_outlined,
+                Icons.auto_stories_rounded,
                 color: CultureScreen.forest,
                 size: 36,
               ),
               SizedBox(height: 6),
               Text(
-                'Image unavailable',
+                'Heritage collection',
                 style: TextStyle(
                   color: CultureScreen.forest,
                   fontSize: 10,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
